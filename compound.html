@@ -682,8 +682,10 @@ function buildChart(moData, P, annRate, totalMonths){
   // No interest (flat)
   const flat = pts.map(d=>Math.round((P + (d.totalDep-P) - d.totalWd)*100)/100);
 
-  if(growthChart)growthChart.destroy();
   const ctx=document.getElementById('growth-chart');
+  const existing=Chart.getChart(ctx);
+  if(existing)existing.destroy();
+  growthChart=null;
   growthChart=new Chart(ctx,{
     type:'line',
     data:{labels:lbMap,datasets:[
