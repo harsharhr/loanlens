@@ -1,1086 +1,769 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoanLens — Smart Free Loan Calculator</title>
-    <meta name="description" content="Free loan EMI calculator with what-if planner, debt payoff tracker, and salary fit checker. Visual charts, instant results.">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4910237367995817" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinWise — Free EMI, SIP, FD & Loan Calculator India 2026</title>
+<meta name="description" content="India's most accurate free finance calculators. Calculate EMI, SIP returns, FD maturity, home loan cost, credit card payoff & take-home salary. Instant visual results. No signup.">
+<meta name="keywords" content="EMI calculator India, SIP calculator, FD calculator, home loan EMI calculator, credit card payoff, salary calculator India, free finance calculator 2026">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="FinWise — India's Free Finance Calculator Hub">
+<meta property="og:description" content="EMI · SIP · FD · Home Loan · Credit Card · Salary — all in one place. Free, accurate, instant.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"FinWise Calculator","description":"India's most accurate free finance calculator for EMI, SIP, FD, Home Loan, Credit Card and Salary","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"INR"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"3241"}}</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4910237367995817" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--ind:#4f46e5;--ind2:#7c3aed;--grn:#10b981;--red:#ef4444;--org:#f59e0b;--blu:#3b82f6;--txt:#0f172a;--mut:#64748b;--bdr:#e2e8f0;--bg:#f8fafc;--card:#fff}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--txt);height:100vh;overflow:hidden;font-size:14px}
 
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: #f0f4ff;
-            height: 100vh;
-            overflow: hidden;
-            color: #1a1a2e;
-        }
+/* HEADER */
+header{background:linear-gradient(135deg,#4f46e5,#7c3aed);height:50px;padding:0 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:21px;font-weight:900;color:#fff;letter-spacing:-0.5px}.logo em{color:#fcd34d;font-style:normal}
+.hright{display:flex;align-items:center;gap:16px;font-size:11px;color:rgba(255,255,255,.75)}
+.hright span::before{content:'✓ ';color:#6ee7b7}
 
-        /* ---- HEADER ---- */
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 10px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            height: 52px;
-            box-shadow: 0 2px 20px rgba(102,126,234,0.4);
-        }
+/* TRUST BAR */
+.tbar{background:#4338ca;height:24px;display:flex;align-items:center;justify-content:center;gap:20px;font-size:10.5px;color:rgba(255,255,255,.8)}
+.tbar b{color:#fcd34d}
 
-        .logo { font-size: 20px; font-weight: 800; color: white; letter-spacing: -0.5px; }
-        .logo span { color: #ffd700; }
-        .tagline { font-size: 11px; color: rgba(255,255,255,0.75); margin-top:1px; }
+/* CALC PICKER */
+.picker{background:#fff;border-bottom:2px solid var(--bdr);padding:0 16px;height:48px;display:flex;align-items:center;gap:6px;overflow-x:auto;scrollbar-width:none}
+.picker::-webkit-scrollbar{display:none}
+.pbtn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:8px;border:1.5px solid var(--bdr);background:#fff;color:var(--mut);font-size:12.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s}
+.pbtn:hover{border-color:var(--ind);color:var(--ind);background:#eef2ff}
+.pbtn.on{background:var(--ind);border-color:var(--ind);color:#fff}
 
-        .ad-header {
-            background: rgba(255,255,255,0.12);
-            border: 1px dashed rgba(255,255,255,0.35);
-            border-radius: 8px;
-            padding: 5px 18px;
-            font-size: 11px;
-            color: rgba(255,255,255,0.7);
-        }
+/* MAIN */
+.main{display:grid;grid-template-columns:305px 1fr;height:calc(100vh - 122px)}
+.pl{background:#fff;border-right:1px solid var(--bdr);padding:15px;overflow-y:auto}
+.pl::-webkit-scrollbar{width:3px}.pl::-webkit-scrollbar-thumb{background:#c7d2fe}
+.pr{padding:15px;background:var(--bg);overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.pr::-webkit-scrollbar{width:3px}.pr::-webkit-scrollbar-thumb{background:#c7d2fe}
 
-        /* ---- TOP AD STRIP ---- */
-        .ad-strip {
-            background: white;
-            border-bottom: 1px solid #e0e7ff;
-            text-align: center;
-            padding: 3px 0;
-            font-size: 11px;
-            color: #aaa;
-            height: 22px;
-        }
+/* PANES */
+.ipane{display:none}.ipane.on{display:block}
+.rpane{display:none;flex-direction:column;gap:12px}.rpane.on{display:flex}
 
-        /* ---- TABS ---- */
-        .tabs {
-            display: flex;
-            background: white;
-            border-bottom: 2px solid #e0e7ff;
-            padding: 0 20px;
-            height: 40px;
-            align-items: flex-end;
-        }
+/* FIELDS */
+.f{margin-bottom:13px}
+.f label{display:block;font-size:10.5px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.f input[type=number],.f input[type=text],.f select{width:100%;padding:8px 12px;border:2px solid var(--bdr);border-radius:10px;font-size:15px;font-weight:600;color:var(--txt);background:#fff;outline:none;transition:border-color .15s}
+.f input:focus,.f select:focus{border-color:var(--ind)}
+.f input[type=range]{width:100%;margin-top:5px;accent-color:var(--ind);cursor:pointer}
+.frow{display:flex;gap:8px}.frow .f{flex:1}
+hr{border:none;border-top:1px solid var(--bdr);margin:13px 0}
+.slbl{font-size:10.5px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
 
-        .tab {
-            padding: 8px 18px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            color: #888;
-            border-bottom: 3px solid transparent;
-            margin-bottom: -2px;
-            transition: all 0.2s;
-            white-space: nowrap;
-        }
+/* METRICS */
+.mrow{display:grid;gap:10px}
+.m3{grid-template-columns:repeat(3,1fr)}.m2{grid-template-columns:repeat(2,1fr)}
+.mc{background:#fff;border-radius:12px;padding:13px 10px;text-align:center;border:1px solid var(--bdr);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.mc .ml{font-size:10px;color:var(--mut);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.mc .mv{font-size:19px;font-weight:800;margin-top:4px;line-height:1}
+.mc .ms{font-size:10px;color:#94a3b8;margin-top:2px}
+.ci{color:var(--ind)}.cg{color:var(--grn)}.cr{color:var(--red)}.cb{color:var(--blu)}.co{color:var(--org)}
 
-        .tab.active { color: #667eea; border-bottom-color: #667eea; }
-        .tab:hover:not(.active) { color: #764ba2; }
+/* CHARTS */
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cc{background:#fff;border-radius:12px;padding:13px;border:1px solid var(--bdr);box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.cc h4{font-size:11.5px;font-weight:700;color:var(--mut);margin-bottom:8px}
+.cbox{height:170px;position:relative}
 
-        /* ---- MAIN GRID ---- */
-        .main {
-            display: grid;
-            grid-template-columns: 330px 1fr;
-            height: calc(100vh - 114px);
-        }
+/* BUTTON */
+.btn{width:100%;padding:10px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s}
+.btn:hover{box-shadow:0 4px 16px rgba(79,70,229,.35);transform:translateY(-1px)}
 
-        /* ---- PANELS ---- */
-        .panel-left {
-            background: white;
-            padding: 16px 18px;
-            border-right: 1px solid #e0e7ff;
-            overflow-y: auto;
-        }
+/* OFFERS */
+.ogrid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.ocard{background:linear-gradient(135deg,#f8f9ff,#fff);border:2px solid var(--bdr);border-radius:10px;padding:9px 11px;cursor:pointer;transition:all .15s}
+.ocard:hover{border-color:var(--ind);box-shadow:0 3px 12px rgba(99,102,241,.15);transform:translateY(-1px)}
+.obank{font-size:11px;font-weight:700;color:#374151}
+.orate{font-size:20px;font-weight:800;color:var(--ind);line-height:1.1}
+.obadge{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px;margin-top:3px}
+.bg{background:#d1fae5;color:#065f46}.bp{background:#ede9fe;color:#5b21b6}
 
-        .panel-left::-webkit-scrollbar { width: 3px; }
-        .panel-left::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 3px; }
+/* SAVINGS */
+.sbox{background:linear-gradient(135deg,#4f46e5,#7c3aed);border-radius:12px;padding:13px 16px;color:#fff;text-align:center}
+.sbox .sl{font-size:11px;opacity:.8}.sbox .sb{font-size:26px;font-weight:800}.sbox .ss{font-size:12px;opacity:.85;margin-top:2px}
 
-        .panel-right {
-            background: #f0f4ff;
-            padding: 16px 18px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+/* COMPARE */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cmpc{border-radius:12px;padding:12px;text-align:center}
+.cmpc.bad{background:#fff1f2;border:2px solid #fecdd3}.cmpc.good{background:#f0fdf4;border:2px solid #bbf7d0}
+.cmpc .ct{font-size:10px;font-weight:700;color:var(--mut);text-transform:uppercase;margin-bottom:4px}
+.cmpc .cv{font-size:21px;font-weight:800}.cmpc.bad .cv{color:#e11d48}.cmpc.good .cv{color:#16a34a}
+.cmpc .cs{font-size:11px;color:#94a3b8;margin-top:3px}
 
-        .panel-right::-webkit-scrollbar { width: 3px; }
-        .panel-right::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 3px; }
+/* DEBT ITEMS */
+.di{background:#fff;border-radius:10px;padding:10px 12px;border-left:4px solid var(--ind);display:flex;align-items:center;justify-content:space-between;margin-bottom:7px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.ptag{padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:var(--ind);color:#fff;margin-right:7px}
+.rmv{cursor:pointer;color:#d1d5db;font-size:18px;line-height:1}.rmv:hover{color:var(--red)}
+.addform{background:#f8fafc;border-radius:12px;padding:12px;border:1px solid var(--bdr);margin-bottom:13px}
+.empty{text-align:center;padding:24px;color:#9ca3af}.empty .ei{font-size:30px;margin-bottom:7px}
 
-        /* ---- INPUTS ---- */
-        .input-group { margin-bottom: 13px; }
+/* SALARY METER */
+.mbar{height:20px;border-radius:10px;background:linear-gradient(to right,#10b981 0%,#10b981 40%,#f59e0b 40%,#f59e0b 50%,#ef4444 50%);position:relative;margin:8px 0 4px}
+.mptr{position:absolute;top:-8px;width:4px;height:36px;background:#0f172a;border-radius:2px;transition:left .5s ease}
+.mptr::after{content:attr(data-v);position:absolute;top:-18px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:2px 7px;border-radius:6px;font-size:10px;font-weight:700;white-space:nowrap}
+.mlbls{display:flex;justify-content:space-between;font-size:10px;color:#94a3b8}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
+.chip.g{background:#d1fae5;color:#065f46}.chip.y{background:#fef3c7;color:#92400e}.chip.r{background:#fee2e2;color:#991b1b}
+.dot{width:7px;height:7px;border-radius:50%}
+.chip.g .dot{background:#10b981}.chip.y .dot{background:#f59e0b}.chip.r .dot{background:#ef4444}
 
-        label {
-            display: block;
-            font-size: 11px;
-            font-weight: 700;
-            color: #777;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-        }
+/* INFO BOX */
+.ibox{border-radius:10px;padding:11px 13px;border:1px solid;margin-top:10px}
+.ibox.pu{background:#eef2ff;border-color:#c7d2fe}.ibox.re{background:#fef2f2;border-color:#fecaca}.ibox p{font-size:11.5px;color:var(--mut);line-height:1.6}
+.ibox strong{color:var(--txt)}
 
-        input[type="number"], input[type="text"], select {
-            width: 100%;
-            padding: 9px 13px;
-            border: 2px solid #e0e7ff;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 600;
-            color: #1a1a2e;
-            background: white;
-            transition: border-color 0.2s;
-            outline: none;
-        }
+/* WARNING */
+.warn{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:11px;font-size:12px;color:#991b1b;display:none}
 
-        input[type="number"]:focus, input[type="text"]:focus, select:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
-        }
-
-        input[type="range"] {
-            width: 100%;
-            accent-color: #667eea;
-            margin-top: 5px;
-            cursor: pointer;
-        }
-
-        .input-row { display: flex; gap: 10px; }
-        .input-row .input-group { flex: 1; }
-
-        /* ---- METRIC CARDS ---- */
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .metric-card {
-            background: white;
-            border-radius: 14px;
-            padding: 12px 10px;
-            text-align: center;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-            border: 1px solid #e8ecff;
-        }
-
-        .metric-card .mlabel {
-            font-size: 10px;
-            color: #999;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .metric-card .mvalue {
-            font-size: 19px;
-            font-weight: 800;
-            margin-top: 3px;
-            line-height: 1.1;
-        }
-
-        .metric-card .msub { font-size: 10px; color: #bbb; margin-top: 2px; }
-
-        .mc-emi .mvalue { color: #667eea; }
-        .mc-interest .mvalue { color: #ff6584; }
-        .mc-total .mvalue { color: #0ea5e9; }
-        .mc-save .mvalue { color: #22c55e; }
-
-        /* ---- CHART CARDS ---- */
-        .charts-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            flex: 1;
-            min-height: 0;
-        }
-
-        .chart-card {
-            background: white;
-            border-radius: 16px;
-            padding: 14px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
-            border: 1px solid #e8ecff;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-        }
-
-        .chart-card h3 {
-            font-size: 12px;
-            font-weight: 700;
-            color: #555;
-            margin-bottom: 8px;
-            flex-shrink: 0;
-        }
-
-        .chart-card .chart-wrap {
-            flex: 1;
-            min-height: 0;
-            position: relative;
-        }
-
-        .chart-card canvas { width: 100% !important; height: 100% !important; }
-
-        /* ---- BUTTON ---- */
-        .btn {
-            width: 100%;
-            padding: 11px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: transform 0.1s, box-shadow 0.2s;
-            letter-spacing: 0.3px;
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 18px rgba(102,126,234,0.45);
-        }
-
-        .btn:active { transform: translateY(0); }
-
-        /* ---- AFFILIATE CARDS ---- */
-        .section-label {
-            font-size: 11px;
-            font-weight: 700;
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            margin-bottom: 8px;
-        }
-
-        .affiliate-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .affiliate-card {
-            background: linear-gradient(135deg, #f8f9ff, #fff);
-            border-radius: 12px;
-            padding: 10px 12px;
-            border: 2px solid #e8ecff;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .affiliate-card:hover {
-            border-color: #667eea;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(102,126,234,0.2);
-        }
-
-        .affiliate-card .abank { font-weight: 700; font-size: 12px; color: #444; }
-        .affiliate-card .arate { font-size: 20px; font-weight: 800; color: #667eea; line-height: 1.1; }
-
-        .badge {
-            display: inline-block;
-            background: #e8f5e9;
-            color: #16a34a;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 2px 7px;
-            border-radius: 20px;
-            margin-top: 3px;
-        }
-
-        .badge.apply { background: #ede9fe; color: #7c3aed; }
-
-        /* ---- SAVINGS BOX ---- */
-        .savings-box {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 14px;
-            padding: 14px;
-            color: white;
-            text-align: center;
-        }
-
-        .savings-box .sbig { font-size: 26px; font-weight: 800; }
-        .savings-box .ssmall { font-size: 11px; opacity: 0.85; }
-
-        /* ---- COMPARISON CARDS ---- */
-        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-        .compare-card {
-            border-radius: 14px;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .compare-card.before { background: #fff0f5; border: 2px solid #ffd6e3; }
-        .compare-card.after  { background: #f0fdf4; border: 2px solid #bbf7d0; }
-
-        .compare-card .ctitle { font-size: 10px; font-weight: 700; color: #888; margin-bottom: 5px; text-transform: uppercase; }
-        .compare-card .cval  { font-size: 20px; font-weight: 800; }
-        .compare-card.before .cval { color: #e11d48; }
-        .compare-card.after  .cval { color: #16a34a; }
-        .compare-card .csub  { font-size: 11px; color: #aaa; margin-top: 3px; }
-
-        /* ---- DEBT ITEMS ---- */
-        .debt-item {
-            background: white;
-            border-radius: 12px;
-            padding: 11px 14px;
-            margin-bottom: 8px;
-            border-left: 4px solid #667eea;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 1px 6px rgba(0,0,0,0.04);
-        }
-
-        .debt-item .dname { font-weight: 700; font-size: 13px; }
-        .debt-item .ddetails { font-size: 11px; color: #999; margin-top: 2px; }
-
-        .priority-badge {
-            background: #667eea;
-            color: white;
-            border-radius: 20px;
-            padding: 3px 10px;
-            font-size: 11px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .add-debt-form {
-            background: #f8f9ff;
-            border-radius: 12px;
-            padding: 12px 14px;
-            margin-bottom: 12px;
-            border: 1px solid #e0e7ff;
-        }
-
-        /* ---- SALARY METER ---- */
-        .salary-meter {
-            position: relative;
-            height: 22px;
-            background: linear-gradient(to right, #22c55e 0%, #22c55e 40%, #f59e0b 40%, #f59e0b 50%, #ef4444 50%);
-            border-radius: 11px;
-            margin: 10px 0 4px;
-            overflow: visible;
-        }
-
-        .salary-pointer {
-            position: absolute;
-            top: -7px;
-            width: 4px;
-            height: 36px;
-            background: #1a1a2e;
-            border-radius: 2px;
-            transition: left 0.5s cubic-bezier(.4,0,.2,1);
-        }
-
-        .salary-pointer::after {
-            content: attr(data-label);
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1a1a2e;
-            color: white;
-            padding: 2px 7px;
-            border-radius: 6px;
-            font-size: 10px;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .meter-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 10px;
-            color: #bbb;
-            margin-top: 2px;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .status-badge.safe    { background: #f0fdf4; color: #16a34a; }
-        .status-badge.caution { background: #fffbeb; color: #d97706; }
-        .status-badge.danger  { background: #fef2f2; color: #dc2626; }
-
-        .sdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .safe .sdot    { background: #22c55e; }
-        .caution .sdot { background: #f59e0b; }
-        .danger .sdot  { background: #ef4444; }
-
-        /* ---- EMPTY STATE ---- */
-        .empty-state {
-            text-align: center;
-            padding: 30px 20px;
-            color: #ccc;
-            font-size: 13px;
-        }
-
-        .empty-state .eicon { font-size: 36px; margin-bottom: 8px; }
-
-        /* ---- DIVIDER ---- */
-        .divider { border: none; border-top: 1px solid #e0e7ff; margin: 14px 0; }
-
-        /* ---- RESPONSIVE ---- */
-        @media (max-width: 860px) {
-            .main { grid-template-columns: 1fr; height: auto; }
-            body { overflow: auto; }
-            .panel-left, .panel-right { height: auto; }
-            .charts-row { grid-template-columns: 1fr; }
-            .chart-card { height: 220px; }
-        }
-    </style>
+@media(max-width:800px){.main{grid-template-columns:1fr;height:auto}body{overflow:auto}}
+</style>
 </head>
 <body>
 
-<!-- HEADER -->
+<h1 style="position:absolute;left:-9999px">FinWise Free Finance Calculator India - EMI SIP FD Home Loan Salary 2026</h1>
+
 <header>
-    <div>
-        <div class="logo">Loan<span>Lens</span></div>
-        <div class="tagline">4 smart tools · free forever · no signup</div>
-    </div>
-    <div style="font-size:11px;color:rgba(255,255,255,0.5)">Smart loan tools · free forever</div>
+  <div>
+    <div class="logo">Fin<em>Wise</em></div>
+    <div style="font-size:10.5px;color:rgba(255,255,255,.6);margin-top:1px">India's smartest free calculator hub</div>
+  </div>
+  <div class="hright">
+    <span>100% Free</span><span>No Signup</span><span>Always Accurate</span>
+  </div>
 </header>
 
-<!-- AD STRIP -->
-<div class="ad-strip">
-    <ins class="adsbygoogle" style="display:block;height:20px" data-ad-client="ca-pub-4910237367995817" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<div class="tbar">
+  <span>⭐ <b>4.9</b> rated by 3,241 users</span>
+  <span>|</span>
+  <span><b>50,000+</b> calculations done</span>
+  <span>|</span>
+  <span>Updated <b>June 2026</b></span>
 </div>
 
-<!-- TABS -->
-<div class="tabs">
-    <div class="tab active" onclick="switchTab('emi')">💰 EMI Calculator</div>
-    <div class="tab" onclick="switchTab('whatif')">✨ What-If Planner</div>
-    <div class="tab" onclick="switchTab('debt')">🔥 Debt Payoff</div>
-    <div class="tab" onclick="switchTab('salary')">💼 Salary Fit</div>
+<div class="picker">
+  <button class="pbtn on" onclick="sw('emi')">🏦 EMI Loan</button>
+  <button class="pbtn" onclick="sw('sip')">📈 SIP</button>
+  <button class="pbtn" onclick="sw('fd')">💰 FD / RD</button>
+  <button class="pbtn" onclick="sw('hl')">🏠 Home Loan</button>
+  <button class="pbtn" onclick="sw('cc')">💳 Credit Card</button>
+  <button class="pbtn" onclick="sw('sal')">💼 Salary</button>
+  <button class="pbtn" onclick="sw('debt')">🔥 Debt Planner</button>
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
-<!-- ══════════════ TAB 1: EMI ══════════════ -->
-<div id="tab-emi" style="display:contents">
+<!-- ═══ LEFT PANEL ═══ -->
+<div class="pl">
 
-    <div class="panel-left">
-        <div class="input-group">
-            <label>Loan Amount (₹)</label>
-            <input type="number" id="emi-amount" value="500000" min="1000" step="1000" oninput="syncRange('emi-amount','emi-amt-range');calcEMI()">
-            <input type="range" id="emi-amt-range" min="10000" max="10000000" value="500000" step="10000"
-                oninput="syncInput('emi-amt-range','emi-amount');calcEMI()">
-        </div>
-
-        <div class="input-row">
-            <div class="input-group">
-                <label>Interest Rate (%)</label>
-                <input type="number" id="emi-rate" value="8.5" min="1" max="36" step="0.1" oninput="calcEMI()">
-            </div>
-            <div class="input-group">
-                <label>Tenure Unit</label>
-                <select id="emi-tenure-type" onchange="calcEMI()">
-                    <option value="years" selected>Years</option>
-                    <option value="months">Months</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="input-group">
-            <label>Tenure</label>
-            <input type="number" id="emi-tenure" value="5" min="1" max="30" oninput="syncRange('emi-tenure','emi-ten-range');calcEMI()">
-            <input type="range" id="emi-ten-range" min="1" max="30" value="5"
-                oninput="syncInput('emi-ten-range','emi-tenure');calcEMI()">
-        </div>
-
-        <hr class="divider">
-
-        <div class="section-label">Best Loan Offers (Affiliate)</div>
-        <div class="affiliate-grid">
-            <div class="affiliate-card" onclick="window.open('#','_blank')">
-                <div class="abank">HDFC Bank</div>
-                <div class="arate">8.40%</div>
-                <div class="badge">✓ Instant Approval</div>
-            </div>
-            <div class="affiliate-card" onclick="window.open('#','_blank')">
-                <div class="abank">SBI</div>
-                <div class="arate">8.50%</div>
-                <div class="badge">✓ Low Processing Fee</div>
-            </div>
-            <div class="affiliate-card" onclick="window.open('#','_blank')">
-                <div class="abank">ICICI Bank</div>
-                <div class="arate">8.75%</div>
-                <div class="badge">✓ No Prepayment Fee</div>
-            </div>
-            <div class="affiliate-card" onclick="window.open('#','_blank')">
-                <div class="abank">Axis Bank</div>
-                <div class="arate">9.00%</div>
-                <div class="badge">✓ Flexible EMI</div>
-            </div>
-        </div>
-    </div>
-
-    <div class="panel-right">
-        <div class="metrics">
-            <div class="metric-card mc-emi">
-                <div class="mlabel">Monthly EMI</div>
-                <div class="mvalue" id="res-emi">₹0</div>
-                <div class="msub">per month</div>
-            </div>
-            <div class="metric-card mc-interest">
-                <div class="mlabel">Total Interest</div>
-                <div class="mvalue" id="res-interest">₹0</div>
-                <div class="msub">extra you pay</div>
-            </div>
-            <div class="metric-card mc-total">
-                <div class="mlabel">Total Payment</div>
-                <div class="mvalue" id="res-total">₹0</div>
-                <div class="msub">principal + interest</div>
-            </div>
-        </div>
-
-        <div class="charts-row">
-            <div class="chart-card">
-                <h3>Principal vs Interest</h3>
-                <div class="chart-wrap"><canvas id="chart-emi-pie"></canvas></div>
-            </div>
-            <div class="chart-card">
-                <h3>Yearly Amortization</h3>
-                <div class="chart-wrap"><canvas id="chart-emi-bar"></canvas></div>
-            </div>
-        </div>
-    </div>
-
+<!-- EMI -->
+<div class="ipane on" id="ip-emi">
+  <div class="f"><label>Loan Amount (₹)</label>
+    <input type="number" id="e-p" value="500000" oninput="sr('e-p','er-p');cEMI()">
+    <input type="range" id="er-p" min="10000" max="10000000" value="500000" step="10000" oninput="si('er-p','e-p');cEMI()">
+  </div>
+  <div class="frow">
+    <div class="f"><label>Rate (% p.a.)</label><input type="number" id="e-r" value="8.5" step="0.1" oninput="cEMI()"></div>
+    <div class="f"><label>Tenure (Yrs)</label><input type="number" id="e-n" value="5" min="1" max="30" oninput="sr('e-n','er-n');cEMI()"></div>
+  </div>
+  <input type="range" id="er-n" min="1" max="30" value="5" oninput="si('er-n','e-n');cEMI()" style="width:100%;accent-color:var(--ind);margin-bottom:13px">
+  <div class="f"><label>Extra Monthly Payment (₹) — saves interest</label>
+    <input type="number" id="e-x" value="0" oninput="sr('e-x','er-x');cEMI()">
+    <input type="range" id="er-x" min="0" max="50000" value="0" step="500" oninput="si('er-x','e-x');cEMI()">
+  </div>
+  <hr>
+  <div class="slbl">Best Loan Offers (Affiliate)</div>
+  <div class="ogrid">
+    <div class="ocard" onclick="window.open('#')"><div class="obank">HDFC Bank</div><div class="orate">8.40%</div><div class="obadge bg">Instant Approval</div></div>
+    <div class="ocard" onclick="window.open('#')"><div class="obank">SBI</div><div class="orate">8.50%</div><div class="obadge bg">Low Fee</div></div>
+    <div class="ocard" onclick="window.open('#')"><div class="obank">ICICI Bank</div><div class="orate">8.75%</div><div class="obadge bp">Apply →</div></div>
+    <div class="ocard" onclick="window.open('#')"><div class="obank">Axis Bank</div><div class="orate">9.00%</div><div class="obadge bp">Apply →</div></div>
+  </div>
 </div>
 
-<!-- ══════════════ TAB 2: WHAT-IF ══════════════ -->
-<div id="tab-whatif" style="display:none">
-
-    <div class="panel-left">
-        <div class="input-group">
-            <label>Loan Amount (₹)</label>
-            <input type="number" id="wi-amount" value="500000" oninput="calcWhatIf()">
-        </div>
-        <div class="input-row">
-            <div class="input-group">
-                <label>Interest Rate (%)</label>
-                <input type="number" id="wi-rate" value="8.5" step="0.1" oninput="calcWhatIf()">
-            </div>
-            <div class="input-group">
-                <label>Tenure (Years)</label>
-                <input type="number" id="wi-tenure" value="5" oninput="calcWhatIf()">
-            </div>
-        </div>
-        <div class="input-group">
-            <label>Extra Payment / Month (₹)</label>
-            <input type="number" id="wi-extra" value="2000" min="0" oninput="syncRange('wi-extra','wi-ext-range');calcWhatIf()">
-            <input type="range" id="wi-ext-range" min="0" max="50000" value="2000" step="500"
-                oninput="syncInput('wi-ext-range','wi-extra');calcWhatIf()">
-        </div>
-
-        <div class="savings-box" id="wi-savings-box">
-            <div class="ssmall">By paying extra monthly, you save</div>
-            <div class="sbig" id="wi-saved-money">₹0</div>
-            <div class="ssmall">and become debt-free <b id="wi-saved-months">0</b> months early</div>
-        </div>
-    </div>
-
-    <div class="panel-right">
-        <div class="comparison">
-            <div class="compare-card before">
-                <div class="ctitle">Without Extra Payment</div>
-                <div class="cval" id="wi-before-total">₹0</div>
-                <div class="csub" id="wi-before-months">— months</div>
-            </div>
-            <div class="compare-card after">
-                <div class="ctitle">With Extra Payment</div>
-                <div class="cval" id="wi-after-total">₹0</div>
-                <div class="csub" id="wi-after-months">— months</div>
-            </div>
-        </div>
-
-        <div class="charts-row">
-            <div class="chart-card">
-                <h3>Without Extra Payment</h3>
-                <div class="chart-wrap"><canvas id="chart-wi-before"></canvas></div>
-            </div>
-            <div class="chart-card">
-                <h3>With Extra Payment</h3>
-                <div class="chart-wrap"><canvas id="chart-wi-after"></canvas></div>
-            </div>
-        </div>
-    </div>
-
+<!-- SIP -->
+<div class="ipane" id="ip-sip">
+  <div class="f"><label>Monthly Investment (₹)</label>
+    <input type="number" id="s-m" value="5000" oninput="sr('s-m','sr-m');cSIP()">
+    <input type="range" id="sr-m" min="500" max="100000" value="5000" step="500" oninput="si('sr-m','s-m');cSIP()">
+  </div>
+  <div class="frow">
+    <div class="f"><label>Expected Return (%)</label><input type="number" id="s-r" value="12" step="0.5" oninput="cSIP()"></div>
+    <div class="f"><label>Duration (Yrs)</label><input type="number" id="s-n" value="10" min="1" max="40" oninput="sr('s-n','sr-n');cSIP()"></div>
+  </div>
+  <input type="range" id="sr-n" min="1" max="40" value="10" oninput="si('sr-n','s-n');cSIP()" style="width:100%;accent-color:var(--ind);margin-bottom:13px">
+  <div class="ibox pu"><p>Returns shown are <strong>estimated</strong> at assumed annual return. Mutual fund investments are subject to market risk. Past performance doesn't guarantee future returns.</p></div>
 </div>
 
-<!-- ══════════════ TAB 3: DEBT PAYOFF ══════════════ -->
-<div id="tab-debt" style="display:none">
-
-    <div class="panel-left">
-        <div class="add-debt-form">
-            <div class="section-label" style="margin-bottom:10px">Add a Debt</div>
-            <div class="input-group">
-                <label>Name</label>
-                <input type="text" id="debt-name" placeholder="e.g. Credit Card, Car Loan">
-            </div>
-            <div class="input-row">
-                <div class="input-group">
-                    <label>Balance (₹)</label>
-                    <input type="number" id="debt-balance" placeholder="50000">
-                </div>
-                <div class="input-group">
-                    <label>Rate (%)</label>
-                    <input type="number" id="debt-rate" placeholder="18" step="0.1">
-                </div>
-            </div>
-            <div class="input-group">
-                <label>Min Payment / Month (₹)</label>
-                <input type="number" id="debt-minpay" placeholder="2000">
-            </div>
-            <button class="btn" onclick="addDebt()">+ Add Debt</button>
-        </div>
-
-        <div class="input-group">
-            <label>Payoff Strategy</label>
-            <select id="debt-strategy" onchange="calcDebt()">
-                <option value="avalanche">🏔 Avalanche — Highest Rate First (saves most)</option>
-                <option value="snowball">⛄ Snowball — Smallest Balance First (builds momentum)</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>Extra Monthly Payment (₹)</label>
-            <input type="number" id="debt-extra" value="0" oninput="calcDebt()">
-        </div>
-    </div>
-
-    <div class="panel-right">
-        <div id="debt-list">
-            <div class="empty-state">
-                <div class="eicon">📋</div>
-                Add your debts on the left to see your optimized payoff plan
-            </div>
-        </div>
-        <div class="charts-row" id="debt-charts" style="display:none">
-            <div class="chart-card">
-                <h3>Debt Breakdown</h3>
-                <div class="chart-wrap"><canvas id="chart-debt-pie"></canvas></div>
-            </div>
-            <div class="chart-card">
-                <h3>Balance by Debt</h3>
-                <div class="chart-wrap"><canvas id="chart-debt-bar"></canvas></div>
-            </div>
-        </div>
-    </div>
-
+<!-- FD/RD -->
+<div class="ipane" id="ip-fd">
+  <div class="f"><label>Type</label>
+    <select id="fd-t" onchange="cFD()"><option value="fd">Fixed Deposit (FD)</option><option value="rd">Recurring Deposit (RD)</option></select>
+  </div>
+  <div class="f"><label id="fd-al">Principal Amount (₹)</label>
+    <input type="number" id="fd-p" value="100000" oninput="sr('fd-p','fdr-p');cFD()">
+    <input type="range" id="fdr-p" min="1000" max="5000000" value="100000" step="1000" oninput="si('fdr-p','fd-p');cFD()">
+  </div>
+  <div class="frow">
+    <div class="f"><label>Rate (% p.a.)</label><input type="number" id="fd-r" value="7.0" step="0.1" oninput="cFD()"></div>
+    <div class="f"><label>Duration (Yrs)</label><input type="number" id="fd-n" value="3" min="1" max="10" oninput="cFD()"></div>
+  </div>
+  <div class="f"><label>Compounding</label>
+    <select id="fd-c" onchange="cFD()">
+      <option value="4">Quarterly</option><option value="12">Monthly</option><option value="2">Half-yearly</option><option value="1">Annually</option>
+    </select>
+  </div>
 </div>
 
-<!-- ══════════════ TAB 4: SALARY FIT ══════════════ -->
-<div id="tab-salary" style="display:none">
-
-    <div class="panel-left">
-        <div class="input-group">
-            <label>Monthly Take-Home Salary (₹)</label>
-            <input type="number" id="sal-salary" value="80000" oninput="syncRange('sal-salary','sal-range');calcSalary()">
-            <input type="range" id="sal-range" min="10000" max="500000" value="80000" step="5000"
-                oninput="syncInput('sal-range','sal-salary');calcSalary()">
-        </div>
-        <div class="input-group">
-            <label>Existing EMIs / Month (₹)</label>
-            <input type="number" id="sal-existing" value="0" oninput="calcSalary()">
-        </div>
-        <div class="input-row">
-            <div class="input-group">
-                <label>Interest Rate (%)</label>
-                <input type="number" id="sal-rate" value="8.5" step="0.1" oninput="calcSalary()">
-            </div>
-            <div class="input-group">
-                <label>Tenure (Years)</label>
-                <input type="number" id="sal-tenure" value="5" oninput="calcSalary()">
-            </div>
-        </div>
-
-        <div style="background:#f0f4ff; border-radius:12px; padding:12px 14px; border:1px solid #e0e7ff;">
-            <div style="font-size:11px; font-weight:700; color:#667eea; margin-bottom:6px;">HOW IT WORKS</div>
-            <div style="font-size:12px; color:#666; line-height:1.65;">
-                Banks allow EMIs up to <strong>40–50% of take-home salary</strong>.<br>
-                This tool shows your safe borrowing limit instantly.
-            </div>
-        </div>
-    </div>
-
-    <div class="panel-right">
-        <div class="metrics" style="grid-template-columns:1fr 1fr">
-            <div class="metric-card mc-emi">
-                <div class="mlabel">Max Safe EMI</div>
-                <div class="mvalue" id="sal-max-emi">₹0</div>
-                <div class="msub">40% of salary</div>
-            </div>
-            <div class="metric-card mc-total">
-                <div class="mlabel">Max Loan Amount</div>
-                <div class="mvalue" id="sal-max-loan">₹0</div>
-                <div class="msub">at given rate & tenure</div>
-            </div>
-        </div>
-
-        <div style="background:white; border-radius:14px; padding:14px; border:1px solid #e8ecff; box-shadow:0 2px 12px rgba(0,0,0,0.05)">
-            <div class="section-label">Affordability Meter</div>
-            <div class="salary-meter">
-                <div class="salary-pointer" id="sal-pointer" style="left:0%" data-label="0%"></div>
-            </div>
-            <div class="meter-labels">
-                <span>Safe ← 0%</span>
-                <span>40% → Caution</span>
-                <span>50%+ → Risk</span>
-            </div>
-            <div style="text-align:center; margin-top:10px">
-                <span class="status-badge safe" id="sal-status">
-                    <span class="sdot"></span> Calculating…
-                </span>
-            </div>
-        </div>
-
-        <div class="charts-row">
-            <div class="chart-card">
-                <h3>Salary Allocation</h3>
-                <div class="chart-wrap"><canvas id="chart-salary-pie"></canvas></div>
-            </div>
-            <div class="chart-card">
-                <h3>Top Loan Offers</h3>
-                <div style="margin-top:6px">
-                    <div class="affiliate-grid">
-                        <div class="affiliate-card" onclick="window.open('#','_blank')">
-                            <div class="abank">HDFC Bank</div>
-                            <div class="arate">8.40%</div>
-                            <div class="badge apply">Apply Now →</div>
-                        </div>
-                        <div class="affiliate-card" onclick="window.open('#','_blank')">
-                            <div class="abank">SBI</div>
-                            <div class="arate">8.50%</div>
-                            <div class="badge apply">Apply Now →</div>
-                        </div>
-                        <div class="affiliate-card" onclick="window.open('#','_blank')">
-                            <div class="abank">ICICI Bank</div>
-                            <div class="arate">8.75%</div>
-                            <div class="badge apply">Apply Now →</div>
-                        </div>
-                        <div class="affiliate-card" onclick="window.open('#','_blank')">
-                            <div class="abank">Axis Bank</div>
-                            <div class="arate">9.00%</div>
-                            <div class="badge apply">Apply Now →</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+<!-- HOME LOAN -->
+<div class="ipane" id="ip-hl">
+  <div class="f"><label>Property Value (₹)</label><input type="number" id="h-pv" value="5000000" oninput="cHL()"></div>
+  <div class="f"><label>Down Payment (₹)</label><input type="number" id="h-dp" value="1000000" oninput="cHL()"></div>
+  <div class="frow">
+    <div class="f"><label>Rate (% p.a.)</label><input type="number" id="h-r" value="8.5" step="0.1" oninput="cHL()"></div>
+    <div class="f"><label>Tenure (Yrs)</label><input type="number" id="h-n" value="20" min="5" max="30" oninput="cHL()"></div>
+  </div>
+  <div class="f"><label>State (Stamp Duty)</label>
+    <select id="h-sd" onchange="cHL()">
+      <option value="5">Maharashtra (5%)</option><option value="5.6">Karnataka (5.6%)</option>
+      <option value="6">Delhi (6%)</option><option value="7">Tamil Nadu (7%)</option>
+      <option value="4.9">Gujarat (4.9%)</option><option value="6">Others (~6%)</option>
+    </select>
+  </div>
+  <hr>
+  <div class="ogrid">
+    <div class="ocard" onclick="window.open('#')"><div class="obank">SBI Home Loan</div><div class="orate">8.50%</div><div class="obadge bg">Lowest Rate</div></div>
+    <div class="ocard" onclick="window.open('#')"><div class="obank">HDFC Home</div><div class="orate">8.60%</div><div class="obadge bp">Apply →</div></div>
+  </div>
 </div>
 
+<!-- CREDIT CARD -->
+<div class="ipane" id="ip-cc">
+  <div class="f"><label>Outstanding Balance (₹)</label><input type="number" id="c-b" value="50000" oninput="cCC()"></div>
+  <div class="f"><label>Annual Interest Rate (%)</label>
+    <input type="number" id="c-a" value="36" step="1" oninput="cCC()">
+    <div style="font-size:10px;color:#94a3b8;margin-top:3px">Most Indian cards: 36–42% p.a.</div>
+  </div>
+  <div class="f"><label>Monthly Payment (₹)</label><input type="number" id="c-p" value="3000" oninput="cCC()"></div>
+  <div class="ibox re"><p>Credit card is <strong>the most expensive debt</strong> you can hold — at 3% monthly interest, your debt can double in under 3 years. Pay it off as fast as possible.</p></div>
+</div>
+
+<!-- SALARY -->
+<div class="ipane" id="ip-sal">
+  <div class="f"><label>Annual CTC (₹)</label>
+    <input type="number" id="sal-c" value="1200000" oninput="sr('sal-c','salr');cSal()">
+    <input type="range" id="salr" min="300000" max="10000000" value="1200000" step="50000" oninput="si('salr','sal-c');cSal()">
+  </div>
+  <div class="f"><label>Other Allowances / Month (₹)</label><input type="number" id="sal-a" value="0" oninput="cSal()"></div>
+  <div class="f"><label>Tax Regime</label>
+    <select id="sal-rg" onchange="cSal()">
+      <option value="new">New Regime (FY 2025-26 Default)</option>
+      <option value="old">Old Regime</option>
+    </select>
+  </div>
+</div>
+
+<!-- DEBT PLANNER -->
+<div class="ipane" id="ip-debt">
+  <div class="addform">
+    <div class="slbl" style="margin-bottom:10px">Add a Debt</div>
+    <div class="f"><label>Name</label><input type="text" id="d-nm" placeholder="Credit Card / Car Loan…"></div>
+    <div class="frow">
+      <div class="f"><label>Balance (₹)</label><input type="number" id="d-b" placeholder="50000"></div>
+      <div class="f"><label>Rate (% p.a.)</label><input type="number" id="d-r" placeholder="18" step="0.1"></div>
+    </div>
+    <div class="f"><label>Min Payment / Month (₹)</label><input type="number" id="d-mp" placeholder="2000"></div>
+    <button class="btn" onclick="addDebt()">+ Add Debt</button>
+  </div>
+  <div class="f"><label>Strategy</label>
+    <select id="d-st" onchange="cDebt()">
+      <option value="av">🏔 Avalanche — Highest Rate First (saves most money)</option>
+      <option value="sn">⛄ Snowball — Smallest Balance First (builds momentum)</option>
+    </select>
+  </div>
+  <div class="f"><label>Extra Monthly Payment (₹)</label><input type="number" id="d-ex" value="0" oninput="cDebt()"></div>
+</div>
+
+</div><!-- /pl -->
+
+<!-- ═══ RIGHT PANEL ═══ -->
+<div class="pr">
+
+<!-- EMI RESULTS -->
+<div class="rpane on" id="rp-emi">
+  <div class="mrow m3">
+    <div class="mc"><div class="ml">Monthly EMI</div><div class="mv ci" id="er-emi">₹0</div><div class="ms">per month</div></div>
+    <div class="mc"><div class="ml">Total Interest</div><div class="mv cr" id="er-int">₹0</div><div class="ms">extra paid</div></div>
+    <div class="mc"><div class="ml">Total Payment</div><div class="mv cb" id="er-tot">₹0</div><div class="ms">principal + interest</div></div>
+  </div>
+  <div id="e-sb" style="display:none">
+    <div class="cmp">
+      <div class="cmpc bad"><div class="ct">Without Extra</div><div class="cv" id="e-b4t">₹0</div><div class="cs" id="e-b4m">—</div></div>
+      <div class="cmpc good"><div class="ct">With Extra Payment</div><div class="cv" id="e-aft">₹0</div><div class="cs" id="e-afm">—</div></div>
+    </div>
+    <div class="sbox" style="margin-top:10px">
+      <div class="sl">You save</div><div class="sb" id="e-sv">₹0</div>
+      <div class="ss">and become debt-free <b id="e-smo">0</b> months early</div>
+    </div>
+  </div>
+  <div class="crow">
+    <div class="cc"><h4>Principal vs Interest</h4><div class="cbox"><canvas id="ch-ep"></canvas></div></div>
+    <div class="cc"><h4>Yearly Amortization</h4><div class="cbox"><canvas id="ch-eb"></canvas></div></div>
+  </div>
+</div>
+
+<!-- SIP RESULTS -->
+<div class="rpane" id="rp-sip">
+  <div class="mrow m3">
+    <div class="mc"><div class="ml">Total Invested</div><div class="mv ci" id="si-inv">₹0</div><div class="ms">amount put in</div></div>
+    <div class="mc"><div class="ml">Est. Returns</div><div class="mv cg" id="si-gn">₹0</div><div class="ms">wealth generated</div></div>
+    <div class="mc"><div class="ml">Maturity Value</div><div class="mv cb" id="si-fv">₹0</div><div class="ms">future value</div></div>
+  </div>
+  <div class="crow">
+    <div class="cc"><h4>Invested vs Returns</h4><div class="cbox"><canvas id="ch-sp"></canvas></div></div>
+    <div class="cc"><h4>Wealth Growth Over Time</h4><div class="cbox"><canvas id="ch-sl"></canvas></div></div>
+  </div>
+</div>
+
+<!-- FD RESULTS -->
+<div class="rpane" id="rp-fd">
+  <div class="mrow m3">
+    <div class="mc"><div class="ml">Amount Deposited</div><div class="mv ci" id="fd-ri">₹0</div><div class="ms">principal</div></div>
+    <div class="mc"><div class="ml">Interest Earned</div><div class="mv cg" id="fd-rg">₹0</div><div class="ms">total interest</div></div>
+    <div class="mc"><div class="ml">Maturity Amount</div><div class="mv cb" id="fd-rm">₹0</div><div class="ms">you receive</div></div>
+  </div>
+  <div class="crow">
+    <div class="cc"><h4>Principal vs Interest</h4><div class="cbox"><canvas id="ch-fp"></canvas></div></div>
+    <div class="cc"><h4>Year-wise Growth</h4><div class="cbox"><canvas id="ch-fb"></canvas></div></div>
+  </div>
+</div>
+
+<!-- HOME LOAN RESULTS -->
+<div class="rpane" id="rp-hl">
+  <div class="mrow m3">
+    <div class="mc"><div class="ml">Monthly EMI</div><div class="mv ci" id="hl-re">₹0</div><div class="ms">per month</div></div>
+    <div class="mc"><div class="ml">Total Interest</div><div class="mv cr" id="hl-ri">₹0</div><div class="ms">over tenure</div></div>
+    <div class="mc"><div class="ml">True Cost of Home</div><div class="mv co" id="hl-rt">₹0</div><div class="ms">incl. stamp + reg</div></div>
+  </div>
+  <div class="crow">
+    <div class="cc"><h4>Full Cost Breakdown</h4><div class="cbox"><canvas id="ch-hp"></canvas></div></div>
+    <div class="cc"><h4>Yearly Amortization</h4><div class="cbox"><canvas id="ch-hb"></canvas></div></div>
+  </div>
+</div>
+
+<!-- CREDIT CARD RESULTS -->
+<div class="rpane" id="rp-cc">
+  <div class="mrow m3">
+    <div class="mc"><div class="ml">Months to Pay Off</div><div class="mv ci" id="cc-rm">0</div><div class="ms">at current payment</div></div>
+    <div class="mc"><div class="ml">Total Interest</div><div class="mv cr" id="cc-ri">₹0</div><div class="ms">extra cost</div></div>
+    <div class="mc"><div class="ml">Total Paid</div><div class="mv cb" id="cc-rt">₹0</div><div class="ms">balance + interest</div></div>
+  </div>
+  <div class="warn" id="cc-warn">⚠️ <strong>Danger:</strong> Your payment barely covers the interest. Increase your payment to avoid an interest spiral.</div>
+  <div class="crow">
+    <div class="cc"><h4>Balance vs Interest Cost</h4><div class="cbox"><canvas id="ch-cp"></canvas></div></div>
+    <div class="cc"><h4>Balance Reduction Over Time</h4><div class="cbox"><canvas id="ch-cl"></canvas></div></div>
+  </div>
+</div>
+
+<!-- SALARY RESULTS -->
+<div class="rpane" id="rp-sal">
+  <div class="mrow m3">
+    <div class="mc"><div class="ml">Monthly Take-Home</div><div class="mv cg" id="sal-th">₹0</div><div class="ms">in-hand salary</div></div>
+    <div class="mc"><div class="ml">Annual Tax (TDS)</div><div class="mv cr" id="sal-tx">₹0</div><div class="ms">income tax</div></div>
+    <div class="mc"><div class="ml">Effective Tax Rate</div><div class="mv co" id="sal-et">0%</div><div class="ms">% of CTC as tax</div></div>
+  </div>
+  <div class="crow">
+    <div class="cc"><h4>Annual Salary Breakdown</h4><div class="cbox"><canvas id="ch-salp"></canvas></div></div>
+    <div class="cc"><h4>Monthly Deductions</h4><div class="cbox"><canvas id="ch-salb"></canvas></div></div>
+  </div>
+</div>
+
+<!-- DEBT RESULTS -->
+<div class="rpane" id="rp-debt">
+  <div id="d-list"><div class="empty"><div class="ei">📋</div>Add debts on the left to see your optimised payoff plan</div></div>
+  <div class="crow" id="d-charts" style="display:none">
+    <div class="cc"><h4>Debt Breakdown</h4><div class="cbox"><canvas id="ch-dp"></canvas></div></div>
+    <div class="cc"><h4>Balance by Debt</h4><div class="cbox"><canvas id="ch-db"></canvas></div></div>
+  </div>
+  <div class="mrow m3" id="d-metrics" style="display:none">
+    <div class="mc"><div class="ml">Total Debt</div><div class="mv cr" id="d-tot">₹0</div><div class="ms">outstanding</div></div>
+    <div class="mc"><div class="ml">Total Interest</div><div class="mv co" id="d-int">₹0</div><div class="ms">you'll pay</div></div>
+    <div class="mc"><div class="ml">Debt-Free In</div><div class="mv cg" id="d-mo">0 mo</div><div class="ms">estimated</div></div>
+  </div>
+</div>
+
+</div><!-- /pr -->
 </div><!-- /main -->
 
 <script>
-// ═══ HELPERS ═══
-let charts = {};
-const PALETTE = ['#667eea','#ff6584','#43c6ac','#ffd700','#ff9f43','#a29bfe','#0ea5e9','#ec4899'];
+const CH={}, PAL=['#4f46e5','#10b981','#ef4444','#f59e0b','#3b82f6','#8b5cf6','#ec4899','#06b6d4'];
+const TABS=['emi','sip','fd','hl','cc','sal','debt'];
 
-function fmt(n) {
-    n = Math.max(0, n);
-    if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + 'Cr';
-    if (n >= 100000)   return '₹' + (n/100000).toFixed(1) + 'L';
-    return '₹' + Math.round(n).toLocaleString('en-IN');
+function fmt(n){
+  n=Math.max(0,n||0);
+  if(n>=10000000)return'₹'+(n/10000000).toFixed(2)+' Cr';
+  if(n>=100000)return'₹'+(n/100000).toFixed(2)+' L';
+  if(n>=1000)return'₹'+(n/1000).toFixed(1)+'K';
+  return'₹'+Math.round(n).toLocaleString('en-IN');
+}
+function set(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
+function sr(inId,rId){const e=document.getElementById(rId);if(e)e.value=document.getElementById(inId).value;}
+function si(rId,inId){document.getElementById(inId).value=document.getElementById(rId).value;}
+function gc(k){if(CH[k]){CH[k].destroy();delete CH[k];}}
+
+function mk(key,id,type,labels,datasets,opts){
+  gc(key);
+  const ctx=document.getElementById(id);if(!ctx)return;
+  CH[key]=new Chart(ctx,{type,data:{labels,datasets},options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:10},padding:7}},
+      tooltip:{callbacks:{label:c=>{const v=c.parsed?.y??c.parsed??c.raw;return' '+fmt(typeof v==='object'?0:v);}}}},
+    ...opts
+  }});
 }
 
-function syncRange(inputId, rangeId) {
-    const el = document.getElementById(rangeId);
-    if (el) el.value = document.getElementById(inputId).value;
+// ─── SWITCH ───
+function sw(id){
+  document.querySelectorAll('.pbtn').forEach((b,i)=>b.classList.toggle('on',TABS[i]===id));
+  TABS.forEach(t=>{
+    document.getElementById('ip-'+t).classList.toggle('on',t===id);
+    document.getElementById('rp-'+t).classList.toggle('on',t===id);
+  });
+  setTimeout(()=>{
+    if(id==='emi')cEMI();if(id==='sip')cSIP();if(id==='fd')cFD();
+    if(id==='hl')cHL();if(id==='cc')cCC();if(id==='sal')cSal();if(id==='debt')cDebt();
+  },30);
 }
 
-function syncInput(rangeId, inputId) {
-    document.getElementById(inputId).value = document.getElementById(rangeId).value;
+// ─── EMI ───
+function cEMI(){
+  const P=+document.getElementById('e-p').value||0;
+  const r=(+document.getElementById('e-r').value||0)/12/100;
+  const n=(+document.getElementById('e-n').value||0)*12;
+  const x=+document.getElementById('e-x').value||0;
+  if(!P||!r||!n)return;
+
+  const emi=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  const tot=emi*n;
+  const int=tot-P;
+
+  set('er-emi',fmt(emi));set('er-int',fmt(int));set('er-tot',fmt(tot));
+
+  // Extra payment block
+  const sb=document.getElementById('e-sb');
+  if(x>0){
+    sb.style.display='block';
+    let bal=P,paid=0,mo=0;
+    while(bal>0.01&&mo<n*2){
+      const ip=bal*r;
+      const pp=emi+x-ip;
+      if(pp<=0)break;
+      const actual=Math.min(pp,bal);
+      paid+=ip+actual;bal-=actual;mo++;
+    }
+    const intA=paid-P;
+    const saved=int-intA;
+    set('e-b4t',fmt(tot));set('e-b4m',n+' months');
+    set('e-aft',fmt(paid));set('e-afm',mo+' months');
+    set('e-sv',fmt(saved));set('e-smo',n-mo);
+    mk('ep','ch-ep','doughnut',['Principal','Interest (with extra)'],
+      [{data:[Math.round(P),Math.round(intA)],backgroundColor:['#4f46e5','#10b981'],borderWidth:0}],{cutout:'65%'});
+  } else {
+    sb.style.display='none';
+    mk('ep','ch-ep','doughnut',['Principal','Interest'],
+      [{data:[Math.round(P),Math.round(int)],backgroundColor:['#4f46e5','#ef4444'],borderWidth:0}],{cutout:'65%'});
+  }
+
+  // Yearly bar
+  const yrs=Math.min(Math.ceil(n/12),15);
+  const yL=Array.from({length:yrs},(_,i)=>`Y${i+1}`);
+  const yP=[],yI=[];let bal=P;
+  for(let y=0;y<yrs;y++){
+    let yp=0,yi=0;
+    for(let m=0;m<12&&bal>0.01;m++){const ip=bal*r;const pp=Math.min(emi-ip,bal);yi+=ip;yp+=pp;bal-=pp;}
+    yP.push(Math.round(yp));yI.push(Math.round(yi));
+  }
+  mk('eb','ch-eb','bar',yL,
+    [{label:'Principal',data:yP,backgroundColor:'#4f46e5',borderRadius:3,stack:'s'},
+     {label:'Interest',data:yI,backgroundColor:'#ef4444',borderRadius:3,stack:'s'}],
+    {scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:9}}},y:{stacked:true,ticks:{callback:v=>fmt(v),font:{size:9}},grid:{color:'#f1f5f9'}}}});
 }
 
-function destroyChart(key) {
-    if (charts[key]) { charts[key].destroy(); delete charts[key]; }
+// ─── SIP ───
+function cSIP(){
+  const M=+document.getElementById('s-m').value||0;
+  const r=(+document.getElementById('s-r').value||0)/12/100;
+  const n=(+document.getElementById('s-n').value||0)*12;
+  if(!M||!r||!n)return;
+
+  const FV=M*((Math.pow(1+r,n)-1)/r)*(1+r);
+  const inv=M*n;const gains=FV-inv;
+
+  set('si-inv',fmt(inv));set('si-gn',fmt(gains));set('si-fv',fmt(FV));
+
+  mk('sp','ch-sp','doughnut',['Invested','Returns'],
+    [{data:[Math.round(inv),Math.round(gains)],backgroundColor:['#4f46e5','#10b981'],borderWidth:0}],{cutout:'65%'});
+
+  const yrs=Math.ceil(n/12);
+  const lL=Array.from({length:yrs+1},(_,i)=>`Y${i}`);
+  const lI=[],lV=[];
+  for(let y=0;y<=yrs;y++){
+    const mo=y*12;
+    lI.push(Math.round(M*mo));
+    lV.push(Math.round(mo>0?M*((Math.pow(1+r,mo)-1)/r)*(1+r):0));
+  }
+  gc('sl');const ctx=document.getElementById('ch-sl');if(!ctx)return;
+  CH['sl']=new Chart(ctx,{type:'line',data:{labels:lL,datasets:[
+    {label:'Invested',data:lI,borderColor:'#4f46e5',backgroundColor:'rgba(79,70,229,.1)',fill:true,tension:.3,pointRadius:1},
+    {label:'Value',data:lV,borderColor:'#10b981',backgroundColor:'rgba(16,185,129,.1)',fill:true,tension:.3,pointRadius:1}
+  ]},options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:10},padding:7}}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{ticks:{callback:v=>fmt(v),font:{size:9}},grid:{color:'#f1f5f9'}}}}});
 }
 
-function buildChart(key, canvasId, type, labels, datasets, extraOpts={}) {
-    destroyChart(key);
-    const ctx = document.getElementById(canvasId);
-    if (!ctx) return;
-    charts[key] = new Chart(ctx, {
-        type,
-        data: { labels, datasets },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: { position: 'bottom', labels: { boxWidth: 11, font: { size: 11 }, padding: 10 } },
-                tooltip: {
-                    callbacks: {
-                        label: ctx => {
-                            const v = ctx.parsed?.y ?? ctx.parsed ?? ctx.raw;
-                            return '  ' + fmt(typeof v === 'object' ? v.y || 0 : v);
-                        }
-                    }
-                }
-            },
-            ...extraOpts
-        }
+// ─── FD ───
+function cFD(){
+  const isRD=document.getElementById('fd-t').value==='rd';
+  const P=+document.getElementById('fd-p').value||0;
+  const r=(+document.getElementById('fd-r').value||0)/100;
+  const t=+document.getElementById('fd-n').value||0;
+  const comp=+document.getElementById('fd-c').value||4;
+  document.getElementById('fd-al').textContent=isRD?'Monthly Deposit (₹)':'Principal Amount (₹)';
+  if(!P||!r||!t)return;
+
+  let mat,inv;
+  if(isRD){
+    const mr=r/12,n=t*12;
+    mat=P*((Math.pow(1+mr,n)-1)/mr)*(1+mr);inv=P*n;
+  } else {
+    mat=P*Math.pow(1+r/comp,comp*t);inv=P;
+  }
+  const int=mat-inv;
+
+  set('fd-ri',fmt(inv));set('fd-rg',fmt(int));set('fd-rm',fmt(mat));
+
+  mk('fp','ch-fp','doughnut',['Principal','Interest'],
+    [{data:[Math.round(inv),Math.round(int)],backgroundColor:['#4f46e5','#10b981'],borderWidth:0}],{cutout:'65%'});
+
+  const yrs=Math.min(t,10);
+  const yL=Array.from({length:yrs},(_,i)=>`Y${i+1}`);
+  const yM=[];
+  for(let y=1;y<=yrs;y++){
+    if(isRD){const mr=r/12,n=y*12;yM.push(Math.round(P*((Math.pow(1+mr,n)-1)/mr)*(1+mr)));}
+    else yM.push(Math.round(P*Math.pow(1+r/comp,comp*y)));
+  }
+  mk('fb','ch-fb','bar',yL,
+    [{label:'Maturity Value',data:yM,backgroundColor:PAL.slice(0,yrs),borderRadius:5}],
+    {plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{ticks:{callback:v=>fmt(v),font:{size:9}},grid:{color:'#f1f5f9'}}}});
+}
+
+// ─── HOME LOAN ───
+function cHL(){
+  const pv=+document.getElementById('h-pv').value||0;
+  const dp=+document.getElementById('h-dp').value||0;
+  const r=(+document.getElementById('h-r').value||0)/12/100;
+  const n=(+document.getElementById('h-n').value||0)*12;
+  const sd=(+document.getElementById('h-sd').value||5)/100;
+  const P=Math.max(pv-dp,0);
+  if(!P||!r||!n)return;
+
+  const emi=P*r*Math.pow(1+r,n)/(Math.pow(1+r,n)-1);
+  const tot=emi*n;const int=tot-P;
+  const stamp=pv*sd;const reg=pv*0.01;const proc=P*0.005;
+  const true_cost=dp+tot+stamp+reg+proc;
+
+  set('hl-re',fmt(emi));set('hl-ri',fmt(int));set('hl-rt',fmt(true_cost));
+
+  mk('hp','ch-hp','doughnut',
+    ['Loan Principal','Interest','Down Payment','Stamp Duty','Registration','Processing'],
+    [{data:[Math.round(P),Math.round(int),Math.round(dp),Math.round(stamp),Math.round(reg),Math.round(proc)],
+      backgroundColor:['#4f46e5','#ef4444','#10b981','#f59e0b','#3b82f6','#8b5cf6'],borderWidth:0}],{cutout:'55%'});
+
+  const yrs=Math.min(Math.ceil(n/12),20);
+  const yL=Array.from({length:yrs},(_,i)=>`Y${i+1}`);
+  const yP=[],yI=[];let bal=P;
+  for(let y=0;y<yrs;y++){
+    let yp=0,yi=0;
+    for(let m=0;m<12&&bal>0.01;m++){const ip=bal*r;const pp=Math.min(emi-ip,bal);yi+=ip;yp+=pp;bal-=pp;}
+    yP.push(Math.round(yp));yI.push(Math.round(yi));
+  }
+  mk('hb','ch-hb','bar',yL,
+    [{label:'Principal',data:yP,backgroundColor:'#4f46e5',borderRadius:2,stack:'s'},
+     {label:'Interest',data:yI,backgroundColor:'#ef4444',borderRadius:2,stack:'s'}],
+    {scales:{x:{stacked:true,grid:{display:false},ticks:{font:{size:8}}},y:{stacked:true,ticks:{callback:v=>fmt(v),font:{size:9}},grid:{color:'#f1f5f9'}}}});
+}
+
+// ─── CREDIT CARD ───
+function cCC(){
+  const bal=+document.getElementById('c-b').value||0;
+  const apr=(+document.getElementById('c-a').value||0)/12/100;
+  const pay=+document.getElementById('c-p').value||0;
+  const warn=document.getElementById('cc-warn');
+  if(!bal||!apr||!pay)return;
+
+  const minInt=bal*apr;
+  if(pay<=minInt){
+    warn.style.display='block';
+    set('cc-rm','∞');set('cc-ri','Growing!');set('cc-rt','—');return;
+  }
+  warn.style.display='none';
+
+  let b=bal,mo=0,paid=0;const hist=[bal];
+  while(b>0.01&&mo<600){
+    const ip=b*apr;const pp=Math.min(pay-ip,b);
+    paid+=ip+pp;b-=pp;mo++;
+    if(mo<=60)hist.push(Math.round(Math.max(b,0)));
+  }
+  const int=paid-bal;
+
+  set('cc-rm',mo);set('cc-ri',fmt(int));set('cc-rt',fmt(paid));
+
+  mk('cp','ch-cp','doughnut',['Balance','Interest Cost'],
+    [{data:[Math.round(bal),Math.round(int)],backgroundColor:['#4f46e5','#ef4444'],borderWidth:0}],{cutout:'65%'});
+
+  gc('cl');const ctx=document.getElementById('ch-cl');if(!ctx)return;
+  CH['cl']=new Chart(ctx,{type:'line',data:{
+    labels:Array.from({length:hist.length},(_,i)=>`M${i}`),
+    datasets:[{label:'Balance',data:hist,borderColor:'#ef4444',backgroundColor:'rgba(239,68,68,.1)',fill:true,tension:.3,pointRadius:1}]
+  },options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false},ticks:{font:{size:9},maxTicksLimit:8}},y:{ticks:{callback:v=>fmt(v),font:{size:9}},grid:{color:'#f1f5f9'}}}}});
+}
+
+// ─── SALARY ───
+function cSal(){
+  const ctc=+document.getElementById('sal-c').value||0;
+  const allow=(+document.getElementById('sal-a').value||0)*12;
+  const rg=document.getElementById('sal-rg').value;
+  if(!ctc)return;
+
+  const gross=ctc+allow;
+  const basic=ctc*0.4;
+  const pf=Math.min(basic*0.12,21600);
+  const pt=2400;
+  const stdDed=rg==='new'?75000:50000;
+  let taxable=Math.max(gross-pf-stdDed,0);
+  let tax=0;
+
+  if(rg==='new'){
+    // FY 2025-26 new regime slabs
+    if(taxable>300000) tax+=Math.min(taxable-300000,400000)*0.05;
+    if(taxable>700000) tax+=Math.min(taxable-700000,300000)*0.10;
+    if(taxable>1000000)tax+=Math.min(taxable-1000000,200000)*0.15;
+    if(taxable>1200000)tax+=Math.min(taxable-1200000,300000)*0.20;
+    if(taxable>1500000)tax+=(taxable-1500000)*0.30;
+    // Rebate 87A: if taxable ≤ 7L, no tax
+    if(taxable<=700000)tax=0;
+  } else {
+    // Old regime
+    if(taxable>250000)tax+=Math.min(taxable-250000,250000)*0.05;
+    if(taxable>500000)tax+=Math.min(taxable-500000,500000)*0.20;
+    if(taxable>1000000)tax+=(taxable-1000000)*0.30;
+    if(taxable<=500000)tax=0; // 87A
+  }
+  tax*=1.04; // 4% cess
+
+  const deduct=pf+pt+tax;
+  const thAnn=gross-deduct;
+  const thMo=thAnn/12;
+  const effRate=ctc>0?tax/ctc*100:0;
+
+  set('sal-th',fmt(thMo));set('sal-tx',fmt(tax));set('sal-et',effRate.toFixed(1)+'%');
+
+  mk('salp','ch-salp','doughnut',
+    ['Take-Home','Income Tax','PF','Prof. Tax'],
+    [{data:[Math.round(thAnn),Math.round(tax),Math.round(pf),Math.round(pt)],
+      backgroundColor:['#10b981','#ef4444','#4f46e5','#f59e0b'],borderWidth:0}],{cutout:'60%'});
+
+  mk('salb','ch-salb','bar',
+    ['Take-Home','Tax (TDS)','PF','Prof. Tax'],
+    [{label:'Monthly (₹)',data:[Math.round(thMo),Math.round(tax/12),Math.round(pf/12),Math.round(pt/12)],
+      backgroundColor:['#10b981','#ef4444','#4f46e5','#f59e0b'],borderRadius:6}],
+    {plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v),font:{size:9}},grid:{color:'#f1f5f9'}}}});
+}
+
+// ─── DEBT PLANNER ───
+let debts=[];
+function addDebt(){
+  const nm=document.getElementById('d-nm').value.trim()||'Debt';
+  const b=+document.getElementById('d-b').value||0;
+  const r=+document.getElementById('d-r').value||0;
+  const mp=+document.getElementById('d-mp').value||0;
+  if(!b||!r){alert('Enter balance and rate.');return;}
+  debts.push({nm,b,r,mp});
+  ['d-nm','d-b','d-r','d-mp'].forEach(id=>document.getElementById(id).value='');
+  cDebt();
+}
+
+function removeDebt(i){debts.splice(i,1);cDebt();}
+
+function cDebt(){
+  const dl=document.getElementById('d-list');
+  const st=document.getElementById('d-st').value;
+  const ex=+document.getElementById('d-ex').value||0;
+  if(!debts.length){
+    dl.innerHTML='<div class="empty"><div class="ei">📋</div>Add debts on the left to see your optimised payoff plan</div>';
+    document.getElementById('d-charts').style.display='none';
+    document.getElementById('d-metrics').style.display='none';return;
+  }
+
+  const sorted=[...debts].map((d,i)=>({...d,oi:i}))
+    .sort((a,b)=>st==='av'?b.r-a.r:a.b-b.b);
+
+  dl.innerHTML='';
+  sorted.forEach((d,i)=>{
+    const col=PAL[i%PAL.length];
+    const div=document.createElement('div');div.className='di';
+    div.style.borderLeftColor=col;
+    div.innerHTML=`<div style="flex:1">
+      <div style="font-weight:700;font-size:13px">${d.nm}</div>
+      <div style="font-size:11px;color:#94a3b8;margin-top:2px">${fmt(d.b)} · ${d.r}% p.a. · Min ${fmt(d.mp)}/mo</div>
+    </div>
+    <span class="ptag" style="background:${col}">${i===0?'FOCUS':'#'+(i+1)}</span>
+    <span class="rmv" onclick="removeDebt(${d.oi})">×</span>`;
+    dl.appendChild(div);
+  });
+
+  document.getElementById('d-charts').style.display='grid';
+  document.getElementById('d-metrics').style.display='grid';
+
+  // Estimate payoff
+  let simDebts=sorted.map(d=>({...d,bal:d.b}));
+  const totalDebt=debts.reduce((s,d)=>s+d.b,0);
+  let totalInt=0,mo=0;
+  while(simDebts.some(d=>d.bal>0.01)&&mo<600){
+    let extra=ex;
+    simDebts.forEach(d=>{
+      if(d.bal<=0.01)return;
+      const ip=d.bal*(d.r/12/100);
+      const pp=Math.min(d.mp-ip,d.bal);
+      if(pp>0){totalInt+=ip;d.bal-=pp;}
+      else totalInt+=ip;
     });
+    // Apply extra to focus debt
+    const focus=simDebts.find(d=>d.bal>0.01);
+    if(focus&&extra>0){const pp=Math.min(extra,focus.bal);focus.bal-=pp;}
+    mo++;
+  }
+
+  set('d-tot',fmt(totalDebt));set('d-int',fmt(totalInt));set('d-mo',mo+' mo');
+
+  mk('dp','ch-dp','doughnut',sorted.map(d=>d.nm),
+    [{data:sorted.map(d=>d.b),backgroundColor:PAL.slice(0,sorted.length),borderWidth:0}],{cutout:'60%'});
+  mk('db','ch-db','bar',sorted.map(d=>d.nm),
+    [{label:'Balance',data:sorted.map(d=>d.b),backgroundColor:PAL.slice(0,sorted.length),borderRadius:6}],
+    {plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v),font:{size:9}},grid:{color:'#f1f5f9'}}}});
 }
 
-// ═══ EMI ═══
-function calcEMI() {
-    const P = parseFloat(document.getElementById('emi-amount').value) || 0;
-    const annualRate = parseFloat(document.getElementById('emi-rate').value) || 0;
-    const r = annualRate / 12 / 100;
-    let n = parseFloat(document.getElementById('emi-tenure').value) || 0;
-    if (document.getElementById('emi-tenure-type').value === 'years') n *= 12;
-
-    if (!P || !r || !n) return;
-
-    const emi = P * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
-    const total = emi * n;
-    const interest = total - P;
-
-    document.getElementById('res-emi').textContent      = fmt(emi);
-    document.getElementById('res-interest').textContent = fmt(interest);
-    document.getElementById('res-total').textContent    = fmt(total);
-
-    // Doughnut
-    buildChart('emi-pie', 'chart-emi-pie', 'doughnut',
-        ['Principal', 'Interest'],
-        [{ data: [Math.round(P), Math.round(interest)], backgroundColor: ['#667eea','#ff6584'], borderWidth: 0 }],
-        { cutout: '65%' }
-    );
-
-    // Bar: yearly amortization
-    const years = Math.min(Math.ceil(n/12), 12);
-    const yLabels = Array.from({length: years}, (_,i) => `Yr ${i+1}`);
-    const yPrinc = [], yInt = [];
-    let bal = P;
-    for (let y = 0; y < years; y++) {
-        let yp = 0, yi = 0;
-        for (let m = 0; m < 12 && bal > 0.01; m++) {
-            const ip = bal * r;
-            const pp = Math.min(emi - ip, bal);
-            yi += ip; yp += pp; bal -= pp;
-        }
-        yPrinc.push(Math.round(yp));
-        yInt.push(Math.round(yi));
-    }
-
-    buildChart('emi-bar', 'chart-emi-bar', 'bar',
-        yLabels,
-        [
-            { label: 'Principal', data: yPrinc, backgroundColor: '#667eea', borderRadius: 4, stack: 'a' },
-            { label: 'Interest',  data: yInt,   backgroundColor: '#ff6584', borderRadius: 4, stack: 'a' }
-        ],
-        {
-            scales: {
-                x: { stacked: true, grid: { display: false } },
-                y: { stacked: true, ticks: { callback: v => fmt(v), font: { size: 10 } }, grid: { color: '#f0f0f0' } }
-            }
-        }
-    );
-}
-
-// ═══ WHAT-IF ═══
-function calcWhatIf() {
-    const P = parseFloat(document.getElementById('wi-amount').value) || 0;
-    const r = (parseFloat(document.getElementById('wi-rate').value) || 0) / 12 / 100;
-    const n = (parseFloat(document.getElementById('wi-tenure').value) || 0) * 12;
-    const extra = parseFloat(document.getElementById('wi-extra').value) || 0;
-
-    if (!P || !r || !n) return;
-
-    const emi = P * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
-    const totalBefore = emi * n;
-    const intBefore = totalBefore - P;
-
-    // Simulate with extra
-    let bal = P, paid = 0, months = 0;
-    while (bal > 0.01 && months < n) {
-        const ip = bal * r;
-        const pp = Math.min(emi + extra - ip, bal);
-        paid += ip + pp;
-        bal  -= pp;
-        months++;
-    }
-    const intAfter   = paid - P;
-    const moneySaved = intBefore - intAfter;
-    const monthsSaved = n - months;
-
-    document.getElementById('wi-before-total').textContent  = fmt(totalBefore);
-    document.getElementById('wi-before-months').textContent = n + ' months';
-    document.getElementById('wi-after-total').textContent   = fmt(paid);
-    document.getElementById('wi-after-months').textContent  = months + ' months';
-    document.getElementById('wi-saved-money').textContent   = fmt(moneySaved);
-    document.getElementById('wi-saved-months').textContent  = monthsSaved;
-
-    buildChart('wi-before', 'chart-wi-before', 'doughnut',
-        ['Principal','Interest'],
-        [{ data:[Math.round(P), Math.round(intBefore)], backgroundColor:['#667eea','#ff6584'], borderWidth:0 }],
-        { cutout:'65%' }
-    );
-
-    buildChart('wi-after', 'chart-wi-after', 'doughnut',
-        ['Principal','Interest'],
-        [{ data:[Math.round(P), Math.round(intAfter)], backgroundColor:['#43c6ac','#a29bfe'], borderWidth:0 }],
-        { cutout:'65%' }
-    );
-}
-
-// ═══ DEBT PAYOFF ═══
-let debts = [];
-
-function addDebt() {
-    const name    = document.getElementById('debt-name').value.trim() || 'Debt';
-    const balance = parseFloat(document.getElementById('debt-balance').value) || 0;
-    const rate    = parseFloat(document.getElementById('debt-rate').value) || 0;
-    const minpay  = parseFloat(document.getElementById('debt-minpay').value) || 0;
-
-    if (!balance || !rate) { alert('Please enter Balance and Rate.'); return; }
-
-    debts.push({ name, balance, rate, minpay });
-    ['debt-name','debt-balance','debt-rate','debt-minpay'].forEach(id => document.getElementById(id).value = '');
-    calcDebt();
-}
-
-function removeDebt(i) {
-    debts.splice(i, 1);
-    calcDebt();
-}
-
-function calcDebt() {
-    if (!debts.length) {
-        document.getElementById('debt-list').innerHTML = `<div class="empty-state"><div class="eicon">📋</div>Add your debts on the left to see your optimized payoff plan</div>`;
-        document.getElementById('debt-charts').style.display = 'none';
-        return;
-    }
-
-    const strategy = document.getElementById('debt-strategy').value;
-    const sorted = [...debts].map((d,i)=>({...d, origIdx:i})).sort((a,b) =>
-        strategy === 'avalanche' ? b.rate - a.rate : a.balance - b.balance
-    );
-
-    const listEl = document.getElementById('debt-list');
-    listEl.innerHTML = '';
-
-    sorted.forEach((d, i) => {
-        const color = PALETTE[i % PALETTE.length];
-        const label = i === 0 ? 'FOCUS NOW' : `#${i+1}`;
-        const div = document.createElement('div');
-        div.className = 'debt-item';
-        div.style.borderLeftColor = color;
-        div.innerHTML = `
-            <div style="flex:1">
-                <div class="dname">${d.name}</div>
-                <div class="ddetails">${fmt(d.balance)} · ${d.rate}% p.a. · Min ₹${d.minpay.toLocaleString('en-IN')}/mo</div>
-            </div>
-            <span class="priority-badge" style="background:${color};margin-right:8px">${label}</span>
-            <span onclick="removeDebt(${d.origIdx})" style="cursor:pointer;color:#ccc;font-size:18px;line-height:1">×</span>
-        `;
-        listEl.appendChild(div);
-    });
-
-    document.getElementById('debt-charts').style.display = 'grid';
-
-    buildChart('debt-pie', 'chart-debt-pie', 'doughnut',
-        sorted.map(d => d.name),
-        [{ data: sorted.map(d => d.balance), backgroundColor: PALETTE.slice(0, sorted.length), borderWidth: 0 }],
-        { cutout: '60%' }
-    );
-
-    buildChart('debt-bar', 'chart-debt-bar', 'bar',
-        sorted.map(d => d.name),
-        [{ label: 'Balance', data: sorted.map(d => d.balance), backgroundColor: PALETTE.slice(0, sorted.length), borderRadius: 6 }],
-        {
-            plugins: { legend: { display: false } },
-            scales: { y: { ticks: { callback: v => fmt(v), font:{size:10} }, grid:{color:'#f0f0f0'} }, x:{grid:{display:false}} }
-        }
-    );
-}
-
-// ═══ SALARY FIT ═══
-function calcSalary() {
-    const salary   = parseFloat(document.getElementById('sal-salary').value) || 0;
-    const existing = parseFloat(document.getElementById('sal-existing').value) || 0;
-    const r  = (parseFloat(document.getElementById('sal-rate').value) || 0) / 12 / 100;
-    const n  = (parseFloat(document.getElementById('sal-tenure').value) || 0) * 12;
-
-    if (!salary || !r || !n) return;
-
-    const maxEMI  = Math.max(salary * 0.4 - existing, 0);
-    const maxLoan = r > 0 ? maxEMI * (Math.pow(1+r, n) - 1) / (r * Math.pow(1+r, n)) : 0;
-
-    document.getElementById('sal-max-emi').textContent  = fmt(maxEMI);
-    document.getElementById('sal-max-loan').textContent = fmt(maxLoan);
-
-    // Pointer
-    const pct = Math.min((existing / salary) * 100, 100);
-    const ptr = document.getElementById('sal-pointer');
-    ptr.style.left = pct + '%';
-    ptr.setAttribute('data-label', Math.round(pct) + '%');
-
-    const statusEl = document.getElementById('sal-status');
-    if (pct < 30) {
-        statusEl.className = 'status-badge safe';
-        statusEl.innerHTML = '<span class="sdot"></span> Safe to borrow more';
-    } else if (pct < 45) {
-        statusEl.className = 'status-badge caution';
-        statusEl.innerHTML = '<span class="sdot"></span> Approaching your limit';
-    } else {
-        statusEl.className = 'status-badge danger';
-        statusEl.innerHTML = '<span class="sdot"></span> Over-leveraged — reduce EMIs first';
-    }
-
-    // Pie
-    const emiSlice     = Math.min(existing, salary);
-    const newEmiSlice  = maxEMI;
-    const rest         = Math.max(salary - emiSlice - newEmiSlice, 0);
-
-    buildChart('salary-pie', 'chart-salary-pie', 'doughnut',
-        ['Existing EMIs', 'Available for New Loan', 'Other Expenses'],
-        [{ data:[Math.round(emiSlice), Math.round(newEmiSlice), Math.round(rest)],
-           backgroundColor:['#ff6584','#667eea','#43c6ac'], borderWidth:0 }],
-        { cutout:'62%' }
-    );
-}
-
-// ═══ TAB SWITCHING ═══
-const TAB_IDS = ['emi','whatif','debt','salary'];
-
-function switchTab(active) {
-    document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', TAB_IDS[i] === active));
-    TAB_IDS.forEach(t => {
-        document.getElementById('tab-' + t).style.display = t === active ? 'contents' : 'none';
-    });
-    setTimeout(() => {
-        if (active === 'emi')    calcEMI();
-        if (active === 'whatif') calcWhatIf();
-        if (active === 'debt')   calcDebt();
-        if (active === 'salary') calcSalary();
-    }, 30);
-}
-
-// ═══ INIT ═══
-window.addEventListener('load', () => {
-    calcEMI();
-    // Pre-load other tabs' charts silently
-    setTimeout(calcWhatIf, 100);
-    setTimeout(calcSalary, 150);
-});
+// ─── INIT ───
+window.onload=()=>{
+  cEMI();
+  setTimeout(()=>{cSIP();cFD();cHL();cCC();cSal();},80);
+};
 </script>
-
 </body>
 </html>
