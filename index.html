@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoanLens — Smart Free Loan Calculator</title>
+    <meta name="description" content="Free loan EMI calculator with what-if planner, debt payoff tracker, and salary fit checker. Visual charts, instant results.">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f0f4ff;
+            height: 100vh;
+            overflow: hidden;
+            color: #1a1a2e;
+        }
+
+        /* ---- HEADER ---- */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 52px;
+            box-shadow: 0 2px 20px rgba(102,126,234,0.4);
+        }
+
+        .logo { font-size: 20px; font-weight: 800; color: white; letter-spacing: -0.5px; }
+        .logo span { color: #ffd700; }
+        .tagline { font-size: 11px; color: rgba(255,255,255,0.75); margin-top:1px; }
+
+        .ad-header {
+            background: rgba(255,255,255,0.12);
+            border: 1px dashed rgba(255,255,255,0.35);
+            border-radius: 8px;
+            padding: 5px 18px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ---- TOP AD STRIP ---- */
+        .ad-strip {
+            background: white;
+            border-bottom: 1px solid #e0e7ff;
+            text-align: center;
+            padding: 3px 0;
+            font-size: 11px;
+            color: #aaa;
+            height: 22px;
+        }
+
+        /* ---- TABS ---- */
+        .tabs {
+            display: flex;
+            background: white;
+            border-bottom: 2px solid #e0e7ff;
+            padding: 0 20px;
+            height: 40px;
+            align-items: flex-end;
+        }
+
+        .tab {
+            padding: 8px 18px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            color: #888;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab.active { color: #667eea; border-bottom-color: #667eea; }
+        .tab:hover:not(.active) { color: #764ba2; }
+
+        /* ---- MAIN GRID ---- */
+        .main {
+            display: grid;
+            grid-template-columns: 330px 1fr;
+            height: calc(100vh - 114px);
+        }
+
+        /* ---- PANELS ---- */
+        .panel-left {
+            background: white;
+            padding: 16px 18px;
+            border-right: 1px solid #e0e7ff;
+            overflow-y: auto;
+        }
+
+        .panel-left::-webkit-scrollbar { width: 3px; }
+        .panel-left::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 3px; }
+
+        .panel-right {
+            background: #f0f4ff;
+            padding: 16px 18px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .panel-right::-webkit-scrollbar { width: 3px; }
+        .panel-right::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 3px; }
+
+        /* ---- INPUTS ---- */
+        .input-group { margin-bottom: 13px; }
+
+        label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            color: #777;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        input[type="number"], input[type="text"], select {
+            width: 100%;
+            padding: 9px 13px;
+            border: 2px solid #e0e7ff;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a2e;
+            background: white;
+            transition: border-color 0.2s;
+            outline: none;
+        }
+
+        input[type="number"]:focus, input[type="text"]:focus, select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: #667eea;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .input-row { display: flex; gap: 10px; }
+        .input-row .input-group { flex: 1; }
+
+        /* ---- METRIC CARDS ---- */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 14px;
+            padding: 12px 10px;
+            text-align: center;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e8ecff;
+        }
+
+        .metric-card .mlabel {
+            font-size: 10px;
+            color: #999;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-card .mvalue {
+            font-size: 19px;
+            font-weight: 800;
+            margin-top: 3px;
+            line-height: 1.1;
+        }
+
+        .metric-card .msub { font-size: 10px; color: #bbb; margin-top: 2px; }
+
+        .mc-emi .mvalue { color: #667eea; }
+        .mc-interest .mvalue { color: #ff6584; }
+        .mc-total .mvalue { color: #0ea5e9; }
+        .mc-save .mvalue { color: #22c55e; }
+
+        /* ---- CHART CARDS ---- */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            border: 1px solid #e8ecff;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .chart-card h3 {
+            font-size: 12px;
+            font-weight: 700;
+            color: #555;
+            margin-bottom: 8px;
+            flex-shrink: 0;
+        }
+
+        .chart-card .chart-wrap {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+        }
+
+        .chart-card canvas { width: 100% !important; height: 100% !important; }
+
+        /* ---- BUTTON ---- */
+        .btn {
+            width: 100%;
+            padding: 11px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 18px rgba(102,126,234,0.45);
+        }
+
+        .btn:active { transform: translateY(0); }
+
+        /* ---- AFFILIATE CARDS ---- */
+        .section-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 8px;
+        }
+
+        .affiliate-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .affiliate-card {
+            background: linear-gradient(135deg, #f8f9ff, #fff);
+            border-radius: 12px;
+            padding: 10px 12px;
+            border: 2px solid #e8ecff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .affiliate-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(102,126,234,0.2);
+        }
+
+        .affiliate-card .abank { font-weight: 700; font-size: 12px; color: #444; }
+        .affiliate-card .arate { font-size: 20px; font-weight: 800; color: #667eea; line-height: 1.1; }
+
+        .badge {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #16a34a;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 20px;
+            margin-top: 3px;
+        }
+
+        .badge.apply { background: #ede9fe; color: #7c3aed; }
+
+        /* ---- SAVINGS BOX ---- */
+        .savings-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 14px;
+            padding: 14px;
+            color: white;
+            text-align: center;
+        }
+
+        .savings-box .sbig { font-size: 26px; font-weight: 800; }
+        .savings-box .ssmall { font-size: 11px; opacity: 0.85; }
+
+        /* ---- COMPARISON CARDS ---- */
+        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        .compare-card {
+            border-radius: 14px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .compare-card.before { background: #fff0f5; border: 2px solid #ffd6e3; }
+        .compare-card.after  { background: #f0fdf4; border: 2px solid #bbf7d0; }
+
+        .compare-card .ctitle { font-size: 10px; font-weight: 700; color: #888; margin-bottom: 5px; text-transform: uppercase; }
+        .compare-card .cval  { font-size: 20px; font-weight: 800; }
+        .compare-card.before .cval { color: #e11d48; }
+        .compare-card.after  .cval { color: #16a34a; }
+        .compare-card .csub  { font-size: 11px; color: #aaa; margin-top: 3px; }
+
+        /* ---- DEBT ITEMS ---- */
+        .debt-item {
+            background: white;
+            border-radius: 12px;
+            padding: 11px 14px;
+            margin-bottom: 8px;
+            border-left: 4px solid #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+        }
+
+        .debt-item .dname { font-weight: 700; font-size: 13px; }
+        .debt-item .ddetails { font-size: 11px; color: #999; margin-top: 2px; }
+
+        .priority-badge {
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            padding: 3px 10px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .add-debt-form {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border: 1px solid #e0e7ff;
+        }
+
+        /* ---- SALARY METER ---- */
+        .salary-meter {
+            position: relative;
+            height: 22px;
+            background: linear-gradient(to right, #22c55e 0%, #22c55e 40%, #f59e0b 40%, #f59e0b 50%, #ef4444 50%);
+            border-radius: 11px;
+            margin: 10px 0 4px;
+            overflow: visible;
+        }
+
+        .salary-pointer {
+            position: absolute;
+            top: -7px;
+            width: 4px;
+            height: 36px;
+            background: #1a1a2e;
+            border-radius: 2px;
+            transition: left 0.5s cubic-bezier(.4,0,.2,1);
+        }
+
+        .salary-pointer::after {
+            content: attr(data-label);
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a2e;
+            color: white;
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .meter-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            color: #bbb;
+            margin-top: 2px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .status-badge.safe    { background: #f0fdf4; color: #16a34a; }
+        .status-badge.caution { background: #fffbeb; color: #d97706; }
+        .status-badge.danger  { background: #fef2f2; color: #dc2626; }
+
+        .sdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .safe .sdot    { background: #22c55e; }
+        .caution .sdot { background: #f59e0b; }
+        .danger .sdot  { background: #ef4444; }
+
+        /* ---- EMPTY STATE ---- */
+        .empty-state {
+            text-align: center;
+            padding: 30px 20px;
+            color: #ccc;
+            font-size: 13px;
+        }
+
+        .empty-state .eicon { font-size: 36px; margin-bottom: 8px; }
+
+        /* ---- DIVIDER ---- */
+        .divider { border: none; border-top: 1px solid #e0e7ff; margin: 14px 0; }
+
+        /* ---- RESPONSIVE ---- */
+        @media (max-width: 860px) {
+            .main { grid-template-columns: 1fr; height: auto; }
+            body { overflow: auto; }
+            .panel-left, .panel-right { height: auto; }
+            .charts-row { grid-template-columns: 1fr; }
+            .chart-card { height: 220px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+    <div>
+        <div class="logo">Loan<span>Lens</span></div>
+        <div class="tagline">4 smart tools · free forever · no signup</div>
+    </div>
+    <div class="ad-header">📢 Advertisement · AdSense Slot</div>
+</header>
+
+<!-- AD STRIP -->
+<div class="ad-strip">Advertisement — Google AdSense banner goes here</div>
+
+<!-- TABS -->
+<div class="tabs">
+    <div class="tab active" onclick="switchTab('emi')">💰 EMI Calculator</div>
+    <div class="tab" onclick="switchTab('whatif')">✨ What-If Planner</div>
+    <div class="tab" onclick="switchTab('debt')">🔥 Debt Payoff</div>
+    <div class="tab" onclick="switchTab('salary')">💼 Salary Fit</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+<!-- ══════════════ TAB 1: EMI ══════════════ -->
+<div id="tab-emi" style="display:contents">
+
+    <div class="panel-left">
+        <div class="input-group">
+            <label>Loan Amount (₹)</label>
+            <input type="number" id="emi-amount" value="500000" min="1000" step="1000" oninput="syncRange('emi-amount','emi-amt-range');calcEMI()">
+            <input type="range" id="emi-amt-range" min="10000" max="10000000" value="500000" step="10000"
+                oninput="syncInput('emi-amt-range','emi-amount');calcEMI()">
+        </div>
+
+        <div class="input-row">
+            <div class="input-group">
+                <label>Interest Rate (%)</label>
+                <input type="number" id="emi-rate" value="8.5" min="1" max="36" step="0.1" oninput="calcEMI()">
+            </div>
+            <div class="input-group">
+                <label>Tenure Unit</label>
+                <select id="emi-tenure-type" onchange="calcEMI()">
+                    <option value="years" selected>Years</option>
+                    <option value="months">Months</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Tenure</label>
+            <input type="number" id="emi-tenure" value="5" min="1" max="30" oninput="syncRange('emi-tenure','emi-ten-range');calcEMI()">
+            <input type="range" id="emi-ten-range" min="1" max="30" value="5"
+                oninput="syncInput('emi-ten-range','emi-tenure');calcEMI()">
+        </div>
+
+        <hr class="divider">
+
+        <div class="section-label">Best Loan Offers (Affiliate)</div>
+        <div class="affiliate-grid">
+            <div class="affiliate-card" onclick="window.open('#','_blank')">
+                <div class="abank">HDFC Bank</div>
+                <div class="arate">8.40%</div>
+                <div class="badge">✓ Instant Approval</div>
+            </div>
+            <div class="affiliate-card" onclick="window.open('#','_blank')">
+                <div class="abank">SBI</div>
+                <div class="arate">8.50%</div>
+                <div class="badge">✓ Low Processing Fee</div>
+            </div>
+            <div class="affiliate-card" onclick="window.open('#','_blank')">
+                <div class="abank">ICICI Bank</div>
+                <div class="arate">8.75%</div>
+                <div class="badge">✓ No Prepayment Fee</div>
+            </div>
+            <div class="affiliate-card" onclick="window.open('#','_blank')">
+                <div class="abank">Axis Bank</div>
+                <div class="arate">9.00%</div>
+                <div class="badge">✓ Flexible EMI</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-right">
+        <div class="metrics">
+            <div class="metric-card mc-emi">
+                <div class="mlabel">Monthly EMI</div>
+                <div class="mvalue" id="res-emi">₹0</div>
+                <div class="msub">per month</div>
+            </div>
+            <div class="metric-card mc-interest">
+                <div class="mlabel">Total Interest</div>
+                <div class="mvalue" id="res-interest">₹0</div>
+                <div class="msub">extra you pay</div>
+            </div>
+            <div class="metric-card mc-total">
+                <div class="mlabel">Total Payment</div>
+                <div class="mvalue" id="res-total">₹0</div>
+                <div class="msub">principal + interest</div>
+            </div>
+        </div>
+
+        <div class="charts-row">
+            <div class="chart-card">
+                <h3>Principal vs Interest</h3>
+                <div class="chart-wrap"><canvas id="chart-emi-pie"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Yearly Amortization</h3>
+                <div class="chart-wrap"><canvas id="chart-emi-bar"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ══════════════ TAB 2: WHAT-IF ══════════════ -->
+<div id="tab-whatif" style="display:none">
+
+    <div class="panel-left">
+        <div class="input-group">
+            <label>Loan Amount (₹)</label>
+            <input type="number" id="wi-amount" value="500000" oninput="calcWhatIf()">
+        </div>
+        <div class="input-row">
+            <div class="input-group">
+                <label>Interest Rate (%)</label>
+                <input type="number" id="wi-rate" value="8.5" step="0.1" oninput="calcWhatIf()">
+            </div>
+            <div class="input-group">
+                <label>Tenure (Years)</label>
+                <input type="number" id="wi-tenure" value="5" oninput="calcWhatIf()">
+            </div>
+        </div>
+        <div class="input-group">
+            <label>Extra Payment / Month (₹)</label>
+            <input type="number" id="wi-extra" value="2000" min="0" oninput="syncRange('wi-extra','wi-ext-range');calcWhatIf()">
+            <input type="range" id="wi-ext-range" min="0" max="50000" value="2000" step="500"
+                oninput="syncInput('wi-ext-range','wi-extra');calcWhatIf()">
+        </div>
+
+        <div class="savings-box" id="wi-savings-box">
+            <div class="ssmall">By paying extra monthly, you save</div>
+            <div class="sbig" id="wi-saved-money">₹0</div>
+            <div class="ssmall">and become debt-free <b id="wi-saved-months">0</b> months early</div>
+        </div>
+    </div>
+
+    <div class="panel-right">
+        <div class="comparison">
+            <div class="compare-card before">
+                <div class="ctitle">Without Extra Payment</div>
+                <div class="cval" id="wi-before-total">₹0</div>
+                <div class="csub" id="wi-before-months">— months</div>
+            </div>
+            <div class="compare-card after">
+                <div class="ctitle">With Extra Payment</div>
+                <div class="cval" id="wi-after-total">₹0</div>
+                <div class="csub" id="wi-after-months">— months</div>
+            </div>
+        </div>
+
+        <div class="charts-row">
+            <div class="chart-card">
+                <h3>Without Extra Payment</h3>
+                <div class="chart-wrap"><canvas id="chart-wi-before"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>With Extra Payment</h3>
+                <div class="chart-wrap"><canvas id="chart-wi-after"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ══════════════ TAB 3: DEBT PAYOFF ══════════════ -->
+<div id="tab-debt" style="display:none">
+
+    <div class="panel-left">
+        <div class="add-debt-form">
+            <div class="section-label" style="margin-bottom:10px">Add a Debt</div>
+            <div class="input-group">
+                <label>Name</label>
+                <input type="text" id="debt-name" placeholder="e.g. Credit Card, Car Loan">
+            </div>
+            <div class="input-row">
+                <div class="input-group">
+                    <label>Balance (₹)</label>
+                    <input type="number" id="debt-balance" placeholder="50000">
+                </div>
+                <div class="input-group">
+                    <label>Rate (%)</label>
+                    <input type="number" id="debt-rate" placeholder="18" step="0.1">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Min Payment / Month (₹)</label>
+                <input type="number" id="debt-minpay" placeholder="2000">
+            </div>
+            <button class="btn" onclick="addDebt()">+ Add Debt</button>
+        </div>
+
+        <div class="input-group">
+            <label>Payoff Strategy</label>
+            <select id="debt-strategy" onchange="calcDebt()">
+                <option value="avalanche">🏔 Avalanche — Highest Rate First (saves most)</option>
+                <option value="snowball">⛄ Snowball — Smallest Balance First (builds momentum)</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Extra Monthly Payment (₹)</label>
+            <input type="number" id="debt-extra" value="0" oninput="calcDebt()">
+        </div>
+    </div>
+
+    <div class="panel-right">
+        <div id="debt-list">
+            <div class="empty-state">
+                <div class="eicon">📋</div>
+                Add your debts on the left to see your optimized payoff plan
+            </div>
+        </div>
+        <div class="charts-row" id="debt-charts" style="display:none">
+            <div class="chart-card">
+                <h3>Debt Breakdown</h3>
+                <div class="chart-wrap"><canvas id="chart-debt-pie"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Balance by Debt</h3>
+                <div class="chart-wrap"><canvas id="chart-debt-bar"></canvas></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- ══════════════ TAB 4: SALARY FIT ══════════════ -->
+<div id="tab-salary" style="display:none">
+
+    <div class="panel-left">
+        <div class="input-group">
+            <label>Monthly Take-Home Salary (₹)</label>
+            <input type="number" id="sal-salary" value="80000" oninput="syncRange('sal-salary','sal-range');calcSalary()">
+            <input type="range" id="sal-range" min="10000" max="500000" value="80000" step="5000"
+                oninput="syncInput('sal-range','sal-salary');calcSalary()">
+        </div>
+        <div class="input-group">
+            <label>Existing EMIs / Month (₹)</label>
+            <input type="number" id="sal-existing" value="0" oninput="calcSalary()">
+        </div>
+        <div class="input-row">
+            <div class="input-group">
+                <label>Interest Rate (%)</label>
+                <input type="number" id="sal-rate" value="8.5" step="0.1" oninput="calcSalary()">
+            </div>
+            <div class="input-group">
+                <label>Tenure (Years)</label>
+                <input type="number" id="sal-tenure" value="5" oninput="calcSalary()">
+            </div>
+        </div>
+
+        <div style="background:#f0f4ff; border-radius:12px; padding:12px 14px; border:1px solid #e0e7ff;">
+            <div style="font-size:11px; font-weight:700; color:#667eea; margin-bottom:6px;">HOW IT WORKS</div>
+            <div style="font-size:12px; color:#666; line-height:1.65;">
+                Banks allow EMIs up to <strong>40–50% of take-home salary</strong>.<br>
+                This tool shows your safe borrowing limit instantly.
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-right">
+        <div class="metrics" style="grid-template-columns:1fr 1fr">
+            <div class="metric-card mc-emi">
+                <div class="mlabel">Max Safe EMI</div>
+                <div class="mvalue" id="sal-max-emi">₹0</div>
+                <div class="msub">40% of salary</div>
+            </div>
+            <div class="metric-card mc-total">
+                <div class="mlabel">Max Loan Amount</div>
+                <div class="mvalue" id="sal-max-loan">₹0</div>
+                <div class="msub">at given rate & tenure</div>
+            </div>
+        </div>
+
+        <div style="background:white; border-radius:14px; padding:14px; border:1px solid #e8ecff; box-shadow:0 2px 12px rgba(0,0,0,0.05)">
+            <div class="section-label">Affordability Meter</div>
+            <div class="salary-meter">
+                <div class="salary-pointer" id="sal-pointer" style="left:0%" data-label="0%"></div>
+            </div>
+            <div class="meter-labels">
+                <span>Safe ← 0%</span>
+                <span>40% → Caution</span>
+                <span>50%+ → Risk</span>
+            </div>
+            <div style="text-align:center; margin-top:10px">
+                <span class="status-badge safe" id="sal-status">
+                    <span class="sdot"></span> Calculating…
+                </span>
+            </div>
+        </div>
+
+        <div class="charts-row">
+            <div class="chart-card">
+                <h3>Salary Allocation</h3>
+                <div class="chart-wrap"><canvas id="chart-salary-pie"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3>Top Loan Offers</h3>
+                <div style="margin-top:6px">
+                    <div class="affiliate-grid">
+                        <div class="affiliate-card" onclick="window.open('#','_blank')">
+                            <div class="abank">HDFC Bank</div>
+                            <div class="arate">8.40%</div>
+                            <div class="badge apply">Apply Now →</div>
+                        </div>
+                        <div class="affiliate-card" onclick="window.open('#','_blank')">
+                            <div class="abank">SBI</div>
+                            <div class="arate">8.50%</div>
+                            <div class="badge apply">Apply Now →</div>
+                        </div>
+                        <div class="affiliate-card" onclick="window.open('#','_blank')">
+                            <div class="abank">ICICI Bank</div>
+                            <div class="arate">8.75%</div>
+                            <div class="badge apply">Apply Now →</div>
+                        </div>
+                        <div class="affiliate-card" onclick="window.open('#','_blank')">
+                            <div class="abank">Axis Bank</div>
+                            <div class="arate">9.00%</div>
+                            <div class="badge apply">Apply Now →</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ═══ HELPERS ═══
+let charts = {};
+const PALETTE = ['#667eea','#ff6584','#43c6ac','#ffd700','#ff9f43','#a29bfe','#0ea5e9','#ec4899'];
+
+function fmt(n) {
+    n = Math.max(0, n);
+    if (n >= 10000000) return '₹' + (n/10000000).toFixed(2) + 'Cr';
+    if (n >= 100000)   return '₹' + (n/100000).toFixed(1) + 'L';
+    return '₹' + Math.round(n).toLocaleString('en-IN');
+}
+
+function syncRange(inputId, rangeId) {
+    const el = document.getElementById(rangeId);
+    if (el) el.value = document.getElementById(inputId).value;
+}
+
+function syncInput(rangeId, inputId) {
+    document.getElementById(inputId).value = document.getElementById(rangeId).value;
+}
+
+function destroyChart(key) {
+    if (charts[key]) { charts[key].destroy(); delete charts[key]; }
+}
+
+function buildChart(key, canvasId, type, labels, datasets, extraOpts={}) {
+    destroyChart(key);
+    const ctx = document.getElementById(canvasId);
+    if (!ctx) return;
+    charts[key] = new Chart(ctx, {
+        type,
+        data: { labels, datasets },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom', labels: { boxWidth: 11, font: { size: 11 }, padding: 10 } },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => {
+                            const v = ctx.parsed?.y ?? ctx.parsed ?? ctx.raw;
+                            return '  ' + fmt(typeof v === 'object' ? v.y || 0 : v);
+                        }
+                    }
+                }
+            },
+            ...extraOpts
+        }
+    });
+}
+
+// ═══ EMI ═══
+function calcEMI() {
+    const P = parseFloat(document.getElementById('emi-amount').value) || 0;
+    const annualRate = parseFloat(document.getElementById('emi-rate').value) || 0;
+    const r = annualRate / 12 / 100;
+    let n = parseFloat(document.getElementById('emi-tenure').value) || 0;
+    if (document.getElementById('emi-tenure-type').value === 'years') n *= 12;
+
+    if (!P || !r || !n) return;
+
+    const emi = P * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
+    const total = emi * n;
+    const interest = total - P;
+
+    document.getElementById('res-emi').textContent      = fmt(emi);
+    document.getElementById('res-interest').textContent = fmt(interest);
+    document.getElementById('res-total').textContent    = fmt(total);
+
+    // Doughnut
+    buildChart('emi-pie', 'chart-emi-pie', 'doughnut',
+        ['Principal', 'Interest'],
+        [{ data: [Math.round(P), Math.round(interest)], backgroundColor: ['#667eea','#ff6584'], borderWidth: 0 }],
+        { cutout: '65%' }
+    );
+
+    // Bar: yearly amortization
+    const years = Math.min(Math.ceil(n/12), 12);
+    const yLabels = Array.from({length: years}, (_,i) => `Yr ${i+1}`);
+    const yPrinc = [], yInt = [];
+    let bal = P;
+    for (let y = 0; y < years; y++) {
+        let yp = 0, yi = 0;
+        for (let m = 0; m < 12 && bal > 0.01; m++) {
+            const ip = bal * r;
+            const pp = Math.min(emi - ip, bal);
+            yi += ip; yp += pp; bal -= pp;
+        }
+        yPrinc.push(Math.round(yp));
+        yInt.push(Math.round(yi));
+    }
+
+    buildChart('emi-bar', 'chart-emi-bar', 'bar',
+        yLabels,
+        [
+            { label: 'Principal', data: yPrinc, backgroundColor: '#667eea', borderRadius: 4, stack: 'a' },
+            { label: 'Interest',  data: yInt,   backgroundColor: '#ff6584', borderRadius: 4, stack: 'a' }
+        ],
+        {
+            scales: {
+                x: { stacked: true, grid: { display: false } },
+                y: { stacked: true, ticks: { callback: v => fmt(v), font: { size: 10 } }, grid: { color: '#f0f0f0' } }
+            }
+        }
+    );
+}
+
+// ═══ WHAT-IF ═══
+function calcWhatIf() {
+    const P = parseFloat(document.getElementById('wi-amount').value) || 0;
+    const r = (parseFloat(document.getElementById('wi-rate').value) || 0) / 12 / 100;
+    const n = (parseFloat(document.getElementById('wi-tenure').value) || 0) * 12;
+    const extra = parseFloat(document.getElementById('wi-extra').value) || 0;
+
+    if (!P || !r || !n) return;
+
+    const emi = P * r * Math.pow(1+r, n) / (Math.pow(1+r, n) - 1);
+    const totalBefore = emi * n;
+    const intBefore = totalBefore - P;
+
+    // Simulate with extra
+    let bal = P, paid = 0, months = 0;
+    while (bal > 0.01 && months < n) {
+        const ip = bal * r;
+        const pp = Math.min(emi + extra - ip, bal);
+        paid += ip + pp;
+        bal  -= pp;
+        months++;
+    }
+    const intAfter   = paid - P;
+    const moneySaved = intBefore - intAfter;
+    const monthsSaved = n - months;
+
+    document.getElementById('wi-before-total').textContent  = fmt(totalBefore);
+    document.getElementById('wi-before-months').textContent = n + ' months';
+    document.getElementById('wi-after-total').textContent   = fmt(paid);
+    document.getElementById('wi-after-months').textContent  = months + ' months';
+    document.getElementById('wi-saved-money').textContent   = fmt(moneySaved);
+    document.getElementById('wi-saved-months').textContent  = monthsSaved;
+
+    buildChart('wi-before', 'chart-wi-before', 'doughnut',
+        ['Principal','Interest'],
+        [{ data:[Math.round(P), Math.round(intBefore)], backgroundColor:['#667eea','#ff6584'], borderWidth:0 }],
+        { cutout:'65%' }
+    );
+
+    buildChart('wi-after', 'chart-wi-after', 'doughnut',
+        ['Principal','Interest'],
+        [{ data:[Math.round(P), Math.round(intAfter)], backgroundColor:['#43c6ac','#a29bfe'], borderWidth:0 }],
+        { cutout:'65%' }
+    );
+}
+
+// ═══ DEBT PAYOFF ═══
+let debts = [];
+
+function addDebt() {
+    const name    = document.getElementById('debt-name').value.trim() || 'Debt';
+    const balance = parseFloat(document.getElementById('debt-balance').value) || 0;
+    const rate    = parseFloat(document.getElementById('debt-rate').value) || 0;
+    const minpay  = parseFloat(document.getElementById('debt-minpay').value) || 0;
+
+    if (!balance || !rate) { alert('Please enter Balance and Rate.'); return; }
+
+    debts.push({ name, balance, rate, minpay });
+    ['debt-name','debt-balance','debt-rate','debt-minpay'].forEach(id => document.getElementById(id).value = '');
+    calcDebt();
+}
+
+function removeDebt(i) {
+    debts.splice(i, 1);
+    calcDebt();
+}
+
+function calcDebt() {
+    if (!debts.length) {
+        document.getElementById('debt-list').innerHTML = `<div class="empty-state"><div class="eicon">📋</div>Add your debts on the left to see your optimized payoff plan</div>`;
+        document.getElementById('debt-charts').style.display = 'none';
+        return;
+    }
+
+    const strategy = document.getElementById('debt-strategy').value;
+    const sorted = [...debts].map((d,i)=>({...d, origIdx:i})).sort((a,b) =>
+        strategy === 'avalanche' ? b.rate - a.rate : a.balance - b.balance
+    );
+
+    const listEl = document.getElementById('debt-list');
+    listEl.innerHTML = '';
+
+    sorted.forEach((d, i) => {
+        const color = PALETTE[i % PALETTE.length];
+        const label = i === 0 ? 'FOCUS NOW' : `#${i+1}`;
+        const div = document.createElement('div');
+        div.className = 'debt-item';
+        div.style.borderLeftColor = color;
+        div.innerHTML = `
+            <div style="flex:1">
+                <div class="dname">${d.name}</div>
+                <div class="ddetails">${fmt(d.balance)} · ${d.rate}% p.a. · Min ₹${d.minpay.toLocaleString('en-IN')}/mo</div>
+            </div>
+            <span class="priority-badge" style="background:${color};margin-right:8px">${label}</span>
+            <span onclick="removeDebt(${d.origIdx})" style="cursor:pointer;color:#ccc;font-size:18px;line-height:1">×</span>
+        `;
+        listEl.appendChild(div);
+    });
+
+    document.getElementById('debt-charts').style.display = 'grid';
+
+    buildChart('debt-pie', 'chart-debt-pie', 'doughnut',
+        sorted.map(d => d.name),
+        [{ data: sorted.map(d => d.balance), backgroundColor: PALETTE.slice(0, sorted.length), borderWidth: 0 }],
+        { cutout: '60%' }
+    );
+
+    buildChart('debt-bar', 'chart-debt-bar', 'bar',
+        sorted.map(d => d.name),
+        [{ label: 'Balance', data: sorted.map(d => d.balance), backgroundColor: PALETTE.slice(0, sorted.length), borderRadius: 6 }],
+        {
+            plugins: { legend: { display: false } },
+            scales: { y: { ticks: { callback: v => fmt(v), font:{size:10} }, grid:{color:'#f0f0f0'} }, x:{grid:{display:false}} }
+        }
+    );
+}
+
+// ═══ SALARY FIT ═══
+function calcSalary() {
+    const salary   = parseFloat(document.getElementById('sal-salary').value) || 0;
+    const existing = parseFloat(document.getElementById('sal-existing').value) || 0;
+    const r  = (parseFloat(document.getElementById('sal-rate').value) || 0) / 12 / 100;
+    const n  = (parseFloat(document.getElementById('sal-tenure').value) || 0) * 12;
+
+    if (!salary || !r || !n) return;
+
+    const maxEMI  = Math.max(salary * 0.4 - existing, 0);
+    const maxLoan = r > 0 ? maxEMI * (Math.pow(1+r, n) - 1) / (r * Math.pow(1+r, n)) : 0;
+
+    document.getElementById('sal-max-emi').textContent  = fmt(maxEMI);
+    document.getElementById('sal-max-loan').textContent = fmt(maxLoan);
+
+    // Pointer
+    const pct = Math.min((existing / salary) * 100, 100);
+    const ptr = document.getElementById('sal-pointer');
+    ptr.style.left = pct + '%';
+    ptr.setAttribute('data-label', Math.round(pct) + '%');
+
+    const statusEl = document.getElementById('sal-status');
+    if (pct < 30) {
+        statusEl.className = 'status-badge safe';
+        statusEl.innerHTML = '<span class="sdot"></span> Safe to borrow more';
+    } else if (pct < 45) {
+        statusEl.className = 'status-badge caution';
+        statusEl.innerHTML = '<span class="sdot"></span> Approaching your limit';
+    } else {
+        statusEl.className = 'status-badge danger';
+        statusEl.innerHTML = '<span class="sdot"></span> Over-leveraged — reduce EMIs first';
+    }
+
+    // Pie
+    const emiSlice     = Math.min(existing, salary);
+    const newEmiSlice  = maxEMI;
+    const rest         = Math.max(salary - emiSlice - newEmiSlice, 0);
+
+    buildChart('salary-pie', 'chart-salary-pie', 'doughnut',
+        ['Existing EMIs', 'Available for New Loan', 'Other Expenses'],
+        [{ data:[Math.round(emiSlice), Math.round(newEmiSlice), Math.round(rest)],
+           backgroundColor:['#ff6584','#667eea','#43c6ac'], borderWidth:0 }],
+        { cutout:'62%' }
+    );
+}
+
+// ═══ TAB SWITCHING ═══
+const TAB_IDS = ['emi','whatif','debt','salary'];
+
+function switchTab(active) {
+    document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', TAB_IDS[i] === active));
+    TAB_IDS.forEach(t => {
+        document.getElementById('tab-' + t).style.display = t === active ? 'contents' : 'none';
+    });
+    setTimeout(() => {
+        if (active === 'emi')    calcEMI();
+        if (active === 'whatif') calcWhatIf();
+        if (active === 'debt')   calcDebt();
+        if (active === 'salary') calcSalary();
+    }, 30);
+}
+
+// ═══ INIT ═══
+window.addEventListener('load', () => {
+    calcEMI();
+    // Pre-load other tabs' charts silently
+    setTimeout(calcWhatIf, 100);
+    setTimeout(calcSalary, 150);
+});
+</script>
+
+</body>
+</html>
