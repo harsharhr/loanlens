@@ -120,6 +120,23 @@ hr{border:none;border-top:1px solid var(--bdr);margin:13px 0}
 /* WARNING */
 .warn{background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:11px;font-size:12px;color:#991b1b;display:none}
 
+/* ── COMPOUND INTEREST ── */
+.cibtn{padding:6px 4px;border-radius:7px;border:1.5px solid var(--bdr);background:#fff;color:var(--mut);font-size:11px;font-weight:600;cursor:pointer;text-align:center;transition:all .15s;user-select:none}
+.cibtn.on{background:var(--ind);border-color:var(--ind);color:#fff}
+.cit{padding:5px 12px;border-radius:6px;border:1.5px solid var(--bdr);background:#fff;font-size:11.5px;font-weight:600;color:var(--mut);cursor:pointer;transition:all .15s}
+.cit.on{background:var(--ind);border-color:var(--ind);color:#fff}
+.civ{padding:5px 10px;border-radius:6px;border:1.5px solid var(--bdr);background:#fff;font-size:11px;font-weight:600;color:var(--mut);cursor:pointer;transition:all .15s}
+.civ.on{background:var(--ind);border-color:var(--ind);color:#fff}
+.ci-tbl-wrap{background:#fff;border-radius:12px;border:1px solid var(--bdr);overflow:hidden;overflow-y:auto;max-height:260px}
+.ci-tbl-wrap::-webkit-scrollbar{width:3px}.ci-tbl-wrap::-webkit-scrollbar-thumb{background:#c7d2fe}
+.ci-tbl{width:100%;border-collapse:collapse;font-size:11.5px}
+.ci-tbl th{background:#4f46e5;color:#fff;padding:8px 10px;text-align:right;font-size:11px;font-weight:700;white-space:nowrap;position:sticky;top:0;z-index:1}
+.ci-tbl th:first-child{text-align:left}
+.ci-tbl td{padding:7px 10px;text-align:right;border-bottom:1px solid #f1f5f9;white-space:nowrap}
+.ci-tbl td:first-child{text-align:left;font-weight:600;color:var(--txt)}
+.ci-tbl tr:nth-child(even) td{background:#f8fafc}
+.ci-tbl tr:hover td{background:#eef2ff}
+
 @media(max-width:800px){.main{grid-template-columns:1fr;height:auto}body{overflow:auto}}
 </style>
 </head>
@@ -153,7 +170,7 @@ hr{border:none;border-top:1px solid var(--bdr);margin:13px 0}
   <button class="pbtn" onclick="sw('cc')">💳 Credit Card</button>
   <button class="pbtn" onclick="sw('sal')">💼 Salary</button>
   <button class="pbtn" onclick="sw('debt')">🔥 Debt Planner</button>
-  <a class="pbtn" href="compound.html" style="text-decoration:none">📊 Compound Interest</a>
+  <button class="pbtn" onclick="sw('ci')">📊 Compound Interest</button>
 </div>
 
 <div class="main">
@@ -289,6 +306,86 @@ hr{border:none;border-top:1px solid var(--bdr);margin:13px 0}
   <div class="f"><label>Extra Monthly Payment (₹)</label><input type="number" id="d-ex" value="0" oninput="cDebt()"></div>
 </div>
 
+<!-- COMPOUND INTEREST INPUT -->
+<div class="ipane" id="ip-ci">
+  <div class="frow" style="gap:6px">
+    <div class="f" style="flex:0 0 80px"><label>Currency</label>
+      <select id="ci-cur" onchange="cCI()">
+        <option value="$">$ USD</option><option value="₹">₹ INR</option>
+        <option value="€">€ EUR</option><option value="£">£ GBP</option><option value="¥">¥ JPY</option>
+      </select>
+    </div>
+    <div class="f"><label>Initial Investment</label>
+      <input type="number" id="ci-p" value="5000" min="0" oninput="cCI()">
+    </div>
+  </div>
+  <div class="frow">
+    <div class="f"><label>Interest Rate (%)</label>
+      <input type="number" id="ci-r" value="5" step="0.1" min="0" oninput="cCI()">
+    </div>
+    <div class="f"><label>Per</label>
+      <select id="ci-rf" onchange="cCI()">
+        <option value="1">year</option><option value="12">month (×12)</option>
+        <option value="4">quarter (×4)</option><option value="52">week (×52)</option>
+      </select>
+    </div>
+  </div>
+  <div class="f"><label>Compound Frequency</label>
+    <select id="ci-n" onchange="cCI()">
+      <option value="365">Daily (365/yr)</option><option value="52">Weekly (52/yr)</option>
+      <option value="12" selected>Monthly (12/yr)</option><option value="4">Quarterly (4/yr)</option>
+      <option value="2">Semi-Annually (2/yr)</option><option value="1">Annually (1/yr)</option>
+    </select>
+  </div>
+  <div class="frow">
+    <div class="f"><label>Years</label><input type="number" id="ci-y" value="5" min="0" max="100" oninput="cCI()"></div>
+    <div class="f"><label>Extra Months</label><input type="number" id="ci-m" value="0" min="0" max="11" oninput="cCI()"></div>
+  </div>
+  <div class="f">
+    <label>Regular Contributions</label>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:5px">
+      <div class="cibtn on" onclick="ciMode('none',this)">None</div>
+      <div class="cibtn" onclick="ciMode('dep',this)">Deposits</div>
+      <div class="cibtn" onclick="ciMode('wd',this)">Withdrawals</div>
+      <div class="cibtn" onclick="ciMode('both',this)">Both</div>
+    </div>
+  </div>
+  <div id="ci-dep" style="display:none">
+    <hr>
+    <div class="slbl">Deposit Settings</div>
+    <div class="frow">
+      <div class="f"><label>Deposit Amount</label><input type="number" id="ci-da" value="100" min="0" oninput="cCI()"></div>
+      <div class="f"><label>Frequency</label>
+        <select id="ci-df" onchange="cCI()">
+          <option value="365">Daily</option><option value="52">Weekly</option><option value="26">Bi-Weekly</option>
+          <option value="12" selected>Monthly</option><option value="4">Quarterly</option>
+          <option value="2">Semi-Annually</option><option value="1">Annually</option>
+        </select>
+      </div>
+    </div>
+    <div class="f"><label>Annual Deposit Increase (%)</label><input type="number" id="ci-di" value="0" min="0" step="0.5" oninput="cCI()"></div>
+    <div class="f"><label>Deposit Timing</label>
+      <select id="ci-dt" onchange="cCI()">
+        <option value="beg">Beginning of Period</option><option value="end" selected>End of Period</option>
+      </select>
+    </div>
+  </div>
+  <div id="ci-wd" style="display:none">
+    <hr>
+    <div class="slbl">Withdrawal Settings</div>
+    <div class="frow">
+      <div class="f"><label>Withdrawal Amount</label><input type="number" id="ci-wa" value="50" min="0" oninput="cCI()"></div>
+      <div class="f"><label>Frequency</label>
+        <select id="ci-wf" onchange="cCI()">
+          <option value="365">Daily</option><option value="52">Weekly</option>
+          <option value="12" selected>Monthly</option><option value="4">Quarterly</option><option value="1">Annually</option>
+        </select>
+      </div>
+    </div>
+    <div class="f"><label>Annual Withdrawal Increase (%)</label><input type="number" id="ci-wi" value="0" min="0" step="0.5" oninput="cCI()"></div>
+  </div>
+</div>
+
 </div><!-- /pl -->
 
 <!-- ═══ RIGHT PANEL ═══ -->
@@ -397,12 +494,84 @@ hr{border:none;border-top:1px solid var(--bdr);margin:13px 0}
   </div>
 </div>
 
+<!-- COMPOUND INTEREST RESULTS -->
+<div class="rpane" id="rp-ci">
+  <div style="font-size:12px;font-weight:700;color:#94a3b8;text-align:right;margin-bottom:2px" id="ci-period-lbl">5 years</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="mc" style="text-align:left;padding:12px 14px">
+        <div class="ml">Future Investment Value</div>
+        <div class="mv ci" id="ci-fv" style="font-size:21px;margin-top:5px">$0</div>
+      </div>
+      <div class="mc" style="text-align:left;padding:12px 14px">
+        <div class="ml">Total Interest Earned</div>
+        <div class="mv co" id="ci-int" style="font-size:21px;margin-top:5px">$0</div>
+      </div>
+      <div class="mc" style="text-align:left;padding:12px 14px">
+        <div class="ml">Initial Balance</div>
+        <div class="mv" id="ci-ini" style="font-size:21px;margin-top:5px;color:#64748b">$0</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div class="mc" style="text-align:left;padding:12px 14px">
+        <div class="ml">Yearly Rate → Compounded Rate</div>
+        <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
+          <span style="font-size:16px;font-weight:800;color:#64748b" id="ci-nom">5%</span>
+          <span style="color:#d1d5db;font-size:16px">→</span>
+          <span style="font-size:16px;font-weight:800;color:#f59e0b" id="ci-ear">5.12%</span>
+        </div>
+        <div style="font-size:10px;color:#94a3b8;margin-top:3px">EAR after compounding</div>
+      </div>
+      <div class="mc" style="text-align:left;padding:12px 14px">
+        <div class="ml">All-time Return on Investment</div>
+        <div class="mv cg" id="ci-roi" style="font-size:21px;margin-top:5px">0%</div>
+      </div>
+      <div class="mc" style="text-align:left;padding:12px 14px">
+        <div class="ml">Time to Double Investment</div>
+        <div class="mv cb" id="ci-dbl" style="font-size:17px;margin-top:5px">—</div>
+      </div>
+    </div>
+  </div>
+  <!-- Breakdown controls -->
+  <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border-radius:12px;border:1px solid var(--bdr);padding:8px 12px">
+    <div style="display:flex;align-items:center;gap:5px">
+      <span style="font-size:10.5px;font-weight:700;color:#94a3b8">Breakdown:</span>
+      <button class="cit on" onclick="ciTab('mo',this)">Monthly</button>
+      <button class="cit" onclick="ciTab('yr',this)">Yearly</button>
+    </div>
+    <div style="display:flex;gap:5px">
+      <button class="civ on" onclick="ciView('tbl',this)">📋 Table</button>
+      <button class="civ" onclick="ciView('chr',this)">📊 Chart</button>
+    </div>
+  </div>
+  <!-- Chart (hidden by default) -->
+  <div id="ci-chr" style="display:none" class="cc">
+    <h4>Compound vs Simple vs No Interest</h4>
+    <div class="cbox" style="height:190px"><canvas id="ch-ci"></canvas></div>
+  </div>
+  <!-- Table -->
+  <div id="ci-tbl" class="ci-tbl-wrap">
+    <div id="ci-tbl-mo">
+      <table class="ci-tbl">
+        <thead><tr><th>Month</th><th>Deposits</th><th>Withdrawals</th><th>Interest</th><th>Accrued Interest</th><th>Balance</th></tr></thead>
+        <tbody id="ci-tbody-mo"></tbody>
+      </table>
+    </div>
+    <div id="ci-tbl-yr" style="display:none">
+      <table class="ci-tbl">
+        <thead><tr><th>Year</th><th>Deposits</th><th>Withdrawals</th><th>Interest</th><th>Accrued Interest</th><th>Balance</th></tr></thead>
+        <tbody id="ci-tbody-yr"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 </div><!-- /pr -->
 </div><!-- /main -->
 
 <script>
 const CH={}, PAL=['#4f46e5','#10b981','#ef4444','#f59e0b','#3b82f6','#8b5cf6','#ec4899','#06b6d4'];
-const TABS=['emi','sip','fd','hl','cc','sal','debt'];
+const TABS=['emi','sip','fd','hl','cc','sal','debt','ci'];
 
 function fmt(n){
   n=Math.max(0,n||0);
@@ -436,7 +605,7 @@ function sw(id){
   });
   setTimeout(()=>{
     if(id==='emi')cEMI();if(id==='sip')cSIP();if(id==='fd')cFD();
-    if(id==='hl')cHL();if(id==='cc')cCC();if(id==='sal')cSal();if(id==='debt')cDebt();
+    if(id==='hl')cHL();if(id==='cc')cCC();if(id==='sal')cSal();if(id==='debt')cDebt();if(id==='ci')cCI();
   },30);
 }
 
@@ -758,6 +927,144 @@ function cDebt(){
   mk('db','ch-db','bar',sorted.map(d=>d.nm),
     [{label:'Balance',data:sorted.map(d=>d.b),backgroundColor:PAL.slice(0,sorted.length),borderRadius:6}],
     {plugins:{legend:{display:false}},scales:{x:{grid:{display:false}},y:{ticks:{callback:v=>fmt(v),font:{size:9}},grid:{color:'#f1f5f9'}}}});
+}
+
+// ─── COMPOUND INTEREST ───
+let ciContrib='none';
+
+function ciMode(m,el){
+  ciContrib=m;
+  el.parentElement.querySelectorAll('.cibtn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('ci-dep').style.display=(m==='dep'||m==='both')?'block':'none';
+  document.getElementById('ci-wd').style.display=(m==='wd'||m==='both')?'block':'none';
+  cCI();
+}
+
+function ciTab(t,el){
+  el.parentElement.querySelectorAll('.cit').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('ci-tbl-mo').style.display=t==='mo'?'block':'none';
+  document.getElementById('ci-tbl-yr').style.display=t==='yr'?'block':'none';
+}
+
+function ciView(v,el){
+  el.parentElement.querySelectorAll('.civ').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('ci-chr').style.display=v==='chr'?'block':'none';
+  document.getElementById('ci-tbl').style.display=v==='tbl'?'block':'none';
+}
+
+function cCI(){
+  const P  =+document.getElementById('ci-p')?.value||0;
+  const r0 =+document.getElementById('ci-r')?.value||0;
+  const rf =+document.getElementById('ci-rf')?.value||1;
+  const n  =+document.getElementById('ci-n')?.value||12;
+  const yrs=+document.getElementById('ci-y')?.value||0;
+  const mos=+document.getElementById('ci-m')?.value||0;
+  const cur=document.getElementById('ci-cur')?.value||'$';
+  const totalMonths=yrs*12+mos;
+  if(!P||totalMonths<=0)return;
+
+  const annRate=r0*rf/100;
+  const mr=Math.pow(1+annRate/n,n/12)-1;
+
+  let depMo=0,wdMo=0,depInc=0,wdInc=0;
+  if(ciContrib==='dep'||ciContrib==='both'){
+    const da=+document.getElementById('ci-da')?.value||0;
+    const df=+document.getElementById('ci-df')?.value||12;
+    depMo=da*df/12; depInc=+document.getElementById('ci-di')?.value||0;
+  }
+  if(ciContrib==='wd'||ciContrib==='both'){
+    const wa=+document.getElementById('ci-wa')?.value||0;
+    const wf=+document.getElementById('ci-wf')?.value||12;
+    wdMo=wa*wf/12; wdInc=+document.getElementById('ci-wi')?.value||0;
+  }
+  const timing=document.getElementById('ci-dt')?.value||'end';
+
+  let bal=P,totalDep=P,totalWd=0,totalInt=0;
+  const moData=[];
+  for(let m=1;m<=totalMonths;m++){
+    const yr=Math.floor((m-1)/12);
+    const dep=depMo*Math.pow(1+depInc/100,yr);
+    const wd =wdMo *Math.pow(1+wdInc/100,yr);
+    if(timing==='beg')bal=Math.max(0,bal+(dep-wd));
+    const interest=bal*mr;
+    bal+=interest; totalInt+=interest;
+    if(timing==='end')bal=Math.max(0,bal+(dep-wd));
+    totalDep+=dep; totalWd+=wd;
+    moData.push({m,dep,wd,interest,totalDep,totalWd,totalInt,bal:Math.max(0,bal)});
+  }
+
+  const fv=Math.max(0,bal);
+  const EAR=(Math.pow(1+annRate/n,n)-1)*100;
+  const roi=P>0?(fv-P)/P*100:0;
+  const dbl=annRate>0?Math.log(2)/Math.log(1+EAR/100):Infinity;
+
+  const fc=v=>cur+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const fp=v=>v.toFixed(2)+'%';
+
+  const pl=yrs>0&&mos>0?`${yrs}yr ${mos}mo`:yrs>0?`${yrs} year${yrs!==1?'s':''}`:`${mos} month${mos!==1?'s':''}`;
+  set('ci-period-lbl',pl);
+  set('ci-fv',fc(fv)); set('ci-int',fc(totalInt)); set('ci-ini',fc(P));
+  set('ci-nom',fp(annRate*100)); set('ci-ear',fp(EAR));
+  set('ci-roi',(roi>=0?'↑ ':'')+fp(roi));
+  set('ci-dbl',isFinite(dbl)?`${Math.floor(dbl)} yr${Math.floor(dbl)!==1?'s':''} ${Math.round((dbl%1)*12)} mo`:'N/A');
+
+  // Monthly table
+  const tmo=document.getElementById('ci-tbody-mo');
+  if(tmo){
+    tmo.innerHTML=`<tr><td>Month 0</td><td>—</td><td>—</td><td>—</td><td>${fc(0)}</td><td><strong>${fc(P)}</strong></td></tr>`;
+    moData.forEach(d=>{
+      tmo.innerHTML+=`<tr>
+        <td>Month ${d.m}</td>
+        <td>${d.dep>0.005?'<span class="cg">+'+fc(d.dep)+'</span>':'—'}</td>
+        <td>${d.wd>0.005?'<span style="color:var(--red)">-'+fc(d.wd)+'</span>':'—'}</td>
+        <td class="cg">+${fc(d.interest)}</td>
+        <td class="cg">${fc(d.totalInt)}</td>
+        <td><strong>${fc(d.bal)}</strong></td>
+      </tr>`;
+    });
+  }
+
+  // Yearly table
+  const tyr=document.getElementById('ci-tbody-yr');
+  if(tyr){
+    tyr.innerHTML=`<tr><td>Year 0</td><td>—</td><td>—</td><td>—</td><td>${fc(0)}</td><td><strong>${fc(P)}</strong></td></tr>`;
+    let yr2=1,yDep=0,yWd=0,yInt=0;
+    moData.forEach((d,i)=>{
+      yDep+=d.dep;yWd+=d.wd;yInt+=d.interest;
+      if((i+1)%12===0||i===moData.length-1){
+        tyr.innerHTML+=`<tr>
+          <td>Year ${yr2}</td>
+          <td>${yDep>0.005?'<span class="cg">+'+fc(yDep)+'</span>':'—'}</td>
+          <td>${yWd>0.005?'<span style="color:var(--red)">-'+fc(yWd)+'</span>':'—'}</td>
+          <td class="cg">+${fc(yInt)}</td>
+          <td class="cg">${fc(d.totalInt)}</td>
+          <td><strong>${fc(d.bal)}</strong></td>
+        </tr>`;
+        yr2++;yDep=0;yWd=0;yInt=0;
+      }
+    });
+  }
+
+  // Chart (compound vs simple vs no-interest)
+  const pts=totalMonths<=36?moData:moData.filter((_,i)=>(i+1)%12===0||i===moData.length-1);
+  const lbs=totalMonths<=36?pts.map(d=>'M'+d.m):pts.map(d=>'Y'+Math.ceil(d.m/12));
+  gc('ci');
+  const ctx=document.getElementById('ch-ci');
+  if(ctx){
+    CH['ci']=new Chart(ctx,{type:'line',data:{labels:lbs,datasets:[
+      {label:'Compound',data:pts.map(d=>Math.round(d.bal)),borderColor:'#4f46e5',backgroundColor:'rgba(79,70,229,.1)',fill:true,tension:.3,pointRadius:1.5,borderWidth:2.5},
+      {label:'Simple',data:pts.map(d=>Math.round(P*(1+annRate*d.m/12))),borderColor:'#f59e0b',fill:false,tension:.3,pointRadius:1,borderWidth:2,borderDash:[5,4]},
+      {label:'No Interest',data:pts.map(d=>Math.round(P+(d.totalDep-P)-d.totalWd)),borderColor:'#94a3b8',fill:false,tension:.1,pointRadius:1,borderWidth:1.5,borderDash:[3,3]}
+    ]},options:{responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{legend:{position:'bottom',labels:{boxWidth:10,font:{size:10},padding:7}},
+        tooltip:{callbacks:{label:c=>c.dataset.label+': '+cur+c.parsed.y.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}}},
+      scales:{x:{grid:{display:false},ticks:{font:{size:9}}},y:{ticks:{callback:v=>cur+(v>=1000?(v/1000).toFixed(0)+'K':v),font:{size:9}},grid:{color:'#f1f5f9'}}}}
+    });
+  }
 }
 
 // ─── INIT ───
