@@ -4,171 +4,191 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Compound Interest Calculator — FinWise | Free Online Tool 2026</title>
-<meta name="description" content="Free compound interest calculator with monthly breakdown table, growth chart, and formula. Supports regular deposits, withdrawals, and all compounding frequencies. No signup needed.">
-<meta name="keywords" content="compound interest calculator, compound interest formula, investment growth calculator, compound interest with deposits, compound interest monthly breakdown">
+<meta name="description" content="Free compound interest calculator with monthly & yearly breakdown, growth chart, deposits and withdrawals. Calculate how your investment grows with compounding. No signup.">
+<meta name="keywords" content="compound interest calculator, compound interest formula, investment growth calculator, compound interest with deposits, effective annual rate calculator">
 <meta name="robots" content="index, follow">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"FinWise Compound Interest Calculator","description":"Free compound interest calculator with monthly breakdown, visual chart, deposits and withdrawals","applicationCategory":"FinanceApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"2847"}}</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4910237367995817" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--blue:#1d4ed8;--bd:#1e3a8a;--bl:#3b82f6;--teal:#0891b2;--grn:#16a34a;--red:#dc2626;--org:#d97706;--pur:#7c3aed;--txt:#111827;--mut:#6b7280;--bdr:#e5e7eb;--bg:#f9fafb;--card:#fff}
+:root{--blue:#1d4ed8;--bd:#1e3a8a;--bl:#3b82f6;--grn:#16a34a;--org:#d97706;--pur:#7c3aed;--red:#dc2626;--txt:#111827;--mut:#6b7280;--bdr:#e5e7eb;--bg:#f8fafc;--card:#fff}
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--txt);font-size:14px;line-height:1.5}
 
-/* SITE HEADER */
-.sh{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+/* ── HEADER ── */
+.hdr{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);padding:11px 24px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-size:20px;font-weight:900;color:#fff;text-decoration:none}.logo em{color:#fcd34d;font-style:normal}
-.snav{display:flex;gap:16px;font-size:12px}.snav a{color:rgba(255,255,255,.8);text-decoration:none}.snav a:hover{color:#fff}
+.hnav{display:flex;gap:14px;font-size:12px}.hnav a{color:rgba(255,255,255,.8);text-decoration:none}.hnav a:hover{color:#fff}
 .tbar{background:#1e40af;padding:4px 24px;font-size:11px;color:rgba(255,255,255,.75);display:flex;gap:16px;align-items:center}.tbar b{color:#fcd34d}
 
-/* BREADCRUMB */
-.bc{max-width:980px;margin:0 auto;padding:10px 20px;font-size:12px;color:var(--mut)}
+/* ── BREADCRUMB ── */
+.bc{max-width:1200px;margin:0 auto;padding:8px 20px;font-size:12px;color:var(--mut)}
 .bc a{color:var(--blue);text-decoration:none}.bc a:hover{text-decoration:underline}.bc span{margin:0 5px}
 
-/* MAIN */
-.wrap{max-width:980px;margin:0 auto;padding:0 20px 48px}
+/* ── AD SLOTS ── */
+.ad-top{background:#f3f4f6;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);padding:6px;text-align:center;min-height:90px}
+.ad-mid{background:#f3f4f6;border:1px solid var(--bdr);border-radius:8px;padding:6px;text-align:center;min-height:90px;margin:20px 0}
+.ad-rail{background:#f3f4f6;border:1px solid var(--bdr);border-radius:8px;padding:6px;text-align:center;min-height:250px;margin-bottom:16px}
 
-/* TITLE */
-.ptitle{font-size:28px;font-weight:900;color:var(--bd);margin-bottom:4px}
-.psub{font-size:13px;color:var(--mut);margin-bottom:20px}
+/* ── PAGE WRAP ── */
+.pw{max-width:1200px;margin:0 auto;padding:16px 20px 48px}
+.ptitle{font-size:26px;font-weight:900;color:var(--bd);margin-bottom:4px}
+.psub{font-size:13px;color:var(--mut);margin-bottom:16px}
 
-/* CARD */
-.card{background:var(--card);border-radius:12px;border:1px solid var(--bdr);box-shadow:0 2px 12px rgba(0,0,0,.06);padding:24px;margin-bottom:20px}
-.sh2{font-size:12px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid #dbeafe;padding-bottom:7px;margin-bottom:16px}
+/* ── TWO-COLUMN STICKY LAYOUT ── */
+.calc-layout{display:grid;grid-template-columns:360px 1fr;gap:24px;align-items:start}
 
-/* CURRENCY BUTTONS */
-.cur-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
-.cb{padding:6px 14px;border:2px solid var(--bdr);border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;background:#fff;color:var(--mut);transition:all .15s}
+/* ── LEFT FORM (STICKY) ── */
+.form-col{position:sticky;top:12px}
+.form-card{background:var(--card);border-radius:12px;border:1px solid var(--bdr);box-shadow:0 2px 10px rgba(0,0,0,.07);padding:20px}
+.sec-hd{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid #dbeafe;padding-bottom:6px;margin:16px 0 12px}
+.sec-hd:first-child{margin-top:0}
+
+/* Currency buttons */
+.cur-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.cb{padding:5px 11px;border:2px solid var(--bdr);border-radius:6px;font-size:12.5px;font-weight:700;cursor:pointer;background:#fff;color:var(--mut);transition:all .15s}
 .cb.on{background:var(--blue);border-color:var(--blue);color:#fff}
 
-/* FORM GRID */
-.fg{display:grid;gap:14px;margin-bottom:18px}
-.fg3{grid-template-columns:repeat(3,1fr)}.fg2{grid-template-columns:repeat(2,1fr)}.fg4{grid-template-columns:repeat(4,1fr)}
-.field{display:flex;flex-direction:column;gap:5px}
-.field label{font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}
-.fnote{font-size:10px;color:#9ca3af;margin-top:2px}
-
-/* INPUT GROUP (prefix/suffix) */
+/* Fields */
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.field .note{font-size:10px;color:#9ca3af;margin-top:3px}
+.frow{display:flex;gap:8px}.frow .field{flex:1}
 .ig{display:flex;border:2px solid var(--bdr);border-radius:8px;overflow:hidden;transition:border-color .15s;background:#fff}
 .ig:focus-within{border-color:var(--bl)}
-.ig .pfx,.ig .sfx{background:#f3f4f6;padding:9px 10px;font-size:13px;font-weight:700;color:var(--mut);border:none;display:flex;align-items:center;white-space:nowrap;flex-shrink:0}
-.ig input,.ig select{flex:1;border:none;outline:none;padding:9px 10px;font-size:14px;font-weight:600;color:var(--txt);background:#fff;min-width:0;width:100%}
-input[type=number],input[type=text],select{padding:9px 12px;border:2px solid var(--bdr);border-radius:8px;font-size:14px;font-weight:600;color:var(--txt);background:#fff;outline:none;transition:border-color .15s;width:100%}
+.ig .pfx,.ig .sfx{background:#f3f4f6;padding:8px 10px;font-size:13px;font-weight:700;color:var(--mut);display:flex;align-items:center;white-space:nowrap;flex-shrink:0}
+.ig input,.ig select{flex:1;border:none;outline:none;padding:8px 10px;font-size:14px;font-weight:600;color:var(--txt);background:#fff;min-width:0}
+input[type=number],select{padding:8px 12px;border:2px solid var(--bdr);border-radius:8px;font-size:14px;font-weight:600;color:var(--txt);background:#fff;outline:none;transition:border-color .15s;width:100%}
 input:focus,select:focus{border-color:var(--bl)}
 
-/* RADIO TABS */
-.rtabs{display:flex;border:2px solid var(--bdr);border-radius:8px;overflow:hidden}
-.rtab{flex:1;text-align:center;padding:8px 6px;cursor:pointer;font-size:12px;font-weight:600;color:var(--mut);background:#fff;border-right:1px solid var(--bdr);transition:all .15s;user-select:none}
-.rtab:last-child{border-right:none}
-.rtab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+/* Contribution mode tabs */
+.mode-tabs{display:flex;border:2px solid var(--bdr);border-radius:8px;overflow:hidden;margin-bottom:4px}
+.mtab{flex:1;text-align:center;padding:7px 4px;cursor:pointer;font-size:11.5px;font-weight:600;color:var(--mut);background:#fff;border-right:1px solid var(--bdr);transition:all .15s;user-select:none}
+.mtab:last-child{border-right:none}
+.mtab.on{background:var(--blue);color:#fff}
 
-/* CONTRIBUTION PANELS */
-.cpanel{display:none;background:#f0f9ff;border:1px solid #bae6fd;border-radius:10px;padding:16px;margin-top:14px}
+/* Contribution panels */
+.cpanel{display:none;background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:14px;margin-top:10px}
 .cpanel.show{display:block}
+.cpanel .sec-hd{color:#0369a1;border-bottom-color:#bae6fd}
 
-/* BUTTON */
-.go-btn{width:100%;padding:14px;background:linear-gradient(135deg,#1d4ed8,#2563eb);color:#fff;border:none;border-radius:10px;font-size:16px;font-weight:700;cursor:pointer;margin-top:20px;transition:all .15s;box-shadow:0 4px 12px rgba(29,78,216,.3);letter-spacing:.3px}
-.go-btn:hover{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);box-shadow:0 6px 20px rgba(29,78,216,.4);transform:translateY(-1px)}
+/* ── RIGHT RESULTS COLUMN ── */
+.results-col{display:flex;flex-direction:column;gap:14px}
 
-/* RESULTS */
-#results{display:none}
+/* Period badge */
+.period-badge{display:inline-flex;align-items:center;gap:6px;background:#1d4ed8;color:#fff;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:700}
+.period-badge .dot{width:6px;height:6px;background:#fcd34d;border-radius:50%}
 
-/* KEY METRICS */
-.km{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.kmc{background:#fff;border-radius:10px;padding:16px 12px;text-align:center;border:1px solid var(--bdr);box-shadow:0 1px 4px rgba(0,0,0,.04)}
-.kmc .kl{font-size:10px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}
-.kmc .kv{font-size:22px;font-weight:800;margin-top:6px;line-height:1}
-.kmc .ks{font-size:10.5px;color:#9ca3af;margin-top:3px}
-.vb{color:#1d4ed8}.vg{color:#16a34a}.vp{color:#7c3aed}.vo{color:#d97706}.vr{color:#dc2626}.vt{color:#0891b2}
+/* Metric 2-col grid (matches reference) */
+.metrics-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mcol{display:flex;flex-direction:column;gap:10px}
+.mcard{background:var(--card);border-radius:10px;border:1px solid var(--bdr);padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.mcard .ml{font-size:10.5px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.mcard .mv{font-size:24px;font-weight:800;line-height:1.1}
+.mcard .ms{font-size:10.5px;color:#9ca3af;margin-top:3px}
+.mv-blue{color:#1d4ed8}.mv-org{color:#d97706}.mv-gry{color:#64748b}
+.mv-grn{color:#16a34a}.mv-pur{color:#7c3aed}.mv-teal{color:#0891b2}
 
-/* SUB METRICS */
-.sm{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
-.smc{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:10px;text-align:center}
-.smc .sl{font-size:10px;font-weight:700;color:#16a34a;text-transform:uppercase}
-.smc .sv{font-size:13px;font-weight:800;color:#15803d;margin-top:3px}
+/* Rate arrow card */
+.rate-card{background:var(--card);border-radius:10px;border:1px solid var(--bdr);padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.rate-card .ml{font-size:10.5px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+.rate-arrow{display:flex;align-items:center;gap:8px}
+.rate-arrow .nom{font-size:20px;font-weight:800;color:#64748b}
+.rate-arrow .arr{font-size:20px;color:#d1d5db}
+.rate-arrow .ear{font-size:20px;font-weight:800;color:#d97706}
+.rate-sub{font-size:10.5px;color:#9ca3af;margin-top:4px}
 
-/* RATE BAR */
-.rate-bar{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:14px 20px;margin-bottom:16px;display:flex;gap:32px;align-items:center;flex-wrap:wrap}
-.ri .rl{font-size:10.5px;font-weight:700;color:#1d4ed8;text-transform:uppercase}
-.ri .rv{font-size:20px;font-weight:800;color:#1e3a8a}
-.ri .rn{font-size:10.5px;color:var(--mut);margin-top:2px}
-.rate-bar .vsep{width:1px;height:40px;background:#bfdbfe}
+/* ── BREAKDOWN SECTION ── */
+.bk-bar{display:flex;align-items:center;justify-content:space-between;background:var(--card);border-radius:10px;border:1px solid var(--bdr);padding:8px 14px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.bk-label{font-size:11px;font-weight:700;color:var(--mut);margin-right:6px}
+.bk-tabs,.bk-views{display:flex;gap:5px}
+.bktab,.bkview{padding:5px 12px;border-radius:6px;border:1.5px solid var(--bdr);background:#fff;font-size:12px;font-weight:600;color:var(--mut);cursor:pointer;transition:all .15s}
+.bktab.on,.bkview.on{background:var(--blue);border-color:var(--blue);color:#fff}
 
-/* CHART */
-.cbox{height:300px;position:relative}
-
-/* TABLE SECTION */
-.tsec{background:#fff;border-radius:10px;border:1px solid var(--bdr);box-shadow:0 1px 4px rgba(0,0,0,.04);margin-bottom:20px;overflow:hidden}
-.ttabs{display:flex;border-bottom:2px solid var(--bdr)}
-.ttab{padding:11px 20px;font-size:13px;font-weight:600;color:var(--mut);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;background:none;border-top:none;border-left:none;border-right:none}
-.ttab.on{color:var(--blue);border-bottom-color:var(--blue)}
-.twrap{overflow-x:auto;max-height:420px;overflow-y:auto}
-.twrap::-webkit-scrollbar{width:4px;height:4px}.twrap::-webkit-scrollbar-thumb{background:#c7d2fe;border-radius:4px}
+/* ── TABLE ── */
+.tbl-card{background:var(--card);border-radius:10px;border:1px solid var(--bdr);overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.tbl-wrap{overflow-x:auto;max-height:340px;overflow-y:auto}
+.tbl-wrap::-webkit-scrollbar{width:4px;height:4px}.tbl-wrap::-webkit-scrollbar-thumb{background:#c7d2fe;border-radius:4px}
 table{width:100%;border-collapse:collapse;font-size:12.5px}
-th{background:#1d4ed8;color:#fff;padding:10px 12px;text-align:right;font-weight:700;font-size:11.5px;white-space:nowrap;position:sticky;top:0}
+th{background:#1d4ed8;color:#fff;padding:9px 12px;text-align:right;font-size:11.5px;font-weight:700;white-space:nowrap;position:sticky;top:0;z-index:1}
 th:first-child{text-align:left}
-td{padding:9px 12px;text-align:right;border-bottom:1px solid #f1f5f9;white-space:nowrap}
+/* Colored column headers matching reference */
+th.th-int{background:#d97706}
+th.th-acc{background:#d97706}
+th.th-bal{background:#16a34a}
+td{padding:8px 12px;text-align:right;border-bottom:1px solid #f1f5f9;white-space:nowrap;font-size:12.5px}
 td:first-child{text-align:left;font-weight:600;color:var(--txt)}
 tr:nth-child(even) td{background:#f8fafc}
 tr:hover td{background:#eff6ff}
-.pos{color:#16a34a}.neg{color:#dc2626}
+.td-pos{color:#16a34a}.td-neg{color:#dc2626}
 
-/* EDUCATIONAL */
-.edu h2{font-size:20px;font-weight:800;color:var(--bd);margin-bottom:10px}
-.edu h3{font-size:15px;font-weight:700;color:var(--txt);margin:16px 0 8px}
-.edu p{font-size:13.5px;color:#374151;line-height:1.75;margin-bottom:10px}
-.edu ul{margin:8px 0 10px 20px;font-size:13.5px;color:#374151;line-height:1.75}
+/* ── CHART ── */
+.chart-card{background:var(--card);border-radius:10px;border:1px solid var(--bdr);padding:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.chart-card h4{font-size:13px;font-weight:700;color:var(--txt);margin-bottom:12px}
+.cbox{height:260px;position:relative}
 
-.fmbox{background:#f0f9ff;border:2px solid #bae6fd;border-radius:10px;padding:16px 24px;text-align:center;margin:14px 0;font-size:22px;font-weight:700;color:#1d4ed8;font-family:'Courier New',monospace;letter-spacing:.5px}
-.fmvars{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:12.5px;background:#f8fafc;border:1px solid var(--bdr);border-radius:8px;padding:12px 16px;margin-top:10px}
-.fmvars .v{font-weight:800;color:#1d4ed8;font-family:monospace;font-size:13px}
-.fmvars .d{color:#374151}
+/* ── SUMMARY CARD ── */
+.summary-card{background:linear-gradient(135deg,#1e3a8a,#1d4ed8);border-radius:10px;padding:20px;color:#fff}
+.summary-card h4{font-size:13px;font-weight:700;opacity:.8;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.15)}
+.sum-row:last-child{border-bottom:none}
+.sum-label{font-size:12px;opacity:.8}
+.sum-value{font-size:14px;font-weight:800}
 
-.eg-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;border-radius:8px;overflow:hidden}
-.eg-table th{background:#1d4ed8;color:#fff;padding:9px 14px;font-weight:700}
-.eg-table td{padding:8px 14px;border-bottom:1px solid var(--bdr);text-align:right}
+/* ── EDUCATIONAL ── */
+.edu-section{margin-top:32px}
+.edu-card{background:var(--card);border-radius:12px;border:1px solid var(--bdr);padding:24px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.04)}
+.edu-card h2{font-size:20px;font-weight:800;color:var(--bd);margin-bottom:10px}
+.edu-card h3{font-size:15px;font-weight:700;color:var(--txt);margin:14px 0 7px}
+.edu-card p{font-size:13.5px;color:#374151;line-height:1.75;margin-bottom:10px}
+.edu-card ul{margin:8px 0 10px 20px;font-size:13.5px;color:#374151;line-height:1.75}
+.fmbox{background:#eff6ff;border:2px solid #bfdbfe;border-radius:8px;padding:14px 20px;text-align:center;margin:12px 0;font-size:22px;font-weight:700;color:var(--blue);font-family:'Courier New',monospace}
+.fmvars{display:grid;grid-template-columns:auto 1fr;gap:5px 14px;font-size:12.5px;background:#f8fafc;border:1px solid var(--bdr);border-radius:8px;padding:12px 16px;margin-top:8px}
+.fmvars .v{font-weight:800;color:var(--blue);font-family:monospace;font-size:13px}.fmvars .d{color:#374151}
+.tip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.tip-card{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px;text-align:center}
+.tip-card .ti{font-size:22px;margin-bottom:5px}.tip-card .tt{font-weight:700;font-size:13px;color:#15803d;margin-bottom:3px}.tip-card .td{font-size:11.5px;color:#166534;line-height:1.5}
+.eg-table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0;border-radius:8px;overflow:hidden}
+.eg-table th{background:var(--blue);color:#fff;padding:8px 14px;font-weight:700}
+.eg-table td{padding:7px 14px;border-bottom:1px solid var(--bdr);text-align:right}
 .eg-table td:first-child{text-align:left;font-weight:600}
 .eg-table tr:nth-child(even) td{background:#f8fafc}
-
-.tip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
-.tip-card{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px;text-align:center}
-.tip-card .ti{font-size:24px;margin-bottom:6px}
-.tip-card .tt{font-weight:700;font-size:13px;color:#15803d;margin-bottom:4px}
-.tip-card .td{font-size:12px;color:#166534;line-height:1.5}
-
 .faq{border:1px solid var(--bdr);border-radius:10px;overflow:hidden}
 .faqq{padding:12px 16px;font-weight:700;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:#fff;border-bottom:1px solid var(--bdr);font-size:13.5px;transition:background .15s}
-.faqq:hover{background:#f0f9ff}
+.faqq:hover{background:#eff6ff}
 .faqq .ico{font-size:18px;color:var(--blue);font-weight:400;transition:transform .2s}
 .faqq.open .ico{transform:rotate(45deg)}
 .faqa{padding:12px 16px;font-size:13px;color:#374151;line-height:1.7;display:none;background:#f8fafc;border-bottom:1px solid var(--bdr)}
 .faqa.show{display:block}
+.disc{background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:11px 14px;font-size:12px;color:#92400e;margin-top:14px}
 
-/* DISCLAIMER */
-.disc{background:#fef3c7;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:12px;color:#92400e;margin-top:16px}
-
-/* AD */
-.adbox{text-align:center;padding:6px 0;font-size:11px;color:#9ca3af;background:#f9fafb;border-top:1px solid var(--bdr);border-bottom:1px solid var(--bdr);margin:16px 0}
-
-/* FOOTER */
-footer{background:#1e3a8a;color:rgba(255,255,255,.7);text-align:center;padding:16px;font-size:12px;margin-top:32px}
+/* ── FOOTER ── */
+footer{background:#1e3a8a;color:rgba(255,255,255,.7);text-align:center;padding:16px;font-size:12px}
 footer a{color:rgba(255,255,255,.7);text-decoration:none;margin:0 8px}
 
-/* RESPONSIVE */
-@media(max-width:720px){.fg3{grid-template-columns:1fr 1fr}.fg4{grid-template-columns:1fr 1fr}.km{grid-template-columns:1fr 1fr}.sm{grid-template-columns:1fr 1fr}}
-@media(max-width:500px){.fg3,.fg4,.fg2{grid-template-columns:1fr}.km{grid-template-columns:1fr 1fr}}
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .calc-layout{grid-template-columns:1fr}
+  .form-col{position:static}
+  .metrics-2col{grid-template-columns:1fr 1fr}
+  .tip-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .metrics-2col{grid-template-columns:1fr}
+  .bk-bar{flex-wrap:wrap;gap:8px}
+}
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
-<div class="sh">
+<div class="hdr">
   <a href="index.html" class="logo">Fin<em>Wise</em></a>
-  <nav class="snav">
+  <nav class="hnav">
     <a href="index.html">All Calculators</a>
-    <a href="#">EMI Calculator</a>
-    <a href="#">SIP Calculator</a>
-    <a href="#">FD Calculator</a>
+    <a href="index.html">EMI</a>
+    <a href="index.html">SIP</a>
+    <a href="index.html">FD / RD</a>
   </nav>
 </div>
 <div class="tbar">
@@ -179,6 +199,13 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;margin:0 8px}
   <span>Updated <b>June 2026</b></span>
 </div>
 
+<!-- TOP AD (leaderboard — high fill rate) -->
+<div class="ad-top">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4910237367995817"
+       data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+</div>
+
 <!-- BREADCRUMB -->
 <div class="bc">
   <a href="index.html">Home</a><span>›</span>
@@ -186,329 +213,345 @@ footer a{color:rgba(255,255,255,.7);text-decoration:none;margin:0 8px}
   Compound Interest Calculator
 </div>
 
-<!-- MAIN -->
-<div class="wrap">
+<!-- PAGE WRAPPER -->
+<div class="pw">
 
 <h1 class="ptitle">Compound Interest Calculator</h1>
-<p class="psub">Calculate compound interest on an investment or savings account with optional regular deposits and withdrawals. Includes monthly breakdown table and visual chart.</p>
+<p class="psub">Calculate how your investment grows with compound interest. Supports regular deposits, withdrawals, all compounding frequencies, and shows a full monthly/yearly breakdown.</p>
 
-<!-- AD TOP -->
-<div class="adbox">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4910237367995817" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
-</div>
+<!-- TWO-COLUMN LAYOUT: sticky form left + results right -->
+<div class="calc-layout">
 
-<!-- CALCULATOR FORM -->
-<div class="card">
+  <!-- ══ LEFT: STICKY FORM ══ -->
+  <div class="form-col">
+    <div class="form-card">
 
-  <!-- Currency -->
-  <div class="sh2">Currency</div>
-  <div class="cur-row">
-    <button class="cb on" onclick="setCur(this,'$','USD')">$ USD</button>
-    <button class="cb" onclick="setCur(this,'€','EUR')">€ EUR</button>
-    <button class="cb" onclick="setCur(this,'£','GBP')">£ GBP</button>
-    <button class="cb" onclick="setCur(this,'₹','INR')">₹ INR</button>
-    <button class="cb" onclick="setCur(this,'¥','JPY')">¥ JPY</button>
-    <button class="cb" onclick="setCur(this,'A$','AUD')">A$ AUD</button>
-    <button class="cb" onclick="setCur(this,'C$','CAD')">C$ CAD</button>
-  </div>
-
-  <!-- Basic -->
-  <div class="sh2">Investment Details</div>
-  <div class="fg fg3">
-    <div class="field">
-      <label>Initial Investment</label>
-      <div class="ig"><span class="pfx" id="cur-pfx">$</span><input type="number" id="principal" value="10000" min="0" step="100"></div>
-    </div>
-    <div class="field">
-      <label>Annual Interest Rate</label>
-      <div class="ig"><input type="number" id="rate" value="5" step="0.01" min="0" max="100"><span class="sfx">%</span></div>
-      <select id="rate-freq" style="margin-top:4px">
-        <option value="1">per year (annual)</option>
-        <option value="12">per month (×12 = annual)</option>
-        <option value="4">per quarter (×4 = annual)</option>
-        <option value="52">per week (×52 = annual)</option>
-        <option value="365">per day (×365 = annual)</option>
-      </select>
-    </div>
-    <div class="field">
-      <label>Compound Frequency</label>
-      <select id="comp-freq" onchange="toggleCustom()">
-        <option value="365">Daily (365/yr)</option>
-        <option value="52">Weekly (52/yr)</option>
-        <option value="26">Bi-Weekly (26/yr)</option>
-        <option value="12" selected>Monthly (12/yr)</option>
-        <option value="4">Quarterly (4/yr)</option>
-        <option value="2">Semi-Annually (2/yr)</option>
-        <option value="1">Annually (1/yr)</option>
-        <option value="custom">Custom</option>
-      </select>
-      <div id="custom-wrap" style="display:none;margin-top:4px">
-        <div class="ig"><input type="number" id="custom-n" value="12" min="1" max="365" placeholder="Times per year"><span class="sfx">/ yr</span></div>
+      <div class="sec-hd">Currency</div>
+      <div class="cur-row">
+        <button class="cb on" onclick="setCur(this,'$')">$ USD</button>
+        <button class="cb" onclick="setCur(this,'€')">€ EUR</button>
+        <button class="cb" onclick="setCur(this,'£')">£ GBP</button>
+        <button class="cb" onclick="setCur(this,'₹')">₹ INR</button>
+        <button class="cb" onclick="setCur(this,'¥')">¥ JPY</button>
+        <button class="cb" onclick="setCur(this,'A$')">A$</button>
       </div>
-      <div class="fnote">How often interest is added to your account</div>
-    </div>
-  </div>
 
-  <!-- Time Period -->
-  <div class="sh2">Time Period</div>
-  <div class="fg fg2">
-    <div class="field">
-      <label>Years</label>
-      <div class="ig"><input type="number" id="years" value="5" min="0" max="100"><span class="sfx">years</span></div>
-    </div>
-    <div class="field">
-      <label>Months (optional)</label>
-      <div class="ig"><input type="number" id="months" value="0" min="0" max="11"><span class="sfx">months</span></div>
-    </div>
-  </div>
-
-  <!-- Contributions -->
-  <div class="sh2">Regular Contributions</div>
-  <div class="rtabs" style="margin-bottom:4px">
-    <div class="rtab on" onclick="setContrib('none',this)">None</div>
-    <div class="rtab" onclick="setContrib('dep',this)">Deposits</div>
-    <div class="rtab" onclick="setContrib('wd',this)">Withdrawals</div>
-    <div class="rtab" onclick="setContrib('both',this)">Both</div>
-  </div>
-  <div class="fnote" style="margin-bottom:6px">Add regular deposits or withdrawals to your calculation</div>
-
-  <!-- DEPOSIT PANEL -->
-  <div class="cpanel" id="dep-panel">
-    <div class="sh2">Deposit Settings</div>
-    <div class="fg fg3">
+      <div class="sec-hd">Investment</div>
       <div class="field">
-        <label>Deposit Amount</label>
-        <div class="ig"><span class="pfx" id="dep-cur">$</span><input type="number" id="dep-amt" value="100" min="0" step="10"></div>
+        <label>Initial Investment</label>
+        <div class="ig"><span class="pfx" id="cur-pfx">$</span><input type="number" id="principal" value="5000" min="0" step="100" oninput="calc()"></div>
       </div>
+      <div class="frow">
+        <div class="field">
+          <label>Interest Rate</label>
+          <div class="ig"><input type="number" id="rate" value="5" step="0.1" min="0" oninput="calc()"><span class="sfx">%</span></div>
+        </div>
+        <div class="field">
+          <label>Rate Per</label>
+          <select id="rate-freq" onchange="calc()">
+            <option value="1">Year</option>
+            <option value="12">Month (×12)</option>
+            <option value="4">Quarter (×4)</option>
+            <option value="52">Week (×52)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sec-hd">Compounding &amp; Time</div>
       <div class="field">
-        <label>Deposit Frequency</label>
-        <select id="dep-freq">
-          <option value="365">Daily</option>
-          <option value="52">Weekly</option>
-          <option value="26">Bi-Weekly</option>
-          <option value="12" selected>Monthly</option>
-          <option value="4">Quarterly</option>
-          <option value="2">Semi-Annually</option>
-          <option value="1">Annually</option>
+        <label>Compound Frequency</label>
+        <select id="comp-freq" onchange="toggleCustom();calc()">
+          <option value="365">Daily (365/yr)</option>
+          <option value="52">Weekly (52/yr)</option>
+          <option value="26">Bi-Weekly (26/yr)</option>
+          <option value="12" selected>Monthly (12/yr)</option>
+          <option value="4">Quarterly (4/yr)</option>
+          <option value="2">Semi-Annually (2/yr)</option>
+          <option value="1">Annually (1/yr)</option>
+          <option value="custom">Custom…</option>
         </select>
       </div>
-      <div class="field">
-        <label>Annual Deposit Increase</label>
-        <div class="ig"><input type="number" id="dep-inc" value="0" min="0" step="0.5"><span class="sfx">%</span></div>
-        <div class="fnote">Increase deposits by this % each year</div>
+      <div id="custom-wrap" style="display:none" class="field">
+        <label>Custom — times per year</label>
+        <div class="ig"><input type="number" id="custom-n" value="12" min="1" max="365" oninput="calc()"><span class="sfx">/yr</span></div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>Years</label><div class="ig"><input type="number" id="years" value="5" min="0" max="100" oninput="calc()"><span class="sfx">yr</span></div></div>
+        <div class="field"><label>Extra Months</label><div class="ig"><input type="number" id="months" value="0" min="0" max="11" oninput="calc()"><span class="sfx">mo</span></div></div>
+      </div>
+
+      <div class="sec-hd">Regular Contributions <span style="font-weight:400;color:#9ca3af;font-size:10px">(optional)</span></div>
+      <div class="mode-tabs">
+        <div class="mtab on" onclick="setMode('none',this)">None</div>
+        <div class="mtab" onclick="setMode('dep',this)">Deposits</div>
+        <div class="mtab" onclick="setMode('wd',this)">Withdrawals</div>
+        <div class="mtab" onclick="setMode('both',this)">Both</div>
+      </div>
+      <div class="field note" style="margin-top:4px;font-size:10.5px;color:#9ca3af">Add regular deposits or withdrawals to your scenario</div>
+
+      <!-- DEPOSIT PANEL -->
+      <div class="cpanel" id="dep-panel">
+        <div class="sec-hd">Deposit Settings</div>
+        <div class="frow">
+          <div class="field"><label>Amount</label><div class="ig"><span class="pfx dep-cur">$</span><input type="number" id="dep-amt" value="100" min="0" oninput="calc()"></div></div>
+          <div class="field"><label>Frequency</label>
+            <select id="dep-freq" onchange="calc()">
+              <option value="365">Daily</option><option value="52">Weekly</option><option value="26">Bi-Weekly</option>
+              <option value="12" selected>Monthly</option><option value="4">Quarterly</option>
+              <option value="2">Semi-Ann.</option><option value="1">Annually</option>
+            </select>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>Annual Increase</label><div class="ig"><input type="number" id="dep-inc" value="0" min="0" step="0.5" oninput="calc()"><span class="sfx">%</span></div></div>
+          <div class="field"><label>Timing</label>
+            <select id="dep-timing" onchange="calc()">
+              <option value="beg">Beginning</option><option value="end" selected>End of Period</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- WITHDRAWAL PANEL -->
+      <div class="cpanel" id="wd-panel">
+        <div class="sec-hd">Withdrawal Settings</div>
+        <div class="frow">
+          <div class="field"><label>Amount</label><div class="ig"><span class="pfx">$</span><input type="number" id="wd-amt" value="50" min="0" oninput="calc()"></div></div>
+          <div class="field"><label>Frequency</label>
+            <select id="wd-freq" onchange="calc()">
+              <option value="365">Daily</option><option value="52">Weekly</option>
+              <option value="12" selected>Monthly</option><option value="4">Quarterly</option><option value="1">Annually</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>Annual Increase</label><div class="ig"><input type="number" id="wd-inc" value="0" min="0" step="0.5" oninput="calc()"><span class="sfx">%</span></div></div>
+      </div>
+
+    </div><!-- /form-card -->
+
+    <!-- RAIL AD (sidebar rectangle — great for desktop) -->
+    <div class="ad-rail" style="margin-top:16px">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4910237367995817"
+           data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+    </div>
+
+  </div><!-- /form-col -->
+
+  <!-- ══ RIGHT: RESULTS ══ -->
+  <div class="results-col">
+
+    <!-- Period badge + main 2-col metrics (matches reference layout) -->
+    <div>
+      <div style="margin-bottom:10px">
+        <span class="period-badge"><span class="dot"></span><span id="r-period">5 years</span></span>
+      </div>
+
+      <div class="metrics-2col">
+        <!-- Left column: value metrics -->
+        <div class="mcol">
+          <div class="mcard">
+            <div class="ml">Future Investment Value</div>
+            <div class="mv mv-blue" id="r-fv">—</div>
+            <div class="ms">your final balance</div>
+          </div>
+          <div class="mcard">
+            <div class="ml">Total Interest Earned</div>
+            <div class="mv mv-org" id="r-int">—</div>
+            <div class="ms">interest on investment</div>
+          </div>
+          <div class="mcard">
+            <div class="ml">Initial Balance</div>
+            <div class="mv mv-gry" id="r-ini">—</div>
+            <div class="ms">starting amount</div>
+          </div>
+        </div>
+
+        <!-- Right column: rate + performance metrics -->
+        <div class="mcol">
+          <div class="rate-card">
+            <div class="ml">Yearly Rate → Compounded Rate</div>
+            <div class="rate-arrow">
+              <span class="nom" id="r-nom">5%</span>
+              <span class="arr">→</span>
+              <span class="ear" id="r-ear">5.12%</span>
+            </div>
+            <div class="rate-sub">Effective Annual Rate after compounding</div>
+          </div>
+          <div class="mcard">
+            <div class="ml">All-time Rate of Return (RoR)</div>
+            <div class="mv mv-grn" id="r-roi">—</div>
+            <div class="ms">total return on principal</div>
+          </div>
+          <div class="mcard">
+            <div class="ml">Time to Double Investment</div>
+            <div class="mv mv-pur" id="r-dbl">—</div>
+            <div class="ms">at current rate</div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="field" style="margin-top:4px">
-      <label>Deposit Timing</label>
-      <div class="rtabs" style="max-width:300px">
-        <div class="rtab on" onclick="setTiming('beg',this)">Beginning of Period</div>
-        <div class="rtab" onclick="setTiming('end',this)">End of Period</div>
+
+    <!-- BREAKDOWN CONTROLS -->
+    <div class="bk-bar">
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="bk-label">Breakdown:</span>
+        <div class="bk-tabs">
+          <button class="bktab on" onclick="setTab('mo',this)">Monthly</button>
+          <button class="bktab" onclick="setTab('yr',this)">Yearly</button>
+        </div>
+      </div>
+      <div class="bk-views">
+        <button class="bkview on" onclick="setView('tbl',this)">📋 Table</button>
+        <button class="bkview" onclick="setView('chr',this)">📊 Chart</button>
+        <button class="bkview" onclick="setView('sum',this)">📄 Summary</button>
       </div>
     </div>
-  </div>
 
-  <!-- WITHDRAWAL PANEL -->
-  <div class="cpanel" id="wd-panel">
-    <div class="sh2">Withdrawal Settings</div>
-    <div class="fg fg3">
-      <div class="field">
-        <label>Withdrawal Type</label>
-        <select id="wd-type" onchange="toggleWdPct()">
-          <option value="fixed">Fixed Amount</option>
-          <option value="pct">% of Balance</option>
-        </select>
+    <!-- TABLE VIEW -->
+    <div id="view-tbl" class="tbl-card">
+      <div id="tbl-mo" class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Month</th><th>Deposits</th><th>Withdrawals</th>
+            <th class="th-int">Interest</th><th class="th-acc">Accrued Interest</th><th class="th-bal">Balance</th>
+          </tr></thead>
+          <tbody id="tbody-mo"></tbody>
+        </table>
       </div>
-      <div class="field">
-        <label id="wd-amt-lbl">Withdrawal Amount</label>
-        <div class="ig"><span class="pfx" id="wd-pfx">$</span><input type="number" id="wd-amt" value="50" min="0" step="10"><span class="sfx" id="wd-sfx"></span></div>
-      </div>
-      <div class="field">
-        <label>Withdrawal Frequency</label>
-        <select id="wd-freq">
-          <option value="365">Daily</option>
-          <option value="52">Weekly</option>
-          <option value="26">Bi-Weekly</option>
-          <option value="12" selected>Monthly</option>
-          <option value="4">Quarterly</option>
-          <option value="2">Semi-Annually</option>
-          <option value="1">Annually</option>
-        </select>
+      <div id="tbl-yr" class="tbl-wrap" style="display:none">
+        <table>
+          <thead><tr>
+            <th>Year</th><th>Deposits</th><th>Withdrawals</th>
+            <th class="th-int">Interest</th><th class="th-acc">Accrued Interest</th><th class="th-bal">Balance</th>
+          </tr></thead>
+          <tbody id="tbody-yr"></tbody>
+        </table>
       </div>
     </div>
-    <div class="fg fg2" style="margin-top:8px">
-      <div class="field">
-        <label>Annual Withdrawal Increase</label>
-        <div class="ig"><input type="number" id="wd-inc" value="0" min="0" step="0.5"><span class="sfx">%</span></div>
-      </div>
+
+    <!-- CHART VIEW (hidden) -->
+    <div id="view-chr" class="chart-card" style="display:none">
+      <h4>Growth Chart: Compound vs Simple vs No Interest</h4>
+      <div class="cbox"><canvas id="growth-chart"></canvas></div>
     </div>
-  </div>
 
-  <button class="go-btn" onclick="calc()">Calculate</button>
-</div>
-
-<!-- RESULTS -->
-<div id="results">
-
-  <!-- Key Metrics -->
-  <div class="km" id="km-grid">
-    <div class="kmc"><div class="kl">Future Value</div><div class="kv vb" id="r-fv">—</div><div class="ks">final balance</div></div>
-    <div class="kmc"><div class="kl">Total Interest</div><div class="kv vg" id="r-int">—</div><div class="ks">earned on investment</div></div>
-    <div class="kmc"><div class="kl">Initial Balance</div><div class="kv vp" id="r-ini">—</div><div class="ks">starting amount</div></div>
-    <div class="kmc"><div class="kl">Total Deposits</div><div class="kv vt" id="r-dep">—</div><div class="ks">contributions made</div></div>
-  </div>
-
-  <!-- Sub Metrics -->
-  <div class="sm">
-    <div class="smc"><div class="sl">Return on Investment</div><div class="sv" id="r-roi">—</div></div>
-    <div class="smc"><div class="sl">Time to Double</div><div class="sv" id="r-dbl">—</div></div>
-    <div class="smc"><div class="sl">Nominal Rate</div><div class="sv" id="r-nom">—</div></div>
-    <div class="smc"><div class="sl">Effective Annual Rate</div><div class="sv" id="r-ear">—</div></div>
-  </div>
-
-  <!-- Rate comparison -->
-  <div class="rate-bar">
-    <div class="ri"><div class="rl">Nominal Annual Rate</div><div class="rv" id="rb-nom">—</div><div class="rn">Rate as entered</div></div>
-    <div class="vsep"></div>
-    <div class="ri"><div class="rl">Effective Annual Rate (EAR)</div><div class="rv" id="rb-ear">—</div><div class="rn">True annual return after compounding</div></div>
-    <div class="vsep"></div>
-    <div class="ri"><div class="rl">Total Withdrawals</div><div class="rv" id="rb-wd">—</div><div class="rn">total taken out</div></div>
-  </div>
-
-  <!-- Chart -->
-  <div class="card">
-    <h3 style="font-size:15px;font-weight:800;margin-bottom:12px">Growth Chart: Compound vs Simple vs No Interest</h3>
-    <div class="cbox"><canvas id="growth-chart"></canvas></div>
-  </div>
-
-  <!-- Table -->
-  <div class="tsec">
-    <div class="ttabs">
-      <button class="ttab on" onclick="showTab('mo',this)">Monthly Breakdown</button>
-      <button class="ttab" onclick="showTab('yr',this)">Yearly Breakdown</button>
+    <!-- SUMMARY VIEW (hidden) -->
+    <div id="view-sum" class="summary-card" style="display:none">
+      <h4>Investment Summary</h4>
+      <div class="sum-row"><span class="sum-label">Initial Investment</span><span class="sum-value" id="sum-ini">—</span></div>
+      <div class="sum-row"><span class="sum-label">Total Contributions</span><span class="sum-value" id="sum-dep">—</span></div>
+      <div class="sum-row"><span class="sum-label">Total Withdrawals</span><span class="sum-value" id="sum-wd">—</span></div>
+      <div class="sum-row"><span class="sum-label">Interest Earned</span><span class="sum-value" id="sum-int">—</span></div>
+      <div class="sum-row"><span class="sum-label">Nominal Rate</span><span class="sum-value" id="sum-nom">—</span></div>
+      <div class="sum-row"><span class="sum-label">Effective Annual Rate (EAR)</span><span class="sum-value" id="sum-ear">—</span></div>
+      <div class="sum-row"><span class="sum-label">Return on Investment</span><span class="sum-value" id="sum-roi">—</span></div>
+      <div class="sum-row"><span class="sum-label">Future Value</span><span class="sum-value" id="sum-fv" style="font-size:18px;color:#fcd34d">—</span></div>
     </div>
-    <div class="twrap" id="tbl-mo">
-      <table>
-        <thead><tr>
-          <th>Month</th><th>Deposits / Withdrawals</th><th>Interest Earned</th>
-          <th>Total Deposits</th><th>Total Withdrawals</th><th>Accrued Interest</th><th>Balance</th>
-        </tr></thead>
-        <tbody id="tbody-mo"></tbody>
-      </table>
+
+    <!-- MID AD (between table and content — high viewability) -->
+    <div class="ad-mid">
+      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4910237367995817"
+           data-ad-format="auto" data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
     </div>
-    <div class="twrap" id="tbl-yr" style="display:none">
-      <table>
-        <thead><tr>
-          <th>Year</th><th>Deposits / Withdrawals</th><th>Interest Earned</th>
-          <th>Total Deposits</th><th>Total Withdrawals</th><th>Accrued Interest</th><th>Balance</th>
-        </tr></thead>
-        <tbody id="tbody-yr"></tbody>
-      </table>
-    </div>
-  </div>
 
-  <!-- Ad middle -->
-  <div class="adbox">
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4910237367995817" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
-  </div>
+  </div><!-- /results-col -->
+</div><!-- /calc-layout -->
 
-</div><!-- /results -->
+<!-- ═══ EDUCATIONAL CONTENT (full-width below) ═══ -->
+<div class="edu-section">
 
-<!-- EDUCATIONAL CONTENT -->
-<div class="edu">
-
-  <div class="card">
+  <div class="edu-card">
     <h2>What is Compound Interest?</h2>
-    <p>Compound interest is interest calculated on both the initial principal and the accumulated interest from previous periods. Often described as "interest on interest," compounding causes investments to grow at an accelerating rate over time.</p>
-    <p>Unlike simple interest — which is calculated only on the principal — compound interest grows exponentially, which is why Albert Einstein reportedly called it <strong>"the eighth wonder of the world."</strong> The longer the time horizon, the more dramatically compounding amplifies your returns.</p>
-    <h3>How is Compound Interest Calculated?</h3>
-    <p>The standard formula for compound interest is:</p>
-    <div class="fmbox">A = P ( 1 + r/n ) <sup>nt</sup></div>
+    <p>Compound interest is interest calculated on both the initial principal <strong>and</strong> the accumulated interest from previous periods. Unlike simple interest (which only earns on the principal), compounding causes wealth to grow exponentially — Albert Einstein reportedly called it <em>"the eighth wonder of the world."</em></p>
+    <h3>The Formula</h3>
+    <div class="fmbox">A = P (1 + r / n) <sup>nt</sup></div>
     <div class="fmvars">
-      <span class="v">A</span><span class="d">Final amount (what you end up with)</span>
-      <span class="v">P</span><span class="d">Principal (your initial investment)</span>
-      <span class="v">r</span><span class="d">Annual interest rate (as a decimal, e.g. 5% = 0.05)</span>
+      <span class="v">A</span><span class="d">Final amount (your ending balance)</span>
+      <span class="v">P</span><span class="d">Principal (initial investment)</span>
+      <span class="v">r</span><span class="d">Annual interest rate as a decimal (e.g. 5% = 0.05)</span>
       <span class="v">n</span><span class="d">Number of times interest compounds per year</span>
       <span class="v">t</span><span class="d">Time in years</span>
     </div>
-    <h3>Example: $10,000 at 5% over 20 Years</h3>
+    <h3>$5,000 at 5% — Year-by-Year (Monthly Compounding)</h3>
     <table class="eg-table">
       <thead><tr><th>Year</th><th>Opening Balance</th><th>Interest Earned</th><th>Closing Balance</th></tr></thead>
       <tbody id="eg-tbody"></tbody>
     </table>
-    <p>Notice how the interest earned each year <em>increases</em>, even though the rate stays the same — that's the compounding effect in action.</p>
   </div>
 
-  <div class="card">
-    <h2>Making Compound Interest Work for You</h2>
+  <!-- AD between educational sections -->
+  <div class="ad-mid">
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4910237367995817"
+         data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+  </div>
+
+  <div class="edu-card">
+    <h2>Tips to Maximise Your Returns</h2>
     <div class="tip-grid">
-      <div class="tip-card"><div class="ti">⏰</div><div class="tt">Start Early</div><div class="td">Time is the most powerful ingredient. Starting 10 years earlier can more than double your final outcome.</div></div>
-      <div class="tip-card"><div class="ti">📅</div><div class="tt">Compound Frequently</div><div class="td">Daily or monthly compounding earns slightly more than annual compounding due to the increased frequency of interest calculation.</div></div>
-      <div class="tip-card"><div class="ti">💸</div><div class="tt">Add Regular Deposits</div><div class="td">Regular contributions dramatically accelerate growth. Even small monthly additions can add up to hundreds of thousands over a lifetime.</div></div>
+      <div class="tip-card"><div class="ti">⏰</div><div class="tt">Start Early</div><div class="td">Time is the most powerful factor. Starting 10 years earlier can more than double your outcome at the same rate.</div></div>
+      <div class="tip-card"><div class="ti">📅</div><div class="tt">Compound Often</div><div class="td">Daily or monthly compounding earns more than annual compounding — the same nominal rate delivers a higher EAR.</div></div>
+      <div class="tip-card"><div class="ti">💸</div><div class="tt">Add Regularly</div><div class="td">Even small monthly contributions dramatically accelerate growth. Use the Deposits option above to model this.</div></div>
     </div>
-
-    <h3>Nominal vs. Effective Annual Rate</h3>
-    <p>The <strong>nominal rate</strong> is the stated interest rate. The <strong>Effective Annual Rate (EAR)</strong> is the actual rate you earn after compounding kicks in, and it's always higher than the nominal rate (except when compounding annually).</p>
-    <p>Formula: <strong>EAR = (1 + r/n)<sup>n</sup> − 1</strong></p>
-    <p>For example, 6% nominal with monthly compounding gives an EAR of approximately 6.17%. This difference becomes significant at higher rates and over longer periods.</p>
-
-    <h3>The Rule of 72</h3>
-    <p>A quick mental shortcut: divide <strong>72 by your interest rate</strong> to estimate how many years it takes to double your investment. At 6%, money doubles in about 12 years (72 ÷ 6 = 12).</p>
+    <h3>Nominal Rate vs Effective Annual Rate (EAR)</h3>
+    <p>The <strong>nominal rate</strong> is what's advertised. The <strong>EAR</strong> is what you actually earn after compounding kicks in. Formula: <strong>EAR = (1 + r/n)<sup>n</sup> − 1</strong>. At 6% compounded monthly, EAR ≈ 6.17%.</p>
+    <h3>Rule of 72</h3>
+    <p>Divide <strong>72 by your interest rate</strong> to estimate years to double. At 6%, money doubles in ≈ 12 years. This calculator shows the exact figure in "Time to Double" above.</p>
   </div>
 
-  <div class="card">
+  <div class="edu-card">
     <h2>Frequently Asked Questions</h2>
     <div class="faq">
-      <div class="faqq" onclick="toggleFAQ(this)">How does the compound frequency affect my returns? <span class="ico">+</span></div>
-      <div class="faqa">The more frequently interest compounds, the higher your effective return. Daily compounding earns slightly more than monthly, which earns more than annually. The difference is small at low rates but grows with higher rates. For most savings accounts and fixed deposits in India, monthly or quarterly compounding is standard.</div>
+      <div class="faqq" onclick="tFAQ(this)">How does compound frequency affect my returns? <span class="ico">+</span></div>
+      <div class="faqa">More frequent compounding means interest is calculated and added more often — each time on a slightly larger balance. Daily vs annual compounding can add up to 0.5–1% more effective return per year at typical savings rates. Over 20+ years that gap is significant.</div>
 
-      <div class="faqq" onclick="toggleFAQ(this)">What is the difference between compound and simple interest? <span class="ico">+</span></div>
-      <div class="faqa">Simple interest is calculated only on the original principal: Interest = P × r × t. Compound interest includes interest earned in previous periods as part of the new principal. Over long periods, the difference is enormous — compound interest can produce dramatically higher returns even at the same nominal rate.</div>
+      <div class="faqq" onclick="tFAQ(this)">What is the difference between compound and simple interest? <span class="ico">+</span></div>
+      <div class="faqa">Simple interest: Interest = P × r × t — always on the original principal. Compound interest earns interest ON interest. For $10,000 at 5% over 20 years: simple interest gives $20,000; monthly compounding gives $27,127 — a $7,127 difference purely from compounding.</div>
 
-      <div class="faqq" onclick="toggleFAQ(this)">Can I use this calculator for SIP or recurring deposits? <span class="ico">+</span></div>
-      <div class="faqa">Yes. Use the "Deposits" contribution mode and set the deposit frequency to monthly. For SIP (Systematic Investment Plan), set the compound frequency to monthly and add your monthly SIP amount as a regular deposit. The calculator will show your projected corpus over the investment period.</div>
+      <div class="faqq" onclick="tFAQ(this)">Can I use this for SIP or recurring deposits? <span class="ico">+</span></div>
+      <div class="faqa">Yes. Select "Deposits" and set the frequency to monthly. For SIP (Systematic Investment Plan), set compound frequency to monthly, and add your monthly SIP as a regular deposit. The calculator models your projected corpus accurately.</div>
 
-      <div class="faqq" onclick="toggleFAQ(this)">What does "deposit timing" mean? <span class="ico">+</span></div>
-      <div class="faqa">"Beginning of period" means your regular deposit is added at the start of each compounding period — so it earns interest for that period. "End of period" means the deposit is added after interest is applied. Beginning-of-period compounding yields slightly higher returns because each deposit spends more time earning interest.</div>
+      <div class="faqq" onclick="tFAQ(this)">What does "deposit timing" mean? <span class="ico">+</span></div>
+      <div class="faqa">Beginning of period means your deposit earns interest during the current period. End of period means the deposit is added after interest for the period is applied. Beginning-of-period deposits earn slightly more because they compound for one extra period.</div>
 
-      <div class="faqq" onclick="toggleFAQ(this)">How is the effective annual rate calculated? <span class="ico">+</span></div>
-      <div class="faqa">EAR = (1 + r/n)^n − 1, where r is the nominal annual rate and n is the compounding frequency per year. For example, a 10% nominal rate compounded monthly gives EAR = (1 + 0.10/12)^12 − 1 ≈ 10.47%. This means you actually earn 10.47% on your money in real terms.</div>
+      <div class="faqq" onclick="tFAQ(this)">Is this accurate for bank FDs in India? <span class="ico">+</span></div>
+      <div class="faqa">Yes — set compound frequency to Quarterly (standard for most Indian banks), select ₹ as currency, and enter your FD amount. Note that TDS on FD interest is not factored in. For RD, switch to Deposits mode with monthly frequency and set initial investment to 0.</div>
 
-      <div class="faqq" onclick="toggleFAQ(this)">Is this calculator accurate for bank fixed deposits (FDs)? <span class="ico">+</span></div>
-      <div class="faqa">Yes. Set the compound frequency to "Quarterly" (the standard for most Indian banks) and enter the FD amount as your initial investment. For recurring deposits, use the monthly deposit mode. Note that tax deducted at source (TDS) on FD interest is not factored in — consult your bank for exact post-tax returns.</div>
+      <div class="faqq" onclick="tFAQ(this)">How is the effective annual rate (EAR) calculated? <span class="ico">+</span></div>
+      <div class="faqa">EAR = (1 + r/n)^n − 1, where r is the nominal annual rate and n is the number of compounding periods per year. Example: 10% nominal, compounded monthly → EAR = (1 + 0.10/12)^12 − 1 ≈ 10.47%. This is the true annual rate you actually earn.</div>
     </div>
-
-    <div class="disc">⚠️ <strong>Disclaimer:</strong> This calculator is for illustrative and educational purposes only. Results are based on the assumption of a constant interest rate and do not account for taxes, fees, inflation, or market fluctuations. Always consult a qualified financial advisor before making investment decisions.</div>
+    <div class="disc">⚠️ <strong>Disclaimer:</strong> This calculator is for educational and illustrative purposes only. Results assume a constant interest rate and exclude taxes, fees, and inflation. Consult a qualified financial advisor before making investment decisions.</div>
   </div>
 
-</div>
+</div><!-- /edu-section -->
 
-</div><!-- /wrap -->
+</div><!-- /pw -->
 
 <!-- FOOTER -->
 <footer>
   <div style="margin-bottom:8px">
     <a href="index.html">FinWise Home</a>
     <a href="index.html">EMI Calculator</a>
+    <a href="index.html">SIP Calculator</a>
     <a href="compound.html">Compound Interest</a>
   </div>
   © 2026 FinWise. Free online financial calculators. For educational purposes only.
 </footer>
 
 <script>
-// ═══ STATE ═══
-let curSym='$', contribMode='none', depTiming='beg', wdType='fixed';
-let growthChart=null;
+// ══ STATE ══
+let curSym='$', contribMode='none', growthChart=null;
 
-// ═══ UI HELPERS ═══
-function setCur(btn,sym,code){
+// ══ UI ══
+function setCur(btn,sym){
   document.querySelectorAll('.cb').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   curSym=sym;
   document.getElementById('cur-pfx').textContent=sym;
-  document.getElementById('dep-cur').textContent=sym;
-  if(wdType==='fixed')document.getElementById('wd-pfx').textContent=sym;
+  document.querySelectorAll('.dep-cur').forEach(e=>e.textContent=sym);
+  calc();
 }
 
 function toggleCustom(){
@@ -516,182 +559,161 @@ function toggleCustom(){
     document.getElementById('comp-freq').value==='custom'?'block':'none';
 }
 
-function setContrib(mode,el){
-  contribMode=mode;
-  el.parentElement.querySelectorAll('.rtab').forEach(t=>t.classList.remove('on'));
+function setMode(m,el){
+  contribMode=m;
+  el.parentElement.querySelectorAll('.mtab').forEach(t=>t.classList.remove('on'));
   el.classList.add('on');
-  document.getElementById('dep-panel').classList.toggle('show',mode==='dep'||mode==='both');
-  document.getElementById('wd-panel').classList.toggle('show',mode==='wd'||mode==='both');
+  document.getElementById('dep-panel').classList.toggle('show',m==='dep'||m==='both');
+  document.getElementById('wd-panel').classList.toggle('show',m==='wd'||m==='both');
+  calc();
 }
 
-// Fix: wire setContrib to actual DOM buttons
-document.querySelectorAll('.rtab').forEach((t,i)=>{
-  if(i<4){/* contrib tabs already wired via onclick */}
-});
-
-function setTiming(t,el){
-  depTiming=t;
-  el.parentElement.querySelectorAll('.rtab').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-}
-
-function toggleWdPct(){
-  wdType=document.getElementById('wd-type').value;
-  const isFixed=wdType==='fixed';
-  document.getElementById('wd-pfx').textContent=isFixed?curSym:'';
-  document.getElementById('wd-sfx').textContent=isFixed?'':'%';
-  document.getElementById('wd-amt-lbl').textContent=isFixed?'Withdrawal Amount':'% of Balance (Annual)';
-}
-
-function showTab(t,el){
-  document.querySelectorAll('.ttab').forEach(b=>b.classList.remove('on'));
+function setTab(t,el){
+  el.parentElement.querySelectorAll('.bktab').forEach(b=>b.classList.remove('on'));
   el.classList.add('on');
   document.getElementById('tbl-mo').style.display=t==='mo'?'block':'none';
   document.getElementById('tbl-yr').style.display=t==='yr'?'block':'none';
 }
 
-function toggleFAQ(el){
-  el.classList.toggle('open');
-  const ans=el.nextElementSibling;
-  ans.classList.toggle('show');
+function setView(v,el){
+  el.parentElement.querySelectorAll('.bkview').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('view-tbl').style.display=v==='tbl'?'block':'none';
+  document.getElementById('view-chr').style.display=v==='chr'?'block':'none';
+  document.getElementById('view-sum').style.display=v==='sum'?'block':'none';
 }
 
-// ═══ FORMAT ═══
-function fmt(n,sym){
-  if(!isFinite(n))return'—';
-  n=Math.round(n*100)/100;
-  return(sym||curSym)+Math.abs(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+function tFAQ(el){
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('show');
 }
-function fmtPct(n){return isFinite(n)?n.toFixed(2)+'%':'—';}
+
+// ══ FORMAT ══
+function fc(v){return curSym+Math.abs(v<0?v:v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fp(v){return v.toFixed(2)+'%';}
 function set(id,v){const e=document.getElementById(id);if(e)e.textContent=v;}
 
-// ═══ MAIN CALCULATION ═══
+// ══ MAIN CALC ══
 function calc(){
   const P   = parseFloat(document.getElementById('principal').value)||0;
   const r0  = parseFloat(document.getElementById('rate').value)||0;
-  const rFq = parseFloat(document.getElementById('rate-freq').value)||1;
-  const annRate = r0 * rFq / 100; // Annual rate as decimal
-
-  const cfSel = document.getElementById('comp-freq').value;
-  const n = cfSel==='custom'
-    ? (parseFloat(document.getElementById('custom-n').value)||12)
-    : parseFloat(cfSel)||12;
-
+  const rf  = parseFloat(document.getElementById('rate-freq').value)||1;
+  const cf  = document.getElementById('comp-freq').value;
+  const n   = cf==='custom'?(parseFloat(document.getElementById('custom-n').value)||12):parseFloat(cf)||12;
   const yrs = parseInt(document.getElementById('years').value)||0;
   const mos = parseInt(document.getElementById('months').value)||0;
   const totalMonths = yrs*12+mos;
-  if(totalMonths<=0||P<0){alert('Please enter a valid investment amount and time period.');return;}
+  if(!P||totalMonths<=0) return;
 
-  // Effective monthly rate (handles any compound frequency)
-  const mr = Math.pow(1+annRate/n, n/12)-1;
+  const annRate = r0*rf/100;
+  const mr = Math.pow(1+annRate/n, n/12)-1;   // effective monthly rate
 
-  // Contributions
-  let depAmtPerMo=0, wdAmtPerMo=0, depIncPct=0, wdIncPct=0;
-  const hasD = contribMode==='dep'||contribMode==='both';
-  const hasW = contribMode==='wd'||contribMode==='both';
-
-  if(hasD){
-    const da = parseFloat(document.getElementById('dep-amt').value)||0;
-    const df = parseFloat(document.getElementById('dep-freq').value)||12;
-    depAmtPerMo = da*df/12;
-    depIncPct   = parseFloat(document.getElementById('dep-inc').value)||0;
+  let depMo=0,wdMo=0,depInc=0,wdInc=0,depTiming='end';
+  if(contribMode==='dep'||contribMode==='both'){
+    const da=parseFloat(document.getElementById('dep-amt').value)||0;
+    const df=parseFloat(document.getElementById('dep-freq').value)||12;
+    depMo=da*df/12; depInc=parseFloat(document.getElementById('dep-inc').value)||0;
+    depTiming=document.getElementById('dep-timing').value;
   }
-  if(hasW){
-    const wa = parseFloat(document.getElementById('wd-amt').value)||0;
-    const wf = parseFloat(document.getElementById('wd-freq').value)||12;
-    wdType    = document.getElementById('wd-type').value;
-    wdAmtPerMo = wdType==='pct' ? wa/100 : wa*wf/12; // if pct, annual % → monthly fraction
-    wdIncPct  = parseFloat(document.getElementById('wd-inc').value)||0;
+  if(contribMode==='wd'||contribMode==='both'){
+    const wa=parseFloat(document.getElementById('wd-amt').value)||0;
+    const wf=parseFloat(document.getElementById('wd-freq').value)||12;
+    wdMo=wa*wf/12; wdInc=parseFloat(document.getElementById('wd-inc').value)||0;
   }
 
-  // Simulate month by month
   let bal=P, totalDep=P, totalWd=0, totalInt=0;
   const moData=[];
 
   for(let m=1;m<=totalMonths;m++){
-    const yr = Math.floor((m-1)/12);
-    const dep = hasD ? depAmtPerMo*Math.pow(1+depIncPct/100,yr) : 0;
-    let wd = 0;
-    if(hasW){
-      wd = wdType==='pct'
-        ? bal * wdAmtPerMo * Math.pow(1+wdIncPct/100,yr)   // % of current balance per month
-        : wdAmtPerMo * Math.pow(1+wdIncPct/100,yr);
-    }
-    const netContrib = dep - wd;
-
-    // Beginning of period: add/subtract before interest
-    if(depTiming==='beg') bal = Math.max(0, bal+netContrib);
-
-    const interest = bal*mr;
-    bal += interest;
-    totalInt += interest;
-
-    // End of period
-    if(depTiming==='end') bal = Math.max(0, bal+netContrib);
-
-    totalDep += dep;
-    totalWd  += wd;
-
+    const yr=Math.floor((m-1)/12);
+    const dep=depMo*Math.pow(1+depInc/100,yr);
+    const wd =wdMo *Math.pow(1+wdInc/100,yr);
+    if(depTiming==='beg') bal=Math.max(0,bal+(dep-wd));
+    const interest=bal*mr;
+    bal+=interest; totalInt+=interest;
+    if(depTiming==='end') bal=Math.max(0,bal+(dep-wd));
+    totalDep+=dep; totalWd+=wd;
     moData.push({m,dep,wd,interest,totalDep,totalWd,totalInt,bal:Math.max(0,bal)});
   }
 
-  // Derived
-  const EAR  = (Math.pow(1+annRate/n,n)-1)*100;
-  const nomR = annRate*100;
-  const roi  = P>0?(bal-P)/P*100:0;
-  const dbl  = annRate>0?Math.log(2)/Math.log(1+EAR/100):Infinity;
+  const fv  = Math.max(0,bal);
+  const EAR = (Math.pow(1+annRate/n,n)-1)*100;
+  const roi = P>0?(fv-P)/P*100:0;
+  const dbl = annRate>0?Math.log(2)/Math.log(1+EAR/100):Infinity;
 
-  // ─── DISPLAY ───
-  set('r-fv',  fmt(bal));
-  set('r-int', fmt(totalInt));
-  set('r-ini', fmt(P));
-  set('r-dep', fmt(totalDep-P));
-  set('r-roi', fmtPct(roi));
-  set('r-dbl', isFinite(dbl)?dbl.toFixed(1)+' years':'N/A');
-  set('r-nom', fmtPct(nomR));
-  set('r-ear', fmtPct(EAR));
-  set('rb-nom', fmtPct(nomR));
-  set('rb-ear', fmtPct(EAR));
-  set('rb-wd',  fmt(totalWd));
+  const pl = yrs>0&&mos>0?`${yrs} yr${yrs!==1?'s':''} ${mos} mo`
+           : yrs>0?`${yrs} year${yrs!==1?'s':''}`:`${mos} month${mos!==1?'s':''}`;
 
-  document.getElementById('results').style.display='block';
-  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+  set('r-period',pl);
+  set('r-fv', fc(fv));
+  set('r-int',fc(totalInt));
+  set('r-ini',fc(P));
+  set('r-nom',fp(annRate*100));
+  set('r-ear',fp(EAR));
+  set('r-roi',(roi>=0?'↑ ':'')+fp(roi));
+  set('r-dbl',isFinite(dbl)?`${Math.floor(dbl)} yr${Math.floor(dbl)!==1?'s':''} ${Math.round((dbl%1)*12)} mo`:'N/A');
 
-  // ─── CHART ───
-  buildChart(moData, P, annRate, totalMonths);
+  // Summary view
+  set('sum-ini',fc(P)); set('sum-dep',fc(totalDep-P)); set('sum-wd',fc(totalWd));
+  set('sum-int',fc(totalInt)); set('sum-nom',fp(annRate*100)); set('sum-ear',fp(EAR));
+  set('sum-roi',(roi>=0?'↑ ':'')+fp(roi)); set('sum-fv',fc(fv));
 
-  // ─── TABLES ───
   buildMonthlyTable(moData);
   buildYearlyTable(moData);
+  buildChart(moData, P, annRate, totalMonths);
 }
 
-// ─── CHART ───
-function buildChart(moData, P, annRate, totalMonths){
-  // Build yearly data points for chart (or monthly if ≤ 24 months)
-  const pts = totalMonths<=36 ? moData.map(d=>d) : moData.filter((_,i)=>(i+1)%12===0||i===moData.length-1);
-  const lbMap = totalMonths<=36 ? pts.map(d=>'M'+d.m) : pts.map(d=>'Y'+Math.ceil(d.m/12));
-
-  const compound = pts.map(d=>Math.round(d.bal*100)/100);
-
-  // Simple interest comparison (no contributions for comparison)
-  const simple = pts.map(d=>{
-    const t=d.m/12;
-    return Math.round((P*(1+annRate*t))*100)/100;
+function buildMonthlyTable(moData){
+  const tb=document.getElementById('tbody-mo');
+  if(!tb) return;
+  tb.innerHTML=`<tr><td>Month 0</td><td>—</td><td>—</td><td>—</td><td>—</td><td><strong>${fc(moData[0]?.bal-moData[0]?.interest||parseFloat(document.getElementById('principal').value)||0)}</strong></td></tr>`;
+  moData.forEach(d=>{
+    tb.innerHTML+=`<tr>
+      <td>Month ${d.m}</td>
+      <td>${d.dep>0.005?'<span class="td-pos">+'+fc(d.dep)+'</span>':'—'}</td>
+      <td>${d.wd>0.005?'<span class="td-neg">−'+fc(d.wd)+'</span>':'—'}</td>
+      <td class="td-pos">+${fc(d.interest)}</td>
+      <td class="td-pos">${fc(d.totalInt)}</td>
+      <td><strong>${fc(d.bal)}</strong></td>
+    </tr>`;
   });
+}
 
-  // No interest (flat)
-  const flat = pts.map(d=>Math.round((P + (d.totalDep-P) - d.totalWd)*100)/100);
+function buildYearlyTable(moData){
+  const tb=document.getElementById('tbody-yr');
+  if(!tb) return;
+  const P=parseFloat(document.getElementById('principal').value)||0;
+  tb.innerHTML=`<tr><td>Year 0</td><td>—</td><td>—</td><td>—</td><td>—</td><td><strong>${fc(P)}</strong></td></tr>`;
+  let yr=1,yDep=0,yWd=0,yInt=0;
+  moData.forEach((d,i)=>{
+    yDep+=d.dep;yWd+=d.wd;yInt+=d.interest;
+    if((i+1)%12===0||i===moData.length-1){
+      tb.innerHTML+=`<tr>
+        <td>Year ${yr}</td>
+        <td>${yDep>0.005?'<span class="td-pos">+'+fc(yDep)+'</span>':'—'}</td>
+        <td>${yWd>0.005?'<span class="td-neg">−'+fc(yWd)+'</span>':'—'}</td>
+        <td class="td-pos">+${fc(yInt)}</td>
+        <td class="td-pos">${fc(d.totalInt)}</td>
+        <td><strong>${fc(d.bal)}</strong></td>
+      </tr>`;
+      yr++;yDep=0;yWd=0;yInt=0;
+    }
+  });
+}
 
+function buildChart(moData,P,annRate,totalMonths){
+  const pts=totalMonths<=36?moData:moData.filter((_,i)=>(i+1)%12===0||i===moData.length-1);
+  const lbs=totalMonths<=36?pts.map(d=>'M'+d.m):pts.map(d=>'Y'+Math.ceil(d.m/12));
   const ctx=document.getElementById('growth-chart');
-  const existing=Chart.getChart(ctx);
-  if(existing)existing.destroy();
-  growthChart=null;
+  if(!ctx) return;
+  const ex=Chart.getChart(ctx);
+  if(ex)ex.destroy();
   growthChart=new Chart(ctx,{
     type:'line',
-    data:{labels:lbMap,datasets:[
-      {label:'Compound Interest',data:compound,borderColor:'#1d4ed8',backgroundColor:'rgba(29,78,216,.08)',fill:true,tension:.3,pointRadius:2,borderWidth:2.5},
-      {label:'Simple Interest',data:simple,borderColor:'#d97706',backgroundColor:'rgba(217,119,6,.05)',fill:false,tension:.3,pointRadius:1,borderWidth:2,borderDash:[5,4]},
-      {label:'No Interest (Principal Only)',data:flat,borderColor:'#9ca3af',backgroundColor:'rgba(156,163,175,.05)',fill:false,tension:.1,pointRadius:1,borderWidth:1.5,borderDash:[3,3]}
+    data:{labels:lbs,datasets:[
+      {label:'Compound Interest',data:pts.map(d=>Math.round(d.bal)),borderColor:'#1d4ed8',backgroundColor:'rgba(29,78,216,.08)',fill:true,tension:.35,pointRadius:pts.length>40?0:2,borderWidth:2.5},
+      {label:'Simple Interest', data:pts.map(d=>Math.round(P*(1+annRate*d.m/12))),borderColor:'#d97706',fill:false,tension:.3,pointRadius:0,borderWidth:2,borderDash:[6,4]},
+      {label:'No Interest (Principal)',data:pts.map(d=>Math.round(P+(d.totalDep-P)-d.totalWd)),borderColor:'#9ca3af',fill:false,tension:.1,pointRadius:0,borderWidth:1.5,borderDash:[3,3]}
     ]},
     options:{
       responsive:true,maintainAspectRatio:false,
@@ -701,80 +723,33 @@ function buildChart(moData, P, annRate, totalMonths){
         tooltip:{callbacks:{label:c=>c.dataset.label+': '+curSym+c.parsed.y.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}}
       },
       scales:{
-        x:{grid:{display:false},ticks:{font:{size:10},maxTicksLimit:16}},
-        y:{ticks:{callback:v=>curSym+v.toLocaleString('en-US',{notation:'compact'}),font:{size:10}},grid:{color:'#f1f5f9'}}
+        x:{grid:{display:false},ticks:{font:{size:11},maxTicksLimit:12}},
+        y:{ticks:{callback:v=>curSym+(v>=1000000?(v/1000000).toFixed(1)+'M':v>=1000?(v/1000).toFixed(0)+'K':v),font:{size:11}},grid:{color:'#f1f5f9'}}
       }
     }
   });
 }
 
-// ─── MONTHLY TABLE ───
-function buildMonthlyTable(moData){
-  const tbody=document.getElementById('tbody-mo');
-  tbody.innerHTML='';
-  moData.forEach(d=>{
-    const net=d.dep-d.wd;
-    tbody.innerHTML+=`<tr>
-      <td>Month ${d.m}</td>
-      <td class="${net>=0?'pos':'neg'}">${net>=0?'+':'-'}${fmt(Math.abs(net)).replace(curSym,'')}</td>
-      <td class="pos">+${fmt(d.interest)}</td>
-      <td>${fmt(d.totalDep)}</td>
-      <td class="${d.totalWd>0?'neg':''}">${fmt(d.totalWd)}</td>
-      <td class="pos">${fmt(d.totalInt)}</td>
-      <td><strong>${fmt(d.bal)}</strong></td>
-    </tr>`;
-  });
-}
-
-// ─── YEARLY TABLE ───
-function buildYearlyTable(moData){
-  const tbody=document.getElementById('tbody-yr');
-  tbody.innerHTML='';
-  // Aggregate by year
-  let yr=1, yDep=0, yWd=0, yInt=0;
-  moData.forEach((d,i)=>{
-    yDep+=d.dep; yWd+=d.wd; yInt+=d.interest;
-    if((i+1)%12===0||i===moData.length-1){
-      const net=yDep-yWd;
-      tbody.innerHTML+=`<tr>
-        <td>Year ${yr}</td>
-        <td class="${net>=0?'pos':'neg'}">${net>=0?'+':'-'}${fmt(Math.abs(net)).replace(curSym,'')}</td>
-        <td class="pos">+${fmt(yInt)}</td>
-        <td>${fmt(d.totalDep)}</td>
-        <td class="${d.totalWd>0?'neg':''}">${fmt(d.totalWd)}</td>
-        <td class="pos">${fmt(d.totalInt)}</td>
-        <td><strong>${fmt(d.bal)}</strong></td>
-      </tr>`;
-      yr++;yDep=0;yWd=0;yInt=0;
-    }
-  });
-}
-
-// ─── EXAMPLE TABLE ───
-function buildExampleTable(){
-  const tbody=document.getElementById('eg-tbody');
-  let bal=10000;
-  for(let y=1;y<=20;y+=y<5?1:5){
-    const prev=bal;
-    const endBal=10000*Math.pow(1.05,y);
-    const intEarned=endBal-prev;
-    tbody.innerHTML+=`<tr>
+function buildEgTable(){
+  const tb=document.getElementById('eg-tbody');
+  if(!tb)return;
+  let bal=5000;
+  [1,2,3,4,5,10,15,20].forEach(y=>{
+    const prev=y===1?5000:5000*Math.pow(1+0.05/12,12*(y-1));
+    const end=5000*Math.pow(1+0.05/12,12*y);
+    const int=end-prev;
+    tb.innerHTML+=`<tr>
       <td>${y}</td>
       <td>$${prev.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
-      <td class="pos">+$${(endBal-prev).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
-      <td><strong>$${endBal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></td>
+      <td style="color:#16a34a">+$${int.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+      <td><strong>$${end.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></td>
     </tr>`;
-    bal=endBal;
-  }
+  });
 }
 
-// ─── INIT ───
 window.onload=()=>{
-  buildExampleTable();
-  // Wire contribution radio tabs
-  document.querySelectorAll('.rtab').forEach((t,i)=>{
-    // Already wired via onclick
-  });
+  buildEgTable();
+  calc();
 };
 </script>
 </body>
