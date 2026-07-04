@@ -287,3 +287,68 @@ input[type="range"] { accent-color: var(--brand); width: 100%; cursor: pointer; 
 .focusable:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
 
 ::selection { background: var(--brand-soft); }
+
+/* --------------------------------------------------------- print styling */
+@media print {
+  @page {
+    size: A4;
+    margin: 1.5cm;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+  header,
+  footer,
+  aside,
+  nav,
+  .breadcrumbs-container,
+  .btn,
+  #how,
+  #formula,
+  #examples,
+  #faq,
+  #related {
+    display: none !important;
+  }
+  
+  .container-page {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  
+  .section {
+    padding-block: 0 !important;
+  }
+  
+  /* Make the main grid stack instead of two columns */
+  .grid.lg\:grid-cols-\[1fr_220px\] {
+    display: block !important;
+  }
+  
+  .card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+
+  .input-wrap {
+    border-color: #ccc !important;
+  }
+  
+  /* Prevent chart elements or tables from breaking across pages if possible */
+  .data-table {
+    page-break-inside: avoid;
+  }
+  
+  /* Reset some paddings */
+  .card-pad {
+    padding: 0 0 1rem 0 !important;
+  }
+  
+  h1.h-hero {
+    font-size: 2rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
+
