@@ -7,7 +7,7 @@ export const SITE = {
     "Fast, trustworthy finance calculators for compound interest, SIP, loans, EMI, mortgage, CAGR and more. No signup, instant results, clear explanations.",
   // Current live production domain. Change to a custom domain (e.g.
   // https://usemecalculator.com) once one is connected in Vercel.
-  url: "https://loanlens-phi.vercel.app",
+  url: "https://usemecalculator.vercel.app",
   locale: "en_IN",
   defaultCurrency: "INR" as const,
   twitter: "@usemecalc",
