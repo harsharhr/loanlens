@@ -8,6 +8,7 @@ export const inchesToCm: CalculatorConfig = {
   tagline: "Instantly convert inches to cm.",
   intro: "A simple, exact tool to convert inches into metric centimeters. Perfect for both precise engineering and everyday use.",
   category: "featured-units",
+  subcategory: "height-length",
   keywords: ["inches to cm", "in to cm", "convert inches to centimeters", "inches to cm calculator"],
   inputs: [
     { name: "input", label: "Inches (in)", kind: "unit", defaultValue: 12, min: 0, max: 1000000, step: 0.1 }

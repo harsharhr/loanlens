@@ -8,6 +8,7 @@ export const kgToPounds: CalculatorConfig = {
   tagline: "Instantly convert kg to pounds.",
   intro: "A simple, fast tool to convert kilograms into decimal pounds.",
   category: "featured-units",
+  subcategory: "mass-weight",
   keywords: ["kg to pounds", "kilograms to pounds", "convert kg to lbs", "weight conversion"],
   inputs: [
     { name: "input", label: "Kilograms (kg)", kind: "unit", defaultValue: 70, min: 0, max: 1000000, step: 0.1 }

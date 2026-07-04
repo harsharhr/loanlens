@@ -8,6 +8,7 @@ export const metersToFeetInches: CalculatorConfig = {
   tagline: "Convert meters into a combination of feet and inches.",
   intro: "A quick tool to turn metric meters into both total feet and a split feet-and-inches measurement. Helpful for tracking height and building materials.",
   category: "featured-units",
+  subcategory: "height-length",
   keywords: ["meters to feet and inches", "m to ft in", "convert meters to feet inches", "meters to feet and inches calculator"],
   inputs: [
     { name: "input", label: "Meters (m)", kind: "unit", defaultValue: 2, min: 0, max: 10000, step: 0.01 }

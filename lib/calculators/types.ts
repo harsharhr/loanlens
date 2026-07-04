@@ -14,17 +14,18 @@ export type CalculatorCategory =
   | "retirement"
   | "personal-finance"
   | "tax"
-  | "featured-units";
+  | "featured-units"
+  | "health";
 
 /** How a raw numeric result should be rendered. */
-export type ValueFormat = "currency" | "percent" | "number" | "years" | "months" | "unit";
+export type ValueFormat = "currency" | "percent" | "number" | "years" | "months" | "unit" | "text" | "duration";
 
 /** Kinds of form inputs the shared renderer knows how to draw. */
-export type InputKind = "currency" | "percent" | "number" | "unit";
+export type InputKind = "currency" | "percent" | "number" | "unit" | "date" | "select";
 
 export interface SelectOption {
   label: string;
-  value: number;
+  value: number | string;
 }
 
 export interface InputField {
@@ -33,7 +34,7 @@ export interface InputField {
   label: string;
   kind: InputKind;
   /** realistic starting value */
-  defaultValue: number;
+  defaultValue: number | string;
   min?: number;
   max?: number;
   step?: number;
@@ -50,7 +51,7 @@ export interface InputField {
 
 export interface ResultMetric {
   label: string;
-  value: number;
+  value: number | string;
   format: ValueFormat;
   /** optional sub-caption under the value */
   note?: string;
@@ -129,7 +130,7 @@ export interface CalculatorConfig {
 
   inputs: InputField[];
   /** pure function: values -> results. No side effects, no I/O. */
-  compute: (values: Record<string, number>, ctx: ComputeContext) => CalculatorOutput;
+  compute: (values: Record<string, any>, ctx: ComputeContext) => CalculatorOutput;
 
   /** plain-English formula explanation (supports \n paragraphs) */
   formula: {

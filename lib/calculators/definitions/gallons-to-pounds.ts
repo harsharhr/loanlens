@@ -8,6 +8,7 @@ export const gallonsToPounds: CalculatorConfig = {
   tagline: "Convert US liquid gallons to pounds based on density.",
   intro: "An easy tool to calculate the weight of liquids in pounds (lbs) based on their volume in US gallons (gal) and their specific density.",
   category: "featured-units",
+  subcategory: "volume-to-weight",
   keywords: ["gallons to pounds", "gal to lbs", "convert gallons to pounds", "liquid weight calculator"],
   inputs: [
     { 

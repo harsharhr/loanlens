@@ -8,6 +8,7 @@ export const newtonMetersToFtLb: CalculatorConfig = {
   tagline: "Instantly convert Nm to ft-lb.",
   intro: "A simple, fast tool to convert torque from newton-meters into foot-pounds, frequently used by mechanics and engineers worldwide.",
   category: "featured-units",
+  subcategory: "force",
   keywords: ["newton meters to foot pounds", "nm to ft-lb", "torque calculator nm to ft lbs", "convert nm to ft lb"],
   inputs: [
     { name: "input", label: "Newton-Meters (Nm)", kind: "unit", defaultValue: 100, min: 0, max: 1000000, step: 0.1 }

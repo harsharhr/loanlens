@@ -8,6 +8,7 @@ export const litersToOunces: CalculatorConfig = {
   tagline: "Quickly convert liters to US fluid ounces.",
   intro: "An easy-to-use tool for converting metric volume in liters (L) to US customary fluid ounces (fl oz).",
   category: "featured-units",
+  subcategory: "volume",
   keywords: ["liters to ounces", "L to fl oz", "convert liters to fluid ounces", "metric volume to ounces"],
   inputs: [
     { 

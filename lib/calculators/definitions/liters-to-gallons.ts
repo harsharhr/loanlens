@@ -8,6 +8,7 @@ export const litersToGallons: CalculatorConfig = {
   tagline: "Easily convert liters to US liquid gallons.",
   intro: "A simple and accurate tool to convert volume from metric liters (L) to US liquid gallons (gal).",
   category: "featured-units",
+  subcategory: "volume",
   keywords: ["liters to gallons", "L to gal", "convert liters to gallons", "metric to imperial volume"],
   inputs: [
     { 

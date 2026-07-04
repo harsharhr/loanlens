@@ -8,6 +8,7 @@ export const feetToMeters: CalculatorConfig = {
   tagline: "Easily switch from imperial feet to metric meters.",
   intro: "Convert lengths and distances from feet to meters. A standard tool for architecture, engineering, and everyday use.",
   category: "featured-units",
+  subcategory: "height-length",
   keywords: ["feet to meters", "ft to m", "convert feet to meters", "feet to meters calculator"],
   inputs: [
     { name: "input", label: "Feet (ft)", kind: "unit", defaultValue: 10, min: 0, max: 1000000, step: 0.1 }

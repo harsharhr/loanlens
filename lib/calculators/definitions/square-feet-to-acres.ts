@@ -8,6 +8,7 @@ export const squareFeetToAcres: CalculatorConfig = {
   tagline: "Instantly convert sq ft to acres.",
   intro: "A simple, fast tool to convert land area from square feet into acres. Useful for real estate, farming, and property development.",
   category: "featured-units",
+  subcategory: "area",
   keywords: ["square feet to acres", "sq ft to acres", "convert sq ft to acres", "how many square feet in an acre"],
   inputs: [
     { name: "input", label: "Square Feet (sq ft)", kind: "unit", defaultValue: 43560, min: 0, max: 1000000000, step: 1 }

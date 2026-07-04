@@ -8,6 +8,7 @@ export const inchPoundsToFtLb: CalculatorConfig = {
   tagline: "Instantly convert in-lb to ft-lb.",
   intro: "A simple, fast tool to convert torque or work from inch-pounds into foot-pounds. This is commonly needed in automotive, mechanical engineering, and construction when applying specific torque to fasteners.",
   category: "featured-units",
+  subcategory: "force",
   keywords: ["inch pounds to foot pounds", "in-lb to ft-lb", "torque conversion", "inch lbs to ft lbs"],
   inputs: [
     { name: "input", label: "Inch-Pounds (in-lb)", kind: "unit", defaultValue: 120, min: 0, max: 1000000, step: 0.1 }

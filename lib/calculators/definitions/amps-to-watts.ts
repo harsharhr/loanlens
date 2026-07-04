@@ -7,6 +7,7 @@ export const ampsToWatts: CalculatorConfig = {
   tagline: "Easily convert electrical current (Amps) to power (Watts).",
   intro: "This tool helps you calculate the power consumption in Watts based on the electrical current in Amperes and the voltage.",
   category: "featured-units",
+  subcategory: "energy",
   keywords: ["amps to watts", "amperes to watts", "electrical power calculation", "convert amps to watts", "A to W"],
   inputs: [
     { name: "input", label: "Current in Amps (A)", kind: "unit", defaultValue: 10, min: 0, max: 10000, step: 0.1 },

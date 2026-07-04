@@ -4,10 +4,10 @@ import type { InputField as FieldDef } from "@/lib/calculators/types";
 
 interface Props {
   field: FieldDef;
-  value: number;
+  value: any;
   error?: string;
   currencySymbol: string;
-  onChange: (name: string, value: number) => void;
+  onChange: (name: string, value: any) => void;
 }
 
 /**
@@ -59,6 +59,36 @@ export function InputFieldControl({ field, value, error, currencySymbol, onChang
           </div>
         )}
         {field.hint && <p className="field-hint">{field.hint}</p>}
+      </div>
+    );
+  }
+
+  if (field.kind === "date") {
+    return (
+      <div>
+        <label htmlFor={id} className="field-label">
+          {field.label}
+        </label>
+        <div className={`input-wrap ${error ? "has-error" : ""}`}>
+          <input
+            id={id}
+            className="input-el bg-transparent"
+            type="date"
+            value={typeof value === 'string' ? value : ''}
+            onChange={(e) => onChange(field.name, e.target.value)}
+            aria-invalid={Boolean(error)}
+            aria-describedby={field.hint ? `${id}-hint` : undefined}
+          />
+        </div>
+        {error ? (
+          <p className="field-error">{error}</p>
+        ) : (
+          field.hint && (
+            <p id={`${id}-hint`} className="field-hint">
+              {field.hint}
+            </p>
+          )
+        )}
       </div>
     );
   }

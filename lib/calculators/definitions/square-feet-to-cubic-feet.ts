@@ -8,6 +8,7 @@ export const squareFeetToCubicFeet: CalculatorConfig = {
   tagline: "Calculate volume from area and depth.",
   intro: "A simple, fast tool to convert square feet to cubic feet by adding depth. Great for estimating soil, mulch, and concrete.",
   category: "featured-units",
+  subcategory: "area-to-volume",
   keywords: ["square feet to cubic feet", "sq ft to cu ft", "calculate cubic feet from square feet and depth"],
   inputs: [
     { name: "area", label: "Area (sq ft)", kind: "unit", defaultValue: 100, min: 0, max: 1000000, step: 1 },

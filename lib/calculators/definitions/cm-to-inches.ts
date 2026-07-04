@@ -8,6 +8,7 @@ export const cmToInches: CalculatorConfig = {
   tagline: "Instantly convert cm to inches.",
   intro: "A simple, fast tool to convert centimeters into decimal inches. Find out the inch equivalent of any metric measurement.",
   category: "featured-units",
+  subcategory: "height-length",
   keywords: ["cm to inches", "centimeters to inches", "convert cm to in", "cm to in calculator"],
   inputs: [
     { name: "input", label: "Centimeters (cm)", kind: "unit", defaultValue: 100, min: 0, max: 1000000, step: 0.1 }

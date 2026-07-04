@@ -8,6 +8,7 @@ export const cubicYardsToTons: CalculatorConfig = {
   tagline: "Convert volume in cubic yards to weight in tons.",
   intro: "A useful tool for calculating the weight (in tons) of materials based on their volume in cubic yards. Ideal for landscaping, construction, and hauling.",
   category: "featured-units",
+  subcategory: "volume-to-weight",
   keywords: ["cubic yards to tons", "cu yd to tons", "convert cubic yards to tons", "volume to weight"],
   inputs: [
     { 

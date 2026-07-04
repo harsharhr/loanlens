@@ -8,6 +8,7 @@ export const cmToFeet: CalculatorConfig = {
   tagline: "Instantly convert cm to feet.",
   intro: "A simple, fast tool to convert centimeters into decimal feet. Enter any cm value to immediately see the equivalent measurement in feet.",
   category: "featured-units",
+  subcategory: "height-length",
   keywords: ["cm to feet", "centimeters to feet", "convert cm to ft", "cm to ft calculator"],
   inputs: [
     { name: "input", label: "Centimeters (cm)", kind: "unit", defaultValue: 150, min: 0, max: 1000000, step: 0.1 }

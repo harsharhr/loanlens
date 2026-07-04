@@ -8,6 +8,7 @@ export const cubicFeetToGallons: CalculatorConfig = {
   tagline: "Instantly convert cubic feet to US liquid gallons.",
   intro: "A fast and reliable tool to convert volume from cubic feet (cu ft) into US liquid gallons (gal). Useful for pools, tanks, and fluid capacity.",
   category: "featured-units",
+  subcategory: "volume",
   keywords: ["cubic feet to gallons", "cu ft to gal", "convert cubic feet to gallons", "volume converter"],
   inputs: [
     { 

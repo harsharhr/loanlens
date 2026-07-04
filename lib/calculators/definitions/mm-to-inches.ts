@@ -8,6 +8,7 @@ export const mmToInches: CalculatorConfig = {
   tagline: "Quickly convert mm to fractional or decimal inches.",
   intro: "A precision calculator for converting millimeters (mm) into decimal inches, widely used in engineering and drafting.",
   category: "featured-units",
+  subcategory: "height-length",
   keywords: ["mm to inches", "millimeters to inches", "convert mm to in", "mm to inches calculator"],
   inputs: [
     { name: "input", label: "Millimeters (mm)", kind: "unit", defaultValue: 25.4, min: 0, max: 1000000, step: 0.1 }

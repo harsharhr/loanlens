@@ -8,6 +8,7 @@ export const feetToInches: CalculatorConfig = {
   tagline: "Quickly multiply feet to get inches.",
   intro: "Convert any length in feet directly to inches with this easy multiplier tool.",
   category: "featured-units",
+  subcategory: "height-length",
   keywords: ["feet to inches", "ft to in", "convert feet to inches", "feet to in calculator"],
   inputs: [
     { name: "input", label: "Feet (ft)", kind: "unit", defaultValue: 5, min: 0, max: 1000000, step: 0.1 }

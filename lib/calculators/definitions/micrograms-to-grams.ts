@@ -8,6 +8,7 @@ export const microgramsToGrams: CalculatorConfig = {
   tagline: "Instantly convert mcg to grams.",
   intro: "A simple, fast tool to convert micrograms into grams.",
   category: "featured-units",
+  subcategory: "mass-weight",
   keywords: ["micrograms to grams", "mcg to g", "μg to g", "convert mcg to grams"],
   inputs: [
     { name: "input", label: "Micrograms (mcg)", kind: "unit", defaultValue: 1000000, min: 0, max: 1000000000, step: 1 }

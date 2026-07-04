@@ -8,6 +8,7 @@ export const ouncesToPounds: CalculatorConfig = {
   tagline: "Instantly convert ounces to pounds.",
   intro: "A simple, fast tool to convert ounces (oz) into pounds (lbs).",
   category: "featured-units",
+  subcategory: "mass-weight",
   keywords: ["ounces to pounds", "oz to lbs", "convert oz to lbs", "imperial weight"],
   inputs: [
     { name: "input", label: "Ounces (oz)", kind: "unit", defaultValue: 16, min: 0, max: 10000, step: 1 }

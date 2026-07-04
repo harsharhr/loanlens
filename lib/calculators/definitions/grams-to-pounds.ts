@@ -8,6 +8,7 @@ export const gramsToPounds: CalculatorConfig = {
   tagline: "Instantly convert grams to pounds.",
   intro: "A simple, fast tool to convert grams into decimal pounds.",
   category: "featured-units",
+  subcategory: "mass-weight",
   keywords: ["grams to pounds", "g to lbs", "convert grams to lbs", "weight conversion"],
   inputs: [
     { name: "input", label: "Grams (g)", kind: "unit", defaultValue: 1000, min: 0, max: 10000000, step: 1 }

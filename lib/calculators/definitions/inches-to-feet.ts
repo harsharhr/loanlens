@@ -8,6 +8,7 @@ export const inchesToFeet: CalculatorConfig = {
   tagline: "Easily convert total inches into decimal feet.",
   intro: "A fast calculator to divide your inches into feet. Great for carpentry, DIY projects, and everyday math.",
   category: "featured-units",
+  subcategory: "height-length",
   keywords: ["inches to feet", "in to ft", "convert inches to feet", "inches to ft calculator"],
   inputs: [
     { name: "input", label: "Inches (in)", kind: "unit", defaultValue: 36, min: 0, max: 1000000, step: 0.1 }

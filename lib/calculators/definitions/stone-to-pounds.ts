@@ -8,6 +8,7 @@ export const stoneToPounds: CalculatorConfig = {
   tagline: "Instantly convert stone to pounds.",
   intro: "A simple, fast tool to convert British stone into decimal pounds.",
   category: "featured-units",
+  subcategory: "mass-weight",
   keywords: ["stone to pounds", "st to lbs", "convert stone to lbs", "british weight"],
   inputs: [
     { name: "input", label: "Stone (st)", kind: "unit", defaultValue: 10, min: 0, max: 1000, step: 0.1 }

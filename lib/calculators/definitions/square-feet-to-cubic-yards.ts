@@ -8,6 +8,7 @@ export const squareFeetToCubicYards: CalculatorConfig = {
   tagline: "Calculate yards of material needed from area and depth.",
   intro: "A simple, fast tool to convert square feet to cubic yards by adding depth. Essential for ordering concrete, dirt, mulch, or gravel.",
   category: "featured-units",
+  subcategory: "area-to-volume",
   keywords: ["square feet to cubic yards", "sq ft to cu yd", "how many cubic yards for square feet", "concrete calculator yards"],
   inputs: [
     { name: "area", label: "Area (sq ft)", kind: "unit", defaultValue: 100, min: 0, max: 1000000, step: 1 },

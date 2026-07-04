@@ -8,6 +8,7 @@ export const litersToTons: CalculatorConfig = {
   tagline: "Convert volume in liters to weight in metric tons.",
   intro: "A precise tool to calculate the weight of liquids or bulk materials in metric tons based on their volume in liters (L) and specific density.",
   category: "featured-units",
+  subcategory: "volume-to-weight",
   keywords: ["liters to tons", "liters to metric tons", "convert L to t", "volume to metric weight"],
   inputs: [
     { 

@@ -8,6 +8,7 @@ export const gallonsToOunces: CalculatorConfig = {
   tagline: "Instantly convert US gallons to fluid ounces.",
   intro: "A simple, fast tool to convert volume from US liquid gallons (gal) into US fluid ounces (fl oz).",
   category: "featured-units",
+  subcategory: "volume",
   keywords: ["gallons to ounces", "gal to fl oz", "convert gallons to ounces", "fluid ounces converter"],
   inputs: [
     { 

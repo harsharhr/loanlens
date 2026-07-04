@@ -8,6 +8,7 @@ export const mgToGrams: CalculatorConfig = {
   tagline: "Instantly convert mg to grams.",
   intro: "A simple, fast tool to convert milligrams into grams.",
   category: "featured-units",
+  subcategory: "mass-weight",
   keywords: ["mg to grams", "milligrams to grams", "convert mg to g", "metric weight"],
   inputs: [
     { name: "input", label: "Milligrams (mg)", kind: "unit", defaultValue: 1000, min: 0, max: 10000000, step: 1 }

@@ -8,6 +8,7 @@ export const kgToStonePounds: CalculatorConfig = {
   tagline: "Instantly convert kg to stone and pounds.",
   intro: "A simple, fast tool to convert kilograms into stone and pounds (st & lbs).",
   category: "featured-units",
+  subcategory: "mass-weight",
   keywords: ["kg to stone and pounds", "kilograms to st lbs", "convert kg to stone", "weight conversion"],
   inputs: [
     { name: "input", label: "Kilograms (kg)", kind: "unit", defaultValue: 70, min: 0, max: 500, step: 0.1 }

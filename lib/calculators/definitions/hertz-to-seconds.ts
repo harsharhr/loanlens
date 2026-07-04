@@ -7,6 +7,7 @@ export const hertzToSeconds: CalculatorConfig = {
   tagline: "Easily convert frequency (Hertz) to period (Seconds).",
   intro: "This tool helps you calculate the time period of a single cycle in seconds based on a given frequency in Hertz (Hz).",
   category: "featured-units",
+  subcategory: "energy",
   keywords: ["hertz to seconds", "Hz to s", "frequency to period", "period calculator", "convert hertz to seconds"],
   inputs: [
     { name: "input", label: "Frequency in Hertz (Hz)", kind: "unit", defaultValue: 60, min: 0.000001, max: 1000000000, step: 1 }

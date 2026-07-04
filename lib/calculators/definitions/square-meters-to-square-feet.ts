@@ -8,6 +8,7 @@ export const squareMetersToSquareFeet: CalculatorConfig = {
   tagline: "Instantly convert sq m to sq ft.",
   intro: "A simple, fast tool to convert square meters into square feet, perfect for architecture, flooring, and international real estate.",
   category: "featured-units",
+  subcategory: "area",
   keywords: ["square meters to square feet", "sq m to sq ft", "convert sq meters to sq feet", "m2 to sq ft"],
   inputs: [
     { name: "input", label: "Square Meters (sq m)", kind: "unit", defaultValue: 100, min: 0, max: 10000000, step: 0.1 }

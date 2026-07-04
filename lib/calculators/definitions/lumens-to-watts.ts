@@ -7,6 +7,7 @@ export const lumensToWatts: CalculatorConfig = {
   tagline: "Convert brightness (Lumens) to electrical power (Watts) based on bulb type.",
   intro: "This calculator helps you determine the power consumption (in Watts) needed to produce a specific amount of light (in Lumens), depending on the energy efficiency of the bulb.",
   category: "featured-units",
+  subcategory: "energy",
   keywords: ["lumens to watts", "convert lumens to watts", "brightness to power", "light bulb wattage calculator", "lm to W"],
   inputs: [
     { name: "input", label: "Brightness (Lumens)", kind: "unit", defaultValue: 800, min: 0, max: 100000, step: 10 },
