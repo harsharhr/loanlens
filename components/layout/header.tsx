@@ -11,6 +11,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  const [unitsMegaOpen, setUnitsMegaOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
@@ -60,7 +61,7 @@ export function Header() {
             {megaOpen && (
               <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3">
                 <div className="card shadow-elevated p-5 w-[640px] grid grid-cols-2 gap-x-6 gap-y-1">
-                  {CATEGORIES.map((cat) => (
+                  {CATEGORIES.filter(c => c.id !== "featured-units").map((cat) => (
                     <div key={cat.id} className="py-1">
                       <Link
                         href={`/finance#${cat.id}`}
@@ -85,6 +86,75 @@ export function Header() {
                   <div className="col-span-2 mt-2 pt-3 border-t">
                     <Link href="/finance" className="link text-sm inline-flex items-center gap-1">
                       Browse all finance calculators →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div
+            className="relative"
+            onMouseEnter={() => setUnitsMegaOpen(true)}
+            onMouseLeave={() => setUnitsMegaOpen(false)}
+          >
+            <button
+              className="flex items-center gap-1 px-3 py-2 rounded text-[15px] font-semibold text-ink-secondary hover:text-brand hover:bg-brand-soft transition-colors focusable"
+              aria-expanded={unitsMegaOpen}
+              aria-haspopup="true"
+              onClick={() => setUnitsMegaOpen((v) => !v)}
+            >
+              Featured Units <ChevronDown size={16} className={`transition-transform ${unitsMegaOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {unitsMegaOpen && (
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3">
+                <div className="card shadow-elevated p-5 w-[640px] grid grid-cols-3 gap-x-6 gap-y-4">
+                  {[
+                    { id: "height-length", label: "Height & Length" },
+                    { id: "mass-weight", label: "Mass (Weight)" },
+                    { id: "volume", label: "Volume" },
+                    { id: "volume-to-weight", label: "Vol to Weight" },
+                    { id: "force", label: "Force" },
+                    { id: "area", label: "Area" },
+                    { id: "area-to-volume", label: "Area to Vol" },
+                    { id: "energy", label: "Energy" }
+                  ].map((sub) => {
+                    const group = calculatorsByCategory("featured-units").filter(c => c.subcategory === sub.id);
+                    if (group.length === 0) return null;
+                    return (
+                      <div key={sub.id}>
+                        <Link
+                          href={`/featured-units#${sub.id}`}
+                          className="block text-xs font-bold uppercase tracking-wide text-brand mb-1 hover:underline truncate"
+                        >
+                          {sub.label}
+                        </Link>
+                        <ul>
+                          {group.slice(0, 4).map((c) => (
+                            <li key={c.slug}>
+                              <Link
+                                href={`/featured-units/${c.slug}`}
+                                className="block py-0.5 text-[13px] text-ink-secondary hover:text-brand transition-colors truncate"
+                              >
+                                {c.title.replace(" Calculator", "")}
+                              </Link>
+                            </li>
+                          ))}
+                          {group.length > 4 && (
+                            <li>
+                              <Link href={`/featured-units#${sub.id}`} className="block py-0.5 text-[13px] text-brand hover:underline">
+                                +{group.length - 4} more
+                              </Link>
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )
+                  })}
+                  <div className="col-span-3 mt-1 pt-3 border-t">
+                    <Link href="/featured-units" className="link text-sm inline-flex items-center gap-1">
+                      Browse all unit conversions →
                     </Link>
                   </div>
                 </div>
@@ -176,6 +246,17 @@ export function Header() {
               >
                 All finance calculators
               </Link>
+              
+              <div className="py-2 border-t mt-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-brand mb-1.5 mt-2">More Tools</p>
+                <Link
+                  href="/featured-units"
+                  className="block py-2 text-[15px] font-semibold text-ink hover:text-brand"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Featured Units & Conversions →
+                </Link>
+              </div>
             </nav>
           </div>
         </div>

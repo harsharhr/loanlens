@@ -13,13 +13,14 @@ export type CalculatorCategory =
   | "savings"
   | "retirement"
   | "personal-finance"
-  | "tax";
+  | "tax"
+  | "featured-units";
 
 /** How a raw numeric result should be rendered. */
-export type ValueFormat = "currency" | "percent" | "number" | "years" | "months";
+export type ValueFormat = "currency" | "percent" | "number" | "years" | "months" | "unit";
 
 /** Kinds of form inputs the shared renderer knows how to draw. */
-export type InputKind = "currency" | "percent" | "number";
+export type InputKind = "currency" | "percent" | "number" | "unit";
 
 export interface SelectOption {
   label: string;
@@ -120,6 +121,7 @@ export interface CalculatorConfig {
   /** trust-oriented short intro paragraph on the calculator page */
   intro: string;
   category: CalculatorCategory;
+  subcategory?: string;
   /** extra search keywords beyond the title */
   keywords: string[];
   /** show in "featured"/"popular" rails */

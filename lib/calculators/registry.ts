@@ -29,6 +29,40 @@ import { epf } from "./definitions/epf";
 import { hra } from "./definitions/hra";
 import { gratuity } from "./definitions/gratuity";
 
+import { cmToFeet } from "./definitions/cm-to-feet";
+import { cmToInches } from "./definitions/cm-to-inches";
+import { feetToInches } from "./definitions/feet-to-inches";
+import { feetToMeters } from "./definitions/feet-to-meters";
+import { inchesToCm } from "./definitions/inches-to-cm";
+import { inchesToFeet } from "./definitions/inches-to-feet";
+import { mmToInches } from "./definitions/mm-to-inches";
+import { metersToFeetInches } from "./definitions/meters-to-feet-inches";
+import { gramsToPounds } from "./definitions/grams-to-pounds";
+import { kgToPounds } from "./definitions/kg-to-pounds";
+import { microgramsToMg } from "./definitions/micrograms-to-mg";
+import { microgramsToGrams } from "./definitions/micrograms-to-grams";
+import { mgToGrams } from "./definitions/mg-to-grams";
+import { ouncesToPounds } from "./definitions/ounces-to-pounds";
+import { stoneToPounds } from "./definitions/stone-to-pounds";
+import { kgToStonePounds } from "./definitions/kg-to-stone-pounds";
+import { cubicFeetToGallons } from "./definitions/cubic-feet-to-gallons";
+import { gallonsToOunces } from "./definitions/gallons-to-ounces";
+import { litersToGallons } from "./definitions/liters-to-gallons";
+import { litersToOunces } from "./definitions/liters-to-ounces";
+import { cubicYardsToTons } from "./definitions/cubic-yards-to-tons";
+import { gallonsToPounds } from "./definitions/gallons-to-pounds";
+import { litersToTons } from "./definitions/liters-to-tons";
+import { inchPoundsToFtLb } from "./definitions/inch-pounds-to-ft-lb";
+import { newtonMetersToFtLb } from "./definitions/newton-meters-to-ft-lb";
+import { squareFeetToAcres } from "./definitions/square-feet-to-acres";
+import { squareMetersToSquareFeet } from "./definitions/square-meters-to-square-feet";
+import { squareFeetToCubicFeet } from "./definitions/square-feet-to-cubic-feet";
+import { squareFeetToCubicYards } from "./definitions/square-feet-to-cubic-yards";
+import { ampsToWatts } from "./definitions/amps-to-watts";
+import { wattsToAmps } from "./definitions/watts-to-amps";
+import { lumensToWatts } from "./definitions/lumens-to-watts";
+import { hertzToSeconds } from "./definitions/hertz-to-seconds";
+
 export const CALCULATORS: CalculatorConfig[] = [
   incomeTax,
   homeLoan,
@@ -53,6 +87,15 @@ export const CALCULATORS: CalculatorConfig[] = [
   savingsGoal,
   loanPayoff,
   stockAverage,
+  // Featured Units
+  cmToFeet, cmToInches, feetToInches, feetToMeters, inchesToCm, inchesToFeet, mmToInches, metersToFeetInches,
+  gramsToPounds, kgToPounds, microgramsToMg, microgramsToGrams, mgToGrams, ouncesToPounds, stoneToPounds, kgToStonePounds,
+  cubicFeetToGallons, gallonsToOunces, litersToGallons, litersToOunces,
+  cubicYardsToTons, gallonsToPounds, litersToTons,
+  inchPoundsToFtLb, newtonMetersToFtLb,
+  squareFeetToAcres, squareMetersToSquareFeet,
+  squareFeetToCubicFeet, squareFeetToCubicYards,
+  ampsToWatts, wattsToAmps, lumensToWatts, hertzToSeconds
 ];
 
 export const CATEGORIES: CategoryMeta[] = [
@@ -62,6 +105,7 @@ export const CATEGORIES: CategoryMeta[] = [
   { id: "savings", label: "Savings", description: "Calculate maturity for FDs, RDs, PPF, and EPF accounts." },
   { id: "retirement", label: "Retirement", description: "Project your corpus and plan your retirement withdrawals." },
   { id: "personal-finance", label: "Personal Finance", description: "Calculate gratuity, stock averages, and other daily math." },
+  { id: "featured-units", label: "Featured Units", description: "Fast, accurate unit conversions for height, weight, volume, energy, and more." },
 ];
 
 const BY_SLUG = new Map(CALCULATORS.map((c) => [c.slug, c]));
