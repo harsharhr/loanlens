@@ -187,7 +187,7 @@ export default async function FeaturedUnitPage({ params }: { params: Promise<{ s
             <Info size={18} className="text-brand shrink-0 mt-0.5" />
             <p className="text-sm text-muted leading-relaxed">
               {calc.disclaimer ??
-                "This calculator is for educational and estimation purposes only and does not constitute financial advice. Real returns, interest rates, taxes and fees vary. Consult a qualified professional before making financial decisions."}
+                "This calculator is for informational purposes only. While we strive for accuracy, please verify critical conversions with professional tools before using them in engineering, scientific, or other critical applications."}
             </p>
           </div>
 

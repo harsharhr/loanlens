@@ -33,12 +33,12 @@ export function ResultSummary({ metrics, interpretation, currencySymbol, locale 
       </div>
 
       {/* Secondary metrics grid */}
-      <div className="grid grid-cols-3 gap-2.5">
+      <div className="flex flex-wrap gap-2.5">
         {secondary.map((m) => (
-          <div key={m.label} className="rounded-lg border border-line bg-surface px-3 py-3 text-center">
+          <div key={m.label} className="flex-1 min-w-[120px] rounded-lg border border-line bg-surface px-3 py-3 text-center">
             <p className="text-[11px] font-semibold uppercase tracking-wide text-muted leading-tight">{m.label}</p>
             <p
-              className="num text-[17px] md:text-lg font-bold mt-1 leading-tight break-words"
+              className="num text-[17px] md:text-lg font-bold mt-1 leading-tight"
               style={{ color: toneColor[m.tone ?? "neutral"] }}
             >
               {formatValue(m.value, m.format, currencySymbol, locale)}
