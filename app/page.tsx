@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Zap, ShieldCheck, BookOpen, IndianRupee } from "lucide-react";
+import { ArrowRight, Zap, ShieldCheck, BookOpen, IndianRupee, CheckCircle2 } from "lucide-react";
 import { CalculatorSearch } from "@/components/search/calculator-search";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { FaqAccordion } from "@/components/calculators/faq-accordion";
@@ -33,17 +33,25 @@ export default function HomePage() {
             Make confident money decisions in seconds
           </h1>
           <p className="lede mt-4 max-w-2xl mx-auto">
-            Free, accurate calculators for Home Loan EMI, SIP returns, Income Tax (Old vs New), PPF, and GST. Get instant answers with clear explanations tailored for the Indian financial system.
+            Built with India-specific rules, lakh/crore formatting, and current tax regime logic. Plan your SIPs, calculate home loan EMIs, and compare tax regimes with complete confidence.
           </p>
 
-          <div className="mt-8 max-w-xl mx-auto">
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link href="/finance/income-tax" className="button button-primary">Compare tax regimes</Link>
+            <Link href="/finance/home-loan" className="button button-secondary">Calculate home EMI</Link>
+            <Link href="/finance/sip" className="button button-secondary">Start SIP planning</Link>
+            <Link href="/finance/retirement" className="button button-secondary">Plan retirement</Link>
+          </div>
+
+          <div className="mt-6 max-w-xl mx-auto">
             <CalculatorSearch autoFocus={false} />
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted">
-            <span className="inline-flex items-center gap-1.5"><Zap size={15} className="text-brand" /> Instant results</span>
-            <span className="inline-flex items-center gap-1.5"><ShieldCheck size={15} className="text-brand" /> No signup, fully private</span>
-            <span className="inline-flex items-center gap-1.5"><BookOpen size={15} className="text-brand" /> Formulas explained</span>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-muted border border-line bg-surface/50 py-3 px-6 rounded-full w-fit mx-auto shadow-sm">
+            <span className="inline-flex items-center gap-1.5 font-medium"><CheckCircle2 size={16} className="text-brand" /> Standard formulas</span>
+            <span className="inline-flex items-center gap-1.5 font-medium"><CheckCircle2 size={16} className="text-brand" /> India-specific rules</span>
+            <span className="inline-flex items-center gap-1.5 font-medium"><CheckCircle2 size={16} className="text-brand" /> Browser-only privacy</span>
+            <span className="inline-flex items-center gap-1.5 font-medium"><CheckCircle2 size={16} className="text-brand" /> Updated FY 24-25</span>
           </div>
         </div>
       </section>
@@ -60,7 +68,7 @@ export default function HomePage() {
           </Link>
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((c) => (
+          {featured.slice(0, 6).map((c) => (
             <CalculatorCard key={c.slug} calc={c} />
           ))}
         </div>
@@ -107,17 +115,15 @@ export default function HomePage() {
         <div className="grid gap-8 lg:grid-cols-2 items-center">
           <div>
             <span className="eyebrow">Why it matters</span>
-            <h2 className="h-section mt-2">Small numbers, life-changing decisions</h2>
+            <h2 className="h-section mt-2">Indian household decisions run on numbers</h2>
             <p className="text-ink-secondary mt-3 leading-relaxed">
-              A 1% difference in a home loan rate, or starting your mutual fund SIP five years earlier, can be worth lakhs or crores over
-              time. Our calculators don't just spit out an answer — they show the growth curve, the amortization schedule, and the
-              tax implications, so you understand the <em>why</em>, not just the <em>what</em>.
+              A 0.5% drop in your home loan rate, or stepping up your SIP by just ₹2,000 a year, can shift your retirement date by a decade. Our calculators are designed to show you exactly how these numbers play out in the real world.
             </p>
             <ul className="mt-5 space-y-3">
               {[
                 { icon: Zap, t: "See the trade-offs instantly", d: "Slide any input and watch results and charts update live without reloading." },
                 { icon: BookOpen, t: "Learn as you calculate", d: "Plain-English formulas, tax saving tips and FAQs on every single page." },
-                { icon: IndianRupee, t: "Built for India", d: "Lakh/Crore formatting, RBI repo rate context, and Indian tax regime rules." },
+                { icon: ShieldCheck, t: "100% Private & Shareable", d: "Everything runs securely in your browser. Share results via a simple URL link." },
               ].map((f) => (
                 <li key={f.t} className="flex gap-3">
                   <span className="shrink-0 grid place-items-center w-9 h-9 rounded-lg bg-brand-soft text-brand">
@@ -131,13 +137,18 @@ export default function HomePage() {
               ))}
             </ul>
           </div>
-          <div className="card card-pad bg-brand-tint/40">
-            <p className="text-sm font-semibold text-brand uppercase tracking-wide mb-3">Try one now</p>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {featured.slice(0, 4).map((c) => (
-                <CalculatorCard key={c.slug} calc={c} compact />
-              ))}
-            </div>
+          <div className="card card-pad bg-brand-tint/20 border-brand/20">
+            <p className="text-xs font-bold text-brand uppercase tracking-wide mb-3">Concrete Example</p>
+            <h3 className="font-bold text-ink text-lg mb-2">Home Loan: ₹50 Lakh at 8.5%</h3>
+            <p className="text-sm text-ink-secondary mb-3 leading-relaxed">
+              If you take a ₹50 lakh home loan for 20 years at 8.5%, your EMI will be <strong>₹43,391</strong>. By the end, you will have paid <strong>₹54.1 lakh</strong> just in interest!
+            </p>
+            <p className="text-sm text-ink-secondary mb-5 leading-relaxed">
+              <strong>The magic of prepayment:</strong> If you increase your EMI by just ₹5,000 per month, you will save over <strong>₹12 lakh</strong> in interest and finish the loan 4 years early.
+            </p>
+            <Link href="/finance/home-loan" className="link font-semibold inline-flex items-center gap-1 text-sm">
+              Try it yourself <ArrowRight size={14} />
+            </Link>
           </div>
         </div>
       </section>

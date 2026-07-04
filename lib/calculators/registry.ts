@@ -56,12 +56,12 @@ export const CALCULATORS: CalculatorConfig[] = [
 ];
 
 export const CATEGORIES: CategoryMeta[] = [
-  { id: "investing", label: "Investing", description: "Grow wealth through compounding, SIPs and long-term returns." },
-  { id: "loans", label: "Loans & EMI", description: "Understand payments, interest and the true cost of borrowing." },
-  { id: "tax", label: "Tax & Compliance", description: "Calculate Income Tax, GST, HRA and more for India." },
-  { id: "savings", label: "Savings", description: "Plan deposits, interest and everyday savings goals." },
-  { id: "retirement", label: "Retirement", description: "Build and stress-test your long-term nest egg." },
-  { id: "personal-finance", label: "Personal Finance", description: "Everyday money tools for smarter decisions." },
+  { id: "investing", label: "Investing", description: "Model mutual fund SIPs, step-ups, and long-term compounding." },
+  { id: "loans", label: "Loans & EMI", description: "Compare Home, Car, and Personal loan EMIs and prepayments." },
+  { id: "tax", label: "Tax & Compliance", description: "Navigate old vs new tax regimes, HRA exemptions, and GST slabs." },
+  { id: "savings", label: "Savings", description: "Calculate maturity for FDs, RDs, PPF, and EPF accounts." },
+  { id: "retirement", label: "Retirement", description: "Project your corpus and plan your retirement withdrawals." },
+  { id: "personal-finance", label: "Personal Finance", description: "Calculate gratuity, stock averages, and other daily math." },
 ];
 
 const BY_SLUG = new Map(CALCULATORS.map((c) => [c.slug, c]));

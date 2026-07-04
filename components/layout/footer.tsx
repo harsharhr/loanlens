@@ -12,13 +12,13 @@ export function Footer() {
           <div>
             <div className="flex items-center gap-2.5 mb-3">
               <LogoMark size={30} />
-              <span className="text-lg font-bold tracking-tight">
-                Useme<span className="text-brand">calculator</span>
+              <span className="text-lg font-bold tracking-tight text-ink flex items-center gap-1.5">
+                Usemecalculator
+                <span className="text-[10px] uppercase tracking-widest text-brand font-bold bg-brand-soft px-1.5 py-0.5 rounded">India</span>
               </span>
             </div>
             <p className="text-sm text-muted max-w-xs leading-relaxed">
-              Fast, trustworthy finance calculators with clear explanations. Free to use, no signup, instant results —
-              built for India and usable everywhere.
+              India's most trusted financial decision engine. Free, accurate calculators for EMIs, taxes, and investments with complete privacy.
             </p>
           </div>
 

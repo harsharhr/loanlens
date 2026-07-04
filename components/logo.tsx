@@ -24,8 +24,9 @@ export function Logo({ compact = false }: { compact?: boolean }) {
     <Link href="/" className="flex items-center gap-2.5 focusable" aria-label="Usemecalculator home">
       <LogoMark size={compact ? 28 : 34} />
       {!compact && (
-        <span className="text-[19px] font-bold tracking-tight text-ink">
-          Useme<span className="text-brand">calculator</span>
+        <span className="text-[19px] font-bold tracking-tight text-ink flex items-center gap-1.5">
+          Usemecalculator
+          <span className="text-[10px] uppercase tracking-widest text-brand font-bold bg-brand-soft px-1.5 py-0.5 rounded">India</span>
         </span>
       )}
     </Link>
