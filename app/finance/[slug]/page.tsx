@@ -102,6 +102,29 @@ export default async function CalculatorPage({ params }: { params: Promise<{ slu
             <h1 className="h-hero">{calc.title}</h1>
             <p className="lede mt-3">{calc.tagline}</p>
             <p className="text-ink-secondary mt-3 max-w-2xl leading-relaxed">{calc.intro}</p>
+            
+            {/* Trust Layer */}
+            {(calc.author || calc.lastUpdated) && (
+              <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted border-t pt-4">
+                {calc.author && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-semibold text-ink-secondary">Reviewed by:</span>
+                    {calc.author.url ? (
+                      <a href={calc.author.url} className="text-brand hover:underline">{calc.author.name}</a>
+                    ) : (
+                      <span>{calc.author.name}</span>
+                    )}
+                    {calc.author.role && <span className="opacity-80">({calc.author.role})</span>}
+                  </div>
+                )}
+                {calc.lastUpdated && (
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-semibold text-ink-secondary">Last updated:</span>
+                    <time dateTime={calc.lastUpdated}>{new Date(calc.lastUpdated).toLocaleDateString("en-IN", { year: "numeric", month: "long", day: "numeric" })}</time>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -119,6 +142,11 @@ export default async function CalculatorPage({ params }: { params: Promise<{ slu
             {calc.explanation.map((p, i) => (
               <p key={i}>{p}</p>
             ))}
+            {calc.methodology && (
+              <div className="mt-4 p-4 bg-surface rounded-lg border border-line text-sm text-ink-secondary">
+                <strong className="text-ink">Methodology:</strong> {calc.methodology}
+              </div>
+            )}
           </section>
 
           {/* formula */}

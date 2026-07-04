@@ -144,6 +144,17 @@ export interface CalculatorConfig {
   related: string[];
   /** short disclaimer specific to this tool (falls back to a global one) */
   disclaimer?: string;
+
+  /** Trust Layer: Author or reviewer of the calculator logic/content */
+  author?: {
+    name: string;
+    role: string;
+    url?: string;
+  };
+  /** Trust Layer: Last verification date (ISO string e.g. YYYY-MM-DD) */
+  lastUpdated?: string;
+  /** Trust Layer: How we verify or compute this (for YMYL SEO) */
+  methodology?: string;
 }
 
 export interface ComputeContext {

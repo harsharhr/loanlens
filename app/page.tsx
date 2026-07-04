@@ -28,13 +28,12 @@ export default function HomePage() {
           style={{ background: "radial-gradient(120% 80% at 50% -10%, var(--brand-tint) 0%, transparent 60%)" }}
         />
         <div className="container-page pt-16 pb-12 md:pt-24 md:pb-16 text-center">
-          <span className="eyebrow">Finance calculators, done right</span>
+          <span className="eyebrow">India's Smartest Finance Calculators</span>
           <h1 className="h-hero mt-3 max-w-3xl mx-auto text-balance">
             Make confident money decisions in seconds
           </h1>
           <p className="lede mt-4 max-w-2xl mx-auto">
-            Free, accurate calculators for compound interest, SIPs, loans, EMI, mortgages and more — each with a clear
-            explanation of exactly how the number is worked out.
+            Free, accurate calculators for Home Loan EMI, SIP returns, Income Tax (Old vs New), PPF, and GST. Get instant answers with clear explanations tailored for the Indian financial system.
           </p>
 
           <div className="mt-8 max-w-xl mx-auto">
@@ -110,15 +109,15 @@ export default function HomePage() {
             <span className="eyebrow">Why it matters</span>
             <h2 className="h-section mt-2">Small numbers, life-changing decisions</h2>
             <p className="text-ink-secondary mt-3 leading-relaxed">
-              A one-percent difference in a loan rate, or starting an SIP five years earlier, can be worth lakhs over
-              time. Our calculators don't just spit out an answer — they show the growth curve, the schedule and the
-              formula, so you understand the <em>why</em>, not just the <em>what</em>.
+              A 1% difference in a home loan rate, or starting your mutual fund SIP five years earlier, can be worth lakhs or crores over
+              time. Our calculators don't just spit out an answer — they show the growth curve, the amortization schedule, and the
+              tax implications, so you understand the <em>why</em>, not just the <em>what</em>.
             </p>
             <ul className="mt-5 space-y-3">
               {[
-                { icon: Zap, t: "See the trade-offs instantly", d: "Slide any input and watch results and charts update live." },
-                { icon: BookOpen, t: "Learn as you calculate", d: "Plain-English formulas, worked examples and FAQs on every page." },
-                { icon: IndianRupee, t: "Built for real money", d: "India-friendly defaults and currency switching, universal maths." },
+                { icon: Zap, t: "See the trade-offs instantly", d: "Slide any input and watch results and charts update live without reloading." },
+                { icon: BookOpen, t: "Learn as you calculate", d: "Plain-English formulas, tax saving tips and FAQs on every single page." },
+                { icon: IndianRupee, t: "Built for India", d: "Lakh/Crore formatting, RBI repo rate context, and Indian tax regime rules." },
               ].map((f) => (
                 <li key={f.t} className="flex gap-3">
                   <span className="shrink-0 grid place-items-center w-9 h-9 rounded-lg bg-brand-soft text-brand">

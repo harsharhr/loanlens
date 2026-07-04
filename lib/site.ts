@@ -1,10 +1,10 @@
 /** Global site metadata used for SEO, headers, and structured data. */
 export const SITE = {
-  name: "Usemecalculator",
+  name: "Usemecalculator India",
   shortName: "Usemecalc",
-  tagline: "Free, accurate finance calculators",
+  tagline: "India's Most Accurate Finance & Tax Calculators",
   description:
-    "Fast, trustworthy finance calculators for compound interest, SIP, loans, EMI, mortgage, CAGR and more. No signup, instant results, clear explanations.",
+    "Fast, trustworthy financial calculators designed specifically for Indian users. Calculate Home Loan EMI, SIP returns, Income Tax (Old vs New Regime), PPF, EPF, and GST with instant, accurate results and clear explanations.",
   // Current live production domain. Change to a custom domain (e.g.
   // https://usemecalculator.com) once one is connected in Vercel.
   url: "https://usemecalculator.vercel.app",

@@ -17,10 +17,32 @@ import { retirement } from "./definitions/retirement";
 import { savingsGoal } from "./definitions/savings-goal";
 import { loanPayoff } from "./definitions/loan-payoff";
 import { stockAverage } from "./definitions/stock-average";
+import { homeLoan } from "./definitions/home-loan";
+import { carLoan } from "./definitions/car-loan";
+import { personalLoan } from "./definitions/personal-loan";
+import { incomeTax } from "./definitions/income-tax";
+import { gst } from "./definitions/gst";
+import { fd } from "./definitions/fd";
+import { rd } from "./definitions/rd";
+import { ppf } from "./definitions/ppf";
+import { epf } from "./definitions/epf";
+import { hra } from "./definitions/hra";
+import { gratuity } from "./definitions/gratuity";
 
 export const CALCULATORS: CalculatorConfig[] = [
-  compoundInterest,
+  incomeTax,
+  homeLoan,
   sip,
+  ppf,
+  epf,
+  fd,
+  rd,
+  carLoan,
+  personalLoan,
+  gst,
+  hra,
+  gratuity,
+  compoundInterest,
   cagr,
   loan,
   amortization,
@@ -36,6 +58,7 @@ export const CALCULATORS: CalculatorConfig[] = [
 export const CATEGORIES: CategoryMeta[] = [
   { id: "investing", label: "Investing", description: "Grow wealth through compounding, SIPs and long-term returns." },
   { id: "loans", label: "Loans & EMI", description: "Understand payments, interest and the true cost of borrowing." },
+  { id: "tax", label: "Tax & Compliance", description: "Calculate Income Tax, GST, HRA and more for India." },
   { id: "savings", label: "Savings", description: "Plan deposits, interest and everyday savings goals." },
   { id: "retirement", label: "Retirement", description: "Build and stress-test your long-term nest egg." },
   { id: "personal-finance", label: "Personal Finance", description: "Everyday money tools for smarter decisions." },

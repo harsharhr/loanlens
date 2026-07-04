@@ -17,6 +17,12 @@ export const sip: CalculatorConfig = {
     { name: "years", label: "Investment period", kind: "number", defaultValue: 15, min: 1, max: 40, step: 1, slider: true, suffix: "yrs" },
     { name: "stepUp", label: "Annual step-up", kind: "percent", defaultValue: 0, min: 0, max: 25, step: 1, hint: "Increase your SIP by this % each year (optional)." },
   ],
+  author: {
+    name: "RupeeSense Editorial",
+    role: "Financial Experts",
+  },
+  lastUpdated: new Date().toISOString().split('T')[0],
+  methodology: "Uses the future value of an annuity due formula, assuming investments are made at the beginning of each month.",
   compute: (v) => {
     const { monthly, rate, years, stepUp } = v;
     const rMonthly = rate / 100 / 12;
