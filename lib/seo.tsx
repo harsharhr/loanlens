@@ -1,6 +1,7 @@
 /** JSON-LD structured-data builders. Rendered as <script type="application/ld+json">. */
 import { SITE } from "./site";
 import type { CalculatorConfig } from "./calculators/types";
+import { getCalculatorPath } from "./calculators/registry";
 
 export function webApplicationLd() {
   return {
@@ -16,13 +17,14 @@ export function webApplicationLd() {
 }
 
 export function calculatorLd(calc: CalculatorConfig) {
+  const category = calc.category === "health" ? "HealthApplication" : calc.category === "featured-units" ? "UtilityApplication" : "FinanceApplication";
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     name: calc.title,
-    url: `${SITE.url}/finance/${calc.slug}`,
+    url: `${SITE.url}${getCalculatorPath(calc)}`,
     description: calc.tagline,
-    applicationCategory: "FinanceApplication",
+    applicationCategory: category,
     operatingSystem: "Any",
     offers: { "@type": "Offer", price: "0", priceCurrency: "INR" },
   };

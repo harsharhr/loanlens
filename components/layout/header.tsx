@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Menu, X, ChevronDown, Search as SearchIcon } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { CalculatorSearch } from "@/components/search/calculator-search";
-import { CATEGORIES, calculatorsByCategory } from "@/lib/calculators/registry";
+import { CATEGORIES, calculatorsByCategory, getCalculatorPath } from "@/lib/calculators/registry";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -74,7 +74,7 @@ export function Header() {
                         {calculatorsByCategory(cat.id).map((c) => (
                           <li key={c.slug}>
                             <Link
-                              href={`/finance/${c.slug}`}
+                              href={getCalculatorPath(c)}
                               className="block py-1 text-sm text-ink-secondary hover:text-brand transition-colors"
                             >
                               {c.title.replace(" Calculator", "")}
@@ -135,7 +135,7 @@ export function Header() {
                           {group.slice(0, 4).map((c) => (
                             <li key={c.slug}>
                               <Link
-                                href={`/featured-units/${c.slug}`}
+                                href={getCalculatorPath(c)}
                                 className="block py-0.5 text-[13px] text-ink-secondary hover:text-brand transition-colors truncate"
                               >
                                 {c.title.replace(" Calculator", "")}
@@ -202,7 +202,7 @@ export function Header() {
                           {group.map((c) => (
                             <li key={c.slug}>
                               <Link
-                                href={`/health/${c.slug}`}
+                                href={getCalculatorPath(c)}
                                 className="block py-0.5 text-[13px] text-ink-secondary hover:text-brand transition-colors truncate"
                               >
                                 {c.title.replace(" Calculator", "")}
@@ -289,7 +289,7 @@ export function Header() {
                     {calculatorsByCategory(cat.id).map((c) => (
                       <li key={c.slug}>
                         <Link
-                          href={`/finance/${c.slug}`}
+                          href={getCalculatorPath(c)}
                           className="block py-2 text-[15px] text-ink-secondary hover:text-brand"
                           onClick={() => setMobileOpen(false)}
                         >

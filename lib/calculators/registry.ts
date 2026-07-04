@@ -132,6 +132,14 @@ export function getCalculator(slug: string): CalculatorConfig | undefined {
   return BY_SLUG.get(slug);
 }
 
+export function getCalculatorPath(calcOrSlug: { slug: string, category?: string } | string): string {
+  const calc = typeof calcOrSlug === "string" ? getCalculator(calcOrSlug) : calcOrSlug;
+  if (!calc) return "/finance"; // fallback
+  if (calc.category === "featured-units") return `/featured-units/${calc.slug}`;
+  if (calc.category === "health") return `/health/${calc.slug}`;
+  return `/finance/${calc.slug}`;
+}
+
 export function allSlugs(): string[] {
   return CALCULATORS.map((c) => c.slug);
 }

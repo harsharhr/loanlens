@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { CalculatorConfig } from "@/lib/calculators/types";
+import { getCalculatorPath } from "@/lib/calculators/registry";
 
 export function RelatedCalculators({ items }: { items: CalculatorConfig[] }) {
   if (!items.length) return null;
@@ -14,7 +15,7 @@ export function RelatedCalculators({ items }: { items: CalculatorConfig[] }) {
         {items.map((c) => (
           <Link
             key={c.slug}
-            href={`/finance/${c.slug}`}
+            href={getCalculatorPath(c)}
             className="group card card-pad hover:border-brand transition-all focusable"
           >
             <h3 className="text-[15px] font-bold text-ink mb-1 flex items-center gap-1">

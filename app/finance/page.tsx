@@ -4,7 +4,7 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { CalculatorSearch } from "@/components/search/calculator-search";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { FaqAccordion } from "@/components/calculators/faq-accordion";
-import { CATEGORIES, calculatorsByCategory, featuredCalculators } from "@/lib/calculators/registry";
+import { CATEGORIES, calculatorsByCategory, featuredCalculators, getCalculatorPath } from "@/lib/calculators/registry";
 import { JsonLd, breadcrumbLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -67,7 +67,7 @@ export default function FinanceHubPage() {
           </section>
 
           {/* grouped by purpose */}
-          {CATEGORIES.map((cat) => (
+          {CATEGORIES.filter(c => c.id !== "featured-units" && c.id !== "health").map((cat) => (
             <section key={cat.id} id={cat.id} aria-labelledby={`${cat.id}-h`} className="scroll-mt-24">
               <h2 id={`${cat.id}-h`} className="h-section mb-1">
                 {cat.label}
@@ -96,7 +96,7 @@ export default function FinanceHubPage() {
               ].map((row) => (
                 <Link
                   key={row.s}
-                  href={`/finance/${row.s}`}
+                  href={getCalculatorPath(row.s)}
                   className="flex items-center justify-between gap-3 rounded-lg border border-line bg-surface px-4 py-3 hover:border-brand transition-colors"
                 >
                   <span className="text-sm text-ink-secondary">{row.t}</span>
@@ -140,7 +140,7 @@ export default function FinanceHubPage() {
               <a href="#featured" className="py-1.5 text-ink-secondary hover:text-brand border-l-2 border-line hover:border-brand pl-3 transition-colors">
                 Featured
               </a>
-              {CATEGORIES.map((cat) => (
+              {CATEGORIES.filter(c => c.id !== "featured-units" && c.id !== "health").map((cat) => (
                 <a
                   key={cat.id}
                   href={`#${cat.id}`}

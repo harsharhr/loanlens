@@ -13,12 +13,13 @@ import {
   allSlugs,
   relatedCalculators,
   categoryMeta,
+  getCalculatorPath
 } from "@/lib/calculators/registry";
 import { JsonLd, calculatorLd, faqLd, breadcrumbLd } from "@/lib/seo";
 import { SITE } from "@/lib/site";
 
 export function generateStaticParams() {
-  return allSlugs().map((slug) => ({ slug }));
+  return CALCULATORS.filter(c => c.category !== "health" && c.category !== "featured-units").map((c) => ({ slug: c.slug }));
 }
 
 export async function generateMetadata({
@@ -46,10 +47,11 @@ export async function generateMetadata({
 
 // Deterministic adjacency for prev/next navigation.
 function adjacent(slug: string) {
-  const i = CALCULATORS.findIndex((c) => c.slug === slug);
+  const financeCalcs = CALCULATORS.filter(c => c.category !== "health" && c.category !== "featured-units");
+  const i = financeCalcs.findIndex((c) => c.slug === slug);
   return {
-    prev: i > 0 ? CALCULATORS[i - 1] : CALCULATORS[CALCULATORS.length - 1],
-    next: i < CALCULATORS.length - 1 ? CALCULATORS[i + 1] : CALCULATORS[0],
+    prev: i > 0 ? financeCalcs[i - 1] : financeCalcs[financeCalcs.length - 1],
+    next: i < financeCalcs.length - 1 ? financeCalcs[i + 1] : financeCalcs[0],
   };
 }
 
@@ -196,7 +198,7 @@ export default async function CalculatorPage({ params }: { params: Promise<{ slu
 
           {/* prev / next */}
           <nav className="grid gap-3 sm:grid-cols-2 pt-2" aria-label="Adjacent calculators">
-            <Link href={`/finance/${prev.slug}`} className="card card-pad hover:border-brand transition-colors group">
+            <Link href={getCalculatorPath(prev)} className="card card-pad hover:border-brand transition-colors group">
               <span className="text-xs text-muted inline-flex items-center gap-1">
                 <ArrowLeft size={13} /> Previous
               </span>
@@ -205,7 +207,7 @@ export default async function CalculatorPage({ params }: { params: Promise<{ slu
               </span>
             </Link>
             <Link
-              href={`/finance/${next.slug}`}
+              href={getCalculatorPath(next)}
               className="card card-pad hover:border-brand transition-colors group sm:text-right"
             >
               <span className="text-xs text-muted inline-flex items-center gap-1 sm:justify-end w-full">

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { CalculatorConfig } from "@/lib/calculators/types";
-import { categoryMeta } from "@/lib/calculators/registry";
+import { categoryMeta, getCalculatorPath } from "@/lib/calculators/registry";
 
 interface Props {
   calc: Pick<CalculatorConfig, "slug" | "title" | "tagline" | "category">;
@@ -13,7 +13,7 @@ export function CalculatorCard({ calc, compact = false }: Props) {
   const cat = categoryMeta(calc.category);
   return (
     <Link
-      href={`/finance/${calc.slug}`}
+      href={getCalculatorPath(calc)}
       className="group card card-pad flex flex-col gap-2 hover:border-brand hover:shadow-elevated transition-all focusable"
     >
       <div className="flex items-start justify-between gap-2">

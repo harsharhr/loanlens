@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LogoMark } from "@/components/logo";
 import { SITE } from "@/lib/site";
-import { CATEGORIES, calculatorsByCategory } from "@/lib/calculators/registry";
+import { CATEGORIES, calculatorsByCategory, getCalculatorPath } from "@/lib/calculators/registry";
 
 export function Footer() {
   const year = 2026; // static build — avoid Date.now() at render for deterministic output
@@ -28,7 +28,7 @@ export function Footer() {
               <ul className="space-y-2">
                 {calculatorsByCategory(cat.id).map((c) => (
                   <li key={c.slug}>
-                    <Link href={`/finance/${c.slug}`} className="text-sm text-muted hover:text-brand transition-colors">
+                    <Link href={getCalculatorPath(c)} className="text-sm text-muted hover:text-brand transition-colors">
                       {c.title.replace(" Calculator", "")}
                     </Link>
                   </li>

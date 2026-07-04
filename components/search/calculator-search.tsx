@@ -3,7 +3,7 @@
 import { useMemo, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { Search, X, ArrowRight } from "lucide-react";
-import { searchCalculators, CALCULATORS } from "@/lib/calculators/registry";
+import { searchCalculators, CALCULATORS, getCalculatorPath } from "@/lib/calculators/registry";
 
 interface Props {
   placeholder?: string;
@@ -77,7 +77,7 @@ export function CalculatorSearch({
           {(q ? results : []).map((r) => (
             <Link
               key={r.slug}
-              href={`/finance/${r.slug}`}
+              href={getCalculatorPath(r.slug)}
               className="flex items-center justify-between gap-3 px-4 py-3 hover:bg-brand-soft transition-colors border-b border-line last:border-0"
               role="option"
               aria-selected="false"
@@ -98,7 +98,7 @@ export function CalculatorSearch({
                 {popular.map((c) => (
                   <Link
                     key={c.slug}
-                    href={`/finance/${c.slug}`}
+                    href={getCalculatorPath(c)}
                     className="chip hover:text-brand"
                     onClick={() => setOpen(false)}
                   >

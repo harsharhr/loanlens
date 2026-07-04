@@ -1,14 +1,14 @@
 import type { MetadataRoute } from "next";
 import { SITE } from "@/lib/site";
-import { allSlugs } from "@/lib/calculators/registry";
+import { CALCULATORS, getCalculatorPath } from "@/lib/calculators/registry";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/finance", "/about", "/privacy", "/terms"];
-  const calcRoutes = allSlugs().map((slug) => `/finance/${slug}`);
+  const staticRoutes = ["", "/finance", "/featured-units", "/health", "/about", "/privacy", "/terms"];
+  const calcRoutes = CALCULATORS.map((calc) => getCalculatorPath(calc));
 
   return [...staticRoutes, ...calcRoutes].map((route) => ({
     url: `${SITE.url}${route}`,
-    changeFrequency: route.startsWith("/finance/") ? "monthly" : "weekly",
-    priority: route === "" ? 1 : route.startsWith("/finance/") ? 0.8 : 0.6,
+    changeFrequency: route.includes("/finance") ? "monthly" : "weekly",
+    priority: route === "" ? 1 : route.includes("/finance") ? 0.8 : 0.6,
   }));
 }

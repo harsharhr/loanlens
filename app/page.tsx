@@ -3,7 +3,7 @@ import { ArrowRight, Zap, ShieldCheck, BookOpen, IndianRupee, CheckCircle2 } fro
 import { CalculatorSearch } from "@/components/search/calculator-search";
 import { CalculatorCard } from "@/components/calculators/calculator-card";
 import { FaqAccordion } from "@/components/calculators/faq-accordion";
-import { CATEGORIES, calculatorsByCategory, featuredCalculators } from "@/lib/calculators/registry";
+import { CATEGORIES, calculatorsByCategory, featuredCalculators, getCalculatorPath } from "@/lib/calculators/registry";
 import { JsonLd, webApplicationLd } from "@/lib/seo";
 
 const HOME_FAQ = [
@@ -94,7 +94,7 @@ export default function HomePage() {
                     {calcs.map((c) => (
                       <li key={c.slug}>
                         <Link
-                          href={`/finance/${c.slug}`}
+                          href={getCalculatorPath(c)}
                           className="group flex items-center justify-between text-[15px] text-ink-secondary hover:text-brand py-1"
                         >
                           {c.title.replace(" Calculator", "")}
