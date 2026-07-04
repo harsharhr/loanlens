@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
@@ -43,6 +44,8 @@ export const metadata: Metadata = {
   },
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
+  // AdSense site-ownership verification meta (rendered into <head> on every page).
+  other: { "google-adsense-account": SITE.adsensePublisherId },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -52,6 +55,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        {/* Google AdSense loader — enables auto-ads and site verification. */}
+        <Script
+          id="adsbygoogle-init"
+          async
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsensePublisherId}`}
+        />
       </body>
     </html>
   );
