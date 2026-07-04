@@ -55,13 +55,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
-        <Script
-          id="adsbygoogle-init"
-          strategy="beforeInteractive"
-          async
-          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${SITE.adsensePublisherId}`}
-          crossOrigin="anonymous"
-        />
+        {/* Google AdSense loader — enables auto-ads and site verification. */}
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4910237367995817" crossOrigin="anonymous"></script>
       </body>
     </html>
   );
