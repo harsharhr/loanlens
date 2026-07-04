@@ -12,7 +12,8 @@ export type CalculatorCategory =
   | "loans"
   | "savings"
   | "retirement"
-  | "personal-finance";
+  | "personal-finance"
+  | "tax";
 
 /** How a raw numeric result should be rendered. */
 export type ValueFormat = "currency" | "percent" | "number" | "years" | "months";

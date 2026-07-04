@@ -12,7 +12,7 @@ export const SITE = {
   defaultCurrency: "INR" as const,
   twitter: "@usemecalc",
   /** Google AdSense publisher ID (carried over from the original site). */
-  adsensePublisherId: "ca-pub-4910237367995817",
+  adsensePublisherId: "ca-pub-4910237387995517",
 };
 
 export const NAV = {
