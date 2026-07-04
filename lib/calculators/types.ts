@@ -117,10 +117,13 @@ export interface CalculatorConfig {
   id: string;
   slug: string;
   title: string;
-  /** one-line purpose, shown in cards + hero */
+  /** one-line purpose, shown  /** e.g. "Calculate your loan EMI" */
   tagline: string;
-  /** trust-oriented short intro paragraph on the calculator page */
+  /** e.g. "Use this tool to plan your loan..." */
   intro: string;
+  /** Medical or financial disclaimer for this calculator */
+  disclaimer?: string;
+  /** High-level grouping, e.g. "loans" */
   category: CalculatorCategory;
   subcategory?: string;
   /** extra search keywords beyond the title */
@@ -146,7 +149,6 @@ export interface CalculatorConfig {
   /** slugs of related calculators */
   related: string[];
   /** short disclaimer specific to this tool (falls back to a global one) */
-  disclaimer?: string;
 
   /** Trust Layer: Author or reviewer of the calculator logic/content */
   author?: {

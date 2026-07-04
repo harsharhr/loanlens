@@ -65,22 +65,31 @@ export function formatMonths(value: number): string {
 
 /** Single entry point used by result cards, tables, and chart tooltips. */
 export function formatValue(
-  value: number,
+  value: any,
   format: ValueFormat,
   symbol = "₹",
   locale = "en-IN",
 ): string {
+  if (format === "text" || format === "duration") {
+    return String(value);
+  }
+  
+  const numValue = Number(value);
+  
   switch (format) {
     case "currency":
-      return formatCurrency(value, symbol, locale);
+      return formatCurrency(numValue, symbol, locale);
     case "percent":
-      return formatPercent(value);
+      return formatPercent(numValue);
     case "years":
-      return formatYears(value);
+      return formatYears(numValue);
     case "months":
-      return formatMonths(value);
+      return formatMonths(numValue);
+    case "unit":
+      if (!Number.isFinite(numValue)) return "—";
+      return new Intl.NumberFormat(locale, { maximumFractionDigits: 4 }).format(numValue);
     case "number":
     default:
-      return formatNumber(value, locale);
+      return formatNumber(numValue, locale);
   }
 }

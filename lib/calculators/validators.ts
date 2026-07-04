@@ -39,6 +39,6 @@ export function hasErrors(errors: FieldErrors): boolean {
 }
 
 /** Build the default values record from a field list. */
-export function defaultValues(fields: InputField[]): Record<string, number> {
+export function defaultValues(fields: InputField[]): Record<string, any> {
   return Object.fromEntries(fields.map((f) => [f.name, f.defaultValue]));
 }

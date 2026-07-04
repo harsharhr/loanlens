@@ -63,6 +63,19 @@ import { wattsToAmps } from "./definitions/watts-to-amps";
 import { lumensToWatts } from "./definitions/lumens-to-watts";
 import { hertzToSeconds } from "./definitions/hertz-to-seconds";
 
+import { bmiCalculator } from "./definitions/bmi-calculator";
+import { whrCalculator } from "./definitions/whr-calculator";
+import { bmrCalculator } from "./definitions/bmr-calculator";
+import { howLongToWalkAMile } from "./definitions/how-long-to-walk-a-mile";
+import { howManyStepsInAMile } from "./definitions/how-many-steps-in-a-mile";
+import { milesToSteps } from "./definitions/miles-to-steps";
+import { stepsToKm } from "./definitions/steps-to-km";
+import { stepsToMiles } from "./definitions/steps-to-miles";
+import { stepsToCalories } from "./definitions/steps-to-calories";
+import { pregnancyCalculator } from "./definitions/pregnancy-calculator";
+import { sobrietyCalculator } from "./definitions/sobriety-calculator";
+import { kilojoulesToCalories } from "./definitions/kilojoules-to-calories";
+
 export const CALCULATORS: CalculatorConfig[] = [
   incomeTax,
   homeLoan,
@@ -95,7 +108,11 @@ export const CALCULATORS: CalculatorConfig[] = [
   inchPoundsToFtLb, newtonMetersToFtLb,
   squareFeetToAcres, squareMetersToSquareFeet,
   squareFeetToCubicFeet, squareFeetToCubicYards,
-  ampsToWatts, wattsToAmps, lumensToWatts, hertzToSeconds
+  ampsToWatts, wattsToAmps, lumensToWatts, hertzToSeconds,
+  // Health
+  bmiCalculator, whrCalculator, bmrCalculator,
+  howLongToWalkAMile, howManyStepsInAMile, milesToSteps, stepsToKm, stepsToMiles, stepsToCalories,
+  pregnancyCalculator, sobrietyCalculator, kilojoulesToCalories
 ];
 
 export const CATEGORIES: CategoryMeta[] = [
@@ -106,6 +123,7 @@ export const CATEGORIES: CategoryMeta[] = [
   { id: "retirement", label: "Retirement", description: "Project your corpus and plan your retirement withdrawals." },
   { id: "personal-finance", label: "Personal Finance", description: "Calculate gratuity, stock averages, and other daily math." },
   { id: "featured-units", label: "Featured Units", description: "Fast, accurate unit conversions for height, weight, volume, energy, and more." },
+  { id: "health", label: "Health & Fitness", description: "Calculators for BMI, BMR, steps, pregnancy, and more." },
 ];
 
 const BY_SLUG = new Map(CALCULATORS.map((c) => [c.slug, c]));

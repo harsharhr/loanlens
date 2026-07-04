@@ -12,6 +12,7 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [unitsMegaOpen, setUnitsMegaOpen] = useState(false);
+  const [healthMegaOpen, setHealthMegaOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
@@ -61,7 +62,7 @@ export function Header() {
             {megaOpen && (
               <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3">
                 <div className="card shadow-elevated p-5 w-[640px] grid grid-cols-2 gap-x-6 gap-y-1">
-                  {CATEGORIES.filter(c => c.id !== "featured-units").map((cat) => (
+                  {CATEGORIES.filter(c => c.id !== "featured-units" && c.id !== "health").map((cat) => (
                     <div key={cat.id} className="py-1">
                       <Link
                         href={`/finance#${cat.id}`}
@@ -162,6 +163,66 @@ export function Header() {
             )}
           </div>
 
+          <div
+            className="relative"
+            onMouseEnter={() => setHealthMegaOpen(true)}
+            onMouseLeave={() => setHealthMegaOpen(false)}
+          >
+            <button
+              className="flex items-center gap-1 px-3 py-2 rounded text-[15px] font-semibold text-ink-secondary hover:text-brand hover:bg-brand-soft transition-colors focusable"
+              aria-expanded={healthMegaOpen}
+              aria-haspopup="true"
+              onClick={() => setHealthMegaOpen((v) => !v)}
+            >
+              Health <ChevronDown size={16} className={`transition-transform ${healthMegaOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {healthMegaOpen && (
+              <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3">
+                <div className="card shadow-elevated p-5 w-[640px] grid grid-cols-3 gap-x-6 gap-y-4">
+                  {[
+                    { id: "body-composition", label: "Body Composition" },
+                    { id: "metabolism", label: "Metabolism" },
+                    { id: "walking-fitness", label: "Walking & Fitness" },
+                    { id: "pregnancy", label: "Pregnancy" },
+                    { id: "recovery", label: "Recovery" },
+                    { id: "nutrition", label: "Nutrition" }
+                  ].map((sub) => {
+                    const group = calculatorsByCategory("health").filter(c => c.subcategory === sub.id);
+                    if (group.length === 0) return null;
+                    return (
+                      <div key={sub.id}>
+                        <Link
+                          href={`/health#${sub.id}`}
+                          className="block text-xs font-bold uppercase tracking-wide text-brand mb-1 hover:underline truncate"
+                        >
+                          {sub.label}
+                        </Link>
+                        <ul>
+                          {group.map((c) => (
+                            <li key={c.slug}>
+                              <Link
+                                href={`/health/${c.slug}`}
+                                className="block py-0.5 text-[13px] text-ink-secondary hover:text-brand transition-colors truncate"
+                              >
+                                {c.title.replace(" Calculator", "")}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )
+                  })}
+                  <div className="col-span-3 mt-1 pt-3 border-t">
+                    <Link href="/health" className="link text-sm inline-flex items-center gap-1">
+                      Browse all health tools →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
           <Link
             href="/about"
             className="px-3 py-2 rounded text-[15px] font-semibold text-ink-secondary hover:text-brand hover:bg-brand-soft transition-colors focusable"
@@ -255,6 +316,13 @@ export function Header() {
                   onClick={() => setMobileOpen(false)}
                 >
                   Featured Units & Conversions →
+                </Link>
+                <Link
+                  href="/health"
+                  className="block py-2 text-[15px] font-semibold text-ink hover:text-brand"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Health & Fitness →
                 </Link>
               </div>
             </nav>
