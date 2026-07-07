@@ -3,7 +3,7 @@ import { SITE } from "@/lib/site";
 import { CALCULATORS, getCalculatorPath } from "@/lib/calculators/registry";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/finance", "/featured-units", "/health", "/about", "/privacy", "/terms"];
+  const staticRoutes = ["", "/finance", "/featured-units", "/health", "/about", "/contact", "/privacy", "/terms"];
   const calcRoutes = CALCULATORS.map((calc) => getCalculatorPath(calc));
 
   return [...staticRoutes, ...calcRoutes].map((route) => ({

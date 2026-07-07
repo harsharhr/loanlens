@@ -42,12 +42,21 @@ export function Footer() {
           <p className="text-xs text-muted">
             © {year} {SITE.name}. For education and estimation only — not financial advice.
           </p>
-          <nav className="flex items-center gap-5 text-xs text-muted" aria-label="Legal">
+          <nav className="flex flex-wrap items-center justify-center gap-5 text-xs text-muted" aria-label="Legal">
             <Link href="/finance" className="hover:text-brand">
-              All calculators
+              Finance
+            </Link>
+            <Link href="/health" className="hover:text-brand">
+              Health
+            </Link>
+            <Link href="/featured-units" className="hover:text-brand">
+              Unit converters
             </Link>
             <Link href="/about" className="hover:text-brand">
               About
+            </Link>
+            <Link href="/contact" className="hover:text-brand">
+              Contact
             </Link>
             <Link href="/privacy" className="hover:text-brand">
               Privacy

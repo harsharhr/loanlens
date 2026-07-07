@@ -8,6 +8,7 @@ import { calculatorsByCategory } from "@/lib/calculators/registry";
 export const metadata = {
   title: `Health & Fitness Calculators — ${SITE.name}`,
   description: "Free, accurate health calculators for BMI, BMR, pregnancy due dates, step conversions, and more.",
+  alternates: { canonical: "/health" },
 };
 
 const SUBCATEGORIES = [

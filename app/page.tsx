@@ -37,10 +37,10 @@ export default function HomePage() {
           </p>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link href="/finance/income-tax" className="button button-primary">Compare tax regimes</Link>
-            <Link href="/finance/home-loan" className="button button-secondary">Calculate home EMI</Link>
-            <Link href="/finance/sip" className="button button-secondary">Start SIP planning</Link>
-            <Link href="/finance/retirement" className="button button-secondary">Plan retirement</Link>
+            <Link href="/finance/income-tax" className="btn btn-primary">Compare tax regimes</Link>
+            <Link href="/finance/home-loan" className="btn btn-ghost">Calculate home EMI</Link>
+            <Link href="/finance/sip" className="btn btn-ghost">Start SIP planning</Link>
+            <Link href="/finance/retirement" className="btn btn-ghost">Plan retirement</Link>
           </div>
 
           <div className="mt-6 max-w-xl mx-auto">

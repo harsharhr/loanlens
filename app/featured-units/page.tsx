@@ -8,6 +8,7 @@ import { calculatorsByCategory } from "@/lib/calculators/registry";
 export const metadata = {
   title: `Featured Units & Conversions — ${SITE.name}`,
   description: "Accurate, instant unit conversions for length, mass, volume, force, area, and energy.",
+  alternates: { canonical: "/featured-units" },
 };
 
 const SUBCATEGORIES = [
