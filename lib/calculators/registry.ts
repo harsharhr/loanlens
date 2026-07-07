@@ -159,7 +159,18 @@ export function categoryMeta(id: CalculatorCategory): CategoryMeta {
 export function relatedCalculators(slug: string): CalculatorConfig[] {
   const c = getCalculator(slug);
   if (!c) return [];
-  return c.related.map((s) => getCalculator(s)).filter((x): x is CalculatorConfig => Boolean(x));
+  const explicit = c.related.map((s) => getCalculator(s)).filter((x): x is CalculatorConfig => Boolean(x));
+  if (explicit.length > 0) return explicit;
+
+  // No related[] declared (common for programmatically-generated pages like unit
+  // converters) — fall back to siblings so no page is a dead end. Prefer the same
+  // subcategory, then widen to the category, so every page still links onward.
+  const bySubcategory = c.subcategory
+    ? CALCULATORS.filter((x) => x.slug !== c.slug && x.subcategory === c.subcategory)
+    : [];
+  if (bySubcategory.length > 0) return bySubcategory.slice(0, 4);
+
+  return CALCULATORS.filter((x) => x.slug !== c.slug && x.category === c.category).slice(0, 4);
 }
 
 /** Lightweight client-safe search over title + keywords + category. */

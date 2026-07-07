@@ -1,29 +1,49 @@
 import type { CalculatorOutput, ComputeContext } from "../types";
 
+/** Sensible default set of "look this up" values for a quick-reference table. */
+const DEFAULT_PRESETS = [1, 5, 10, 25, 50, 100, 250, 500, 1000];
+
 /**
  * Creates a standard unit conversion compute function.
  * @param fromUnit Label for the input unit (e.g. "Centimeters")
  * @param toUnit Label for the output unit (e.g. "Feet")
  * @param factor Multiplication factor to get from input to output
  * @param interpretationTemplate String template, use {in} and {out}
+ * @param presets Optional list of common values to show in a quick-reference
+ *   table. Pass a range that suits the unit (e.g. [1,2,3,5,10] for a "gallons"
+ *   pair vs. the default which suits general-purpose length/mass conversions).
  */
 export function createStandardConversion(
   fromUnit: string,
   toUnit: string,
   factor: number,
-  interpretationTemplate: string
+  interpretationTemplate: string,
+  presets: number[] = DEFAULT_PRESETS
 ) {
   return (v: Record<string, number>, ctx: ComputeContext): CalculatorOutput => {
     const input = v.input || 0;
     const result = input * factor;
-    
+
+    const tableRows = presets.map((p) => ({
+      input: p,
+      output: Math.round(p * factor * 10000) / 10000,
+    }));
+
     return {
       metrics: [
         { label: toUnit, value: result, format: "unit", primary: true, tone: "brand" }
       ],
       interpretation: interpretationTemplate
         .replace("{in}", `${input.toLocaleString(ctx.locale)} ${fromUnit.toLowerCase()}`)
-        .replace("{out}", `${result.toLocaleString(ctx.locale, { maximumFractionDigits: 4 })} ${toUnit.toLowerCase()}`)
+        .replace("{out}", `${result.toLocaleString(ctx.locale, { maximumFractionDigits: 4 })} ${toUnit.toLowerCase()}`),
+      table: {
+        title: `${fromUnit} to ${toUnit} quick reference`,
+        columns: [
+          { key: "input", label: fromUnit, format: "unit" },
+          { key: "output", label: toUnit, format: "unit" },
+        ],
+        rows: tableRows,
+      },
     };
   };
 }
