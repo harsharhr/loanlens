@@ -52,6 +52,9 @@ export function Footer() {
             <Link href="/featured-units" className="hover:text-brand">
               Unit converters
             </Link>
+            <Link href="/tools" className="hover:text-brand">
+              Everyday tools
+            </Link>
             <Link href="/about" className="hover:text-brand">
               About
             </Link>

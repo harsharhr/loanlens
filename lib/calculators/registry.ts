@@ -28,6 +28,11 @@ import { ppf } from "./definitions/ppf";
 import { epf } from "./definitions/epf";
 import { hra } from "./definitions/hra";
 import { gratuity } from "./definitions/gratuity";
+import { inHandSalary } from "./definitions/in-hand-salary";
+
+import { ageCalculator } from "./definitions/age-calculator";
+import { percentageCalculator } from "./definitions/percentage-calculator";
+import { dateDifference } from "./definitions/date-difference";
 
 import { cmToFeet } from "./definitions/cm-to-feet";
 import { cmToInches } from "./definitions/cm-to-inches";
@@ -78,6 +83,7 @@ import { kilojoulesToCalories } from "./definitions/kilojoules-to-calories";
 
 export const CALCULATORS: CalculatorConfig[] = [
   incomeTax,
+  inHandSalary,
   homeLoan,
   sip,
   ppf,
@@ -112,7 +118,9 @@ export const CALCULATORS: CalculatorConfig[] = [
   // Health
   bmiCalculator, whrCalculator, bmrCalculator,
   howLongToWalkAMile, howManyStepsInAMile, milesToSteps, stepsToKm, stepsToMiles, stepsToCalories,
-  pregnancyCalculator, sobrietyCalculator, kilojoulesToCalories
+  pregnancyCalculator, sobrietyCalculator, kilojoulesToCalories,
+  // Everyday tools
+  ageCalculator, percentageCalculator, dateDifference,
 ];
 
 export const CATEGORIES: CategoryMeta[] = [
@@ -124,6 +132,7 @@ export const CATEGORIES: CategoryMeta[] = [
   { id: "personal-finance", label: "Personal Finance", description: "Calculate gratuity, stock averages, and other daily math." },
   { id: "featured-units", label: "Featured Units", description: "Fast, accurate unit conversions for height, weight, volume, energy, and more." },
   { id: "health", label: "Health & Fitness", description: "Calculators for BMI, BMR, steps, pregnancy, and more." },
+  { id: "everyday", label: "Everyday Tools", description: "Age, percentage and date calculators for daily life, exams and paperwork." },
 ];
 
 const BY_SLUG = new Map(CALCULATORS.map((c) => [c.slug, c]));
@@ -137,6 +146,7 @@ export function getCalculatorPath(calcOrSlug: { slug: string, category?: string 
   if (!calc) return "/finance"; // fallback
   if (calc.category === "featured-units") return `/featured-units/${calc.slug}`;
   if (calc.category === "health") return `/health/${calc.slug}`;
+  if (calc.category === "everyday") return `/tools/${calc.slug}`;
   return `/finance/${calc.slug}`;
 }
 

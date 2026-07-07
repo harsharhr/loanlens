@@ -15,7 +15,8 @@ export type CalculatorCategory =
   | "personal-finance"
   | "tax"
   | "featured-units"
-  | "health";
+  | "health"
+  | "everyday";
 
 /** How a raw numeric result should be rendered. */
 export type ValueFormat = "currency" | "percent" | "number" | "years" | "months" | "unit" | "text" | "duration";
@@ -42,6 +43,8 @@ export interface InputField {
   hint?: string;
   /** render an accompanying range slider */
   slider?: boolean;
+  /** field may be left empty; compute() must handle the missing value */
+  optional?: boolean;
   /** render as a segmented control / dropdown of fixed options instead of a free input */
   options?: SelectOption[];
   /** display prefix (e.g. "₹") — falls back to the active currency symbol for currency kind */
@@ -88,7 +91,8 @@ export interface TableColumn {
 export interface TableSpec {
   title: string;
   columns: TableColumn[];
-  rows: Array<Record<string, number>>;
+  /** cell values; strings render via the "text" format, numbers via the column's format */
+  rows: Array<Record<string, number | string>>;
   /** collapse to N rows with a "show all" toggle when long */
   previewRows?: number;
 }

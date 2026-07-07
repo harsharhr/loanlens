@@ -67,7 +67,7 @@ export default function FinanceHubPage() {
           </section>
 
           {/* grouped by purpose */}
-          {CATEGORIES.filter(c => c.id !== "featured-units" && c.id !== "health").map((cat) => (
+          {CATEGORIES.filter(c => c.id !== "featured-units" && c.id !== "health" && c.id !== "everyday").map((cat) => (
             <section key={cat.id} id={cat.id} aria-labelledby={`${cat.id}-h`} className="scroll-mt-24">
               <h2 id={`${cat.id}-h`} className="h-section mb-1">
                 {cat.label}
@@ -140,7 +140,7 @@ export default function FinanceHubPage() {
               <a href="#featured" className="py-1.5 text-ink-secondary hover:text-brand border-l-2 border-line hover:border-brand pl-3 transition-colors">
                 Featured
               </a>
-              {CATEGORIES.filter(c => c.id !== "featured-units" && c.id !== "health").map((cat) => (
+              {CATEGORIES.filter(c => c.id !== "featured-units" && c.id !== "health" && c.id !== "everyday").map((cat) => (
                 <a
                   key={cat.id}
                   href={`#${cat.id}`}

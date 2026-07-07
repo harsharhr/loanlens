@@ -9,13 +9,24 @@ export type FieldErrors = Record<string, string>;
 
 export function validateInputs(
   fields: InputField[],
-  values: Record<string, number>,
+  values: Record<string, any>,
 ): FieldErrors {
   const errors: FieldErrors = {};
   for (const field of fields) {
     const v = values[field.name];
     if (v === undefined || v === null || Number.isNaN(v)) {
-      errors[field.name] = "Enter a value";
+      if (!field.optional) errors[field.name] = "Enter a value";
+      continue;
+    }
+    // Date and select fields carry string values — numeric range checks don't
+    // apply. (Running Number.isFinite on them flagged every date calculator
+    // as invalid, blanking their results.)
+    if (field.kind === "date" || field.kind === "select") {
+      if (v === "") {
+        if (!field.optional) errors[field.name] = "Enter a value";
+      } else if (field.kind === "date" && Number.isNaN(new Date(v).getTime())) {
+        errors[field.name] = "Enter a valid date";
+      }
       continue;
     }
     if (!Number.isFinite(v)) {

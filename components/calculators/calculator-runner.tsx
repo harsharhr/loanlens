@@ -22,7 +22,7 @@ const ChartPanel = dynamic(() => import("./chart-panel"), {
 
 export function CalculatorRunner({ slug }: { slug: string }) {
   const calc = getCalculator(slug);
-  const [values, setValues] = useState<Record<string, number>>(() =>
+  const [values, setValues] = useState<Record<string, any>>(() =>
     calc ? defaultValues(calc.inputs) : {},
   );
   const [currency, setCurrency] = useState<CurrencyCode>("INR");
@@ -32,11 +32,16 @@ export function CalculatorRunner({ slug }: { slug: string }) {
   useEffect(() => {
     if (!calc) return;
     const params = new URLSearchParams(window.location.search);
-    const next: Record<string, number> = {};
+    const next: Record<string, any> = {};
     let found = false;
     for (const f of calc.inputs) {
       const raw = params.get(f.name);
-      if (raw !== null && !Number.isNaN(Number(raw))) {
+      if (raw === null) continue;
+      // Date/select fields hold string values; everything else is numeric.
+      if (f.kind === "date" || f.kind === "select") {
+        next[f.name] = raw;
+        found = true;
+      } else if (!Number.isNaN(Number(raw))) {
         next[f.name] = Number(raw);
         found = true;
       }
@@ -59,7 +64,7 @@ export function CalculatorRunner({ slug }: { slug: string }) {
     }
   }, [calc, values, errors, meta.symbol, meta.locale]);
 
-  const onChange = useCallback((name: string, value: number) => {
+  const onChange = useCallback((name: string, value: number | string) => {
     setValues((v) => ({ ...v, [name]: value }));
   }, []);
 

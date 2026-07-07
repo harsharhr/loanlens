@@ -62,7 +62,7 @@ export function Header() {
             {megaOpen && (
               <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3">
                 <div className="card shadow-elevated p-5 w-[640px] grid grid-cols-2 gap-x-6 gap-y-1">
-                  {CATEGORIES.filter(c => c.id !== "featured-units" && c.id !== "health").map((cat) => (
+                  {CATEGORIES.filter(c => c.id !== "featured-units" && c.id !== "health" && c.id !== "everyday").map((cat) => (
                     <div key={cat.id} className="py-1">
                       <Link
                         href={`/finance#${cat.id}`}
@@ -224,6 +224,13 @@ export function Header() {
           </div>
 
           <Link
+            href="/tools"
+            className="px-3 py-2 rounded text-[15px] font-semibold text-ink-secondary hover:text-brand hover:bg-brand-soft transition-colors focusable"
+          >
+            Tools
+          </Link>
+
+          <Link
             href="/about"
             className="px-3 py-2 rounded text-[15px] font-semibold text-ink-secondary hover:text-brand hover:bg-brand-soft transition-colors focusable"
           >
@@ -323,6 +330,13 @@ export function Header() {
                   onClick={() => setMobileOpen(false)}
                 >
                   Health & Fitness →
+                </Link>
+                <Link
+                  href="/tools"
+                  className="block py-2 text-[15px] font-semibold text-ink hover:text-brand"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Everyday Tools →
                 </Link>
               </div>
             </nav>
